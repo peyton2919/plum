@@ -18,6 +18,13 @@ import java.util.List;
 public interface PostService {
 
     /**
+     * <h4>判断文章是否存在</h4>
+     * @param id 文章编号
+     * @return true 表示存在 ; 否则取反
+     */
+    boolean isPost(Integer id);
+
+    /**
      * <h4>根据文章分类，分页查找,只查isOpen=1</h4>
      * @param postClassId 文章分类编号
      * @param page 分页对象

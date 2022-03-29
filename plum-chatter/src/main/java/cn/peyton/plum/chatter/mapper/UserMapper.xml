@@ -33,6 +33,15 @@
         </association>
     </resultMap>
 
+    <resultMap id="ResultSimpleMapUserParam" type="cn.peyton.plum.chatter.param.UserParam">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="username" property="username" jdbcType="VARCHAR"/>
+        <result column="user_pic" property="userPic" jdbcType="VARCHAR"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
 
 	<sql id="Base_Column_List">
 		id,username,user_pic,password,phone,email,status,create_time
@@ -157,6 +166,13 @@
     </select>
 
     <!-- new create method   -->
+    <select id="findSimpleById" resultMap="ResultSimpleMapUserParam">
+        select
+            id,username,user_pic,phone,email,create_time
+         from user
+         where id=#{id}
+    </select>
+
     <select id="login" resultMap="BaseResultMap" parameterType="java.lang.String">
        select
             id,username,user_pic,phone,email,create_time
@@ -274,5 +290,6 @@
         from user
         where id=#{userId}
     </select>
+
 
 </mapper>

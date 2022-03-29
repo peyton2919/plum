@@ -1,5 +1,6 @@
 package cn.peyton.plum.chatter.mapper;
 
+import cn.peyton.plum.chatter.param.UserParam;
 import cn.peyton.plum.chatter.pojo.User;
 import cn.peyton.plum.core.mybatis.utils.PageQuery;
 
@@ -58,6 +59,16 @@ public interface UserMapper {
 	User selectByPrimaryKey(Integer id);
 
 	// ==================================== new create method ==================================== //
+
+    /**
+     * <h4>根据 用户编号 查找 用户传递类 对象</h4>
+     * <pre>
+     *     只返回: id,username,userPic,phone,email,createTime
+     * </pre>
+     * @param id 用户编号
+     * @return
+     */
+    UserParam findSimpleById(Integer id);
 
     /**
      * <h4>扩展查找</h4>

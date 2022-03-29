@@ -5,6 +5,7 @@ import cn.peyton.plum.chatter.mapper.PostMapper;
 import cn.peyton.plum.chatter.param.PostParam;
 import cn.peyton.plum.chatter.pojo.Post;
 import cn.peyton.plum.chatter.service.PostService;
+import cn.peyton.plum.chatter.service.SupportService;
 import cn.peyton.plum.core.mybatis.utils.PageQuery;
 import org.springframework.stereotype.Service;
 
@@ -25,36 +26,44 @@ public class PostServiceImpl implements PostService {
 
 	@Resource
 	private PostMapper postMapper;
+	@Resource
+    private SupportService supportService;
+
+    @Override
+    public boolean isPost(Integer id) {
+        return postMapper.checkPost(id) > 0 ? true : false;
+    }
 
     @Override
     public List<PostParam> findByClassId(int postClassId, PageQuery page) {
-        //
-        return new PostBo().adapter(postMapper.findByClassId(postClassId,page));
+
+        return postMapper.findByClassId(postClassId,page);
     }
 
     @Override
     public List<PostParam> search(String keyword, PageQuery page) {
 
-        return new PostBo().adapter(postMapper.search(keyword,page));
+        return postMapper.search(keyword,page);
     }
 
     @Override
     public PostParam findByPrimaryKey(Integer id) {
-        return new PostBo().compat(postMapper.selectByPrimaryKey(id));
+
+        return postMapper.selectByPrimaryKey(id);
     }
 
     @Override
     public List<PostParam> findByTopicId(int topicId, PageQuery page) {
-        return new PostBo().adapter(postMapper.findByTopicId(topicId,page));
+        return postMapper.findByTopicId(topicId,page);
     }
 
     @Override
     public List<PostParam> findByUserId(int userId, PageQuery page) {
-        return new PostBo().adapter(postMapper.findByUserId(userId,page));
+        return postMapper.findByUserId(userId,page);
     }
 
     @Override
     public List<PostParam> findByPKUserId(int userId, PageQuery page) {
-        return new PostBo().adapter(postMapper.findByPKUserId(userId,page));
+        return postMapper.findByPKUserId(userId,page);
     }
 }

@@ -51,6 +51,10 @@ public class PostParam implements Serializable {
 	private Integer isOpen;
     /** 图片集合 */
     private List<Images> imageList;
+    /** 顶  */
+    private Integer ding;
+    /** 踩  */
+    private Integer cai;
 
 	//================================== Constructor =======================================//
 
@@ -244,7 +248,34 @@ public class PostParam implements Serializable {
         this.imageList = imageList;
     }
 
-	/**
+    /**
+     * @return 顶
+     */
+    public Integer getDing() {
+        return ding;
+    }
+
+    /**
+     * @param ding 顶
+     */
+    public void setDing(Integer ding) {
+        this.ding = ding;
+    }
+    /**
+     * @return 踩
+     */
+    public Integer getCai() {
+        return cai;
+    }
+
+    /**
+     * @param cai 踩
+     */
+    public void setCai(Integer cai) {
+        this.cai = cai;
+    }
+
+    /**
 	 * <h4>对象转成Post对象<h4> 
 	 * <pre>
 	 * 	 转换字段如下:

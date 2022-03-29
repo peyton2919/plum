@@ -14,7 +14,13 @@
         <module name="mybatis-generator-toolkit" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="11" />
+    <bytecodeTargetLevel target="11">
+      <module name="plum-community" target="11" />
+      <module name="plum-learn" target="11" />
+      <module name="plum-mall" target="11" />
+      <module name="plum-mybatis-generator-tools" target="11" />
+      <module name="plum-o2o" target="11" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_STRING" value="-encoding UTF8" />

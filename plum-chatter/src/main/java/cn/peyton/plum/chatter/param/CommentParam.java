@@ -19,9 +19,9 @@ public class CommentParam implements Serializable {
 	private Integer id;
 	/** 发布人 用户对象userId  */
 	private UserParam userParam;
-	/** 评论父编号 0表示一级评论 */
+	/** 评论父编号 0表示一级评论 不是0表示回复 */
 	private Integer fId;
-	/** 被回复数  */
+	/** 这条评论被回复数数 ;用来判断有没有下级  */
 	private Integer fnum;
 	/** 数据  */
 	private String data;
@@ -66,28 +66,28 @@ public class CommentParam implements Serializable {
     }
 
     /**
-	 * @param fId 评论父编号 0表示一级评论
+	 * @param fId 评论父编号 0表示一级评论 不是0表示回复
 	 */
     public void setFId(Integer fId) {
         this.fId = fId;
     }
 
     /**
-	 * @return 评论父编号 0表示一级评论
+	 * @return 评论父编号 0表示一级评论 不是0表示回复
 	 */
     public Integer getFId() {
         return fId;
     }
 
     /**
-	 * @param fnum 被回复数 
+	 * @param fnum 这条评论被回复数数 ;用来判断有没有下级
 	 */ 
 	public void setFnum(Integer fnum){
 		this.fnum = fnum;
 	}
 
 	/** 
-	 * @return 被回复数 
+	 * @return 这条评论被回复数数 ;用来判断有没有下级
 	 */ 
 	public Integer getFnum(){
 		return fnum;

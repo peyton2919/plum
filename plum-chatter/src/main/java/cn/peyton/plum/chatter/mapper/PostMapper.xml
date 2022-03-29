@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.peyton.plum.chatter.mapper.PostMapper">
-	<resultMap id="BaseResultMap" type="cn.peyton.plum.chatter.pojo.Post">
+	<resultMap id="BaseResultMap" type="cn.peyton.plum.chatter.param.PostParam">
 		<id column="id" property="id" jdbcType="INTEGER"/>
 		<!--<result column="user_id" property="userId" jdbcType="INTEGER"/>-->
 		<result column="title" property="title" jdbcType="VARCHAR"/>
@@ -14,13 +14,25 @@
 		<result column="post_class_id" property="postClassId" jdbcType="INTEGER"/>
 		<!--<result column="share_id" property="shareId" jdbcType="INTEGER"/>-->
 		<result column="is_open" property="isOpen" jdbcType="INTEGER"/>
-        <association  property="user" javaType="cn.peyton.plum.chatter.pojo.User"
-                     column="user_id" select="cn.peyton.plum.chatter.mapper.UserMapper.findByExpand">
+        <!--<association  property="user" javaType="cn.peyton.plum.chatter.pojo.User"-->
+        <!--             column="user_id" select="cn.peyton.plum.chatter.mapper.UserMapper.findByExpand">-->
+        <!--</association>-->
+        <association property="userParam" javaType="cn.peyton.plum.chatter.param.UserParam"
+                     column="user_id" select="cn.peyton.plum.chatter.mapper.UserMapper.findSimpleById">
         </association>
 
-        <association property="sharePost" javaType="cn.peyton.plum.chatter.pojo.Post"
+        <association property="sharePostParam" javaType="cn.peyton.plum.chatter.param.PostParam"
                      column="share_id" select="cn.peyton.plum.chatter.mapper.PostMapper.findByShareId">
         </association>
+
+        <association property="cai" javaType="int" column="id"
+                    select="cn.peyton.plum.chatter.mapper.SupportMapper.findCaiByPostId">
+        </association>
+
+        <association property="ding" javaType="int" column="id"
+                     select="cn.peyton.plum.chatter.mapper.SupportMapper.findDingByPostId">
+        </association>
+
         <collection property="imageList" javaType="java.util.List"
                      column="id" select="cn.peyton.plum.chatter.mapper.ImagesMapper.selectByExpand">
 
@@ -180,6 +192,13 @@
 	</select>
 
 	<!-- new create method   -->
+    <select id="checkPost" resultType="java.lang.Integer">
+        select
+            count(id)
+        from post
+        where id = #{id}
+    </select>
+
     <select id="findByShareId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
@@ -226,6 +245,7 @@
         ORDER BY create_time DESC
         limit #{page.offset},#{page.pageSize}
     </select>
+
     <select id="findByPKUserId" resultMap="BaseResultMap" parameterType="map">
         select
             id, user_id, title,title_pic,content,share_num,post.path,
@@ -235,4 +255,5 @@
         ORDER BY create_time DESC
         limit #{page.offset},#{page.pageSize}
     </select>
+
 </mapper>
