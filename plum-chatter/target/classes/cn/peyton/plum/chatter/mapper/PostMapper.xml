@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.peyton.plum.chatter.mapper.PostMapper">
+	<resultMap id="BaseResultMap" type="cn.peyton.plum.chatter.pojo.Post">
+		<id column="id" property="id" jdbcType="INTEGER"/>
+		<!--<result column="user_id" property="userId" jdbcType="INTEGER"/>-->
+		<result column="title" property="title" jdbcType="VARCHAR"/>
+		<result column="title_pic" property="titlePic" jdbcType="VARCHAR"/>
+		<result column="content" property="content" jdbcType="LONGVARCHAR"/>
+		<result column="share_num" property="shareNum" jdbcType="INTEGER"/>
+		<result column="path" property="path" jdbcType="VARCHAR"/>
+		<result column="type" property="type" jdbcType="INTEGER"/>
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+		<result column="post_class_id" property="postClassId" jdbcType="INTEGER"/>
+		<!--<result column="share_id" property="shareId" jdbcType="INTEGER"/>-->
+		<result column="is_open" property="isOpen" jdbcType="INTEGER"/>
+        <association  property="user" javaType="cn.peyton.plum.chatter.pojo.User"
+                     column="user_id" select="cn.peyton.plum.chatter.mapper.UserMapper.findByExpand">
+        </association>
+
+        <association property="sharePost" javaType="cn.peyton.plum.chatter.pojo.Post"
+                     column="share_id" select="cn.peyton.plum.chatter.mapper.PostMapper.findByShareId">
+        </association>
+        <collection property="imageList" javaType="java.util.List"
+                     column="id" select="cn.peyton.plum.chatter.mapper.ImagesMapper.selectByExpand">
+
+        </collection>
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id,user_id,title,title_pic,content,share_num,path,type,create_time,post_class_id,share_id,is_open
+	</sql>
+
+	<insert id="insert" parameterType="cn.peyton.plum.chatter.pojo.Post" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into Post(user_id,title,title_pic,content,share_num,path,type,create_time,post_class_id,share_id,is_open)
+		values (#{userId},#{title},#{titlePic},#{content},#{shareNum},#{path},#{type},#{createTime},#{postClassId},#{shareId},#{isOpen})
+	</insert>
+
+	<insert id="insertSelective" parameterType="cn.peyton.plum.chatter.pojo.Post" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into Post
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="title != null">
+				title,
+			</if>
+			<if test="titlePic != null">
+				title_pic,
+			</if>
+			<if test="content != null">
+				content,
+			</if>
+			<if test="shareNum != null">
+				share_num,
+			</if>
+			<if test="path != null">
+				path,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="postClassId != null">
+				post_class_id,
+			</if>
+			<if test="shareId != null">
+				share_id,
+			</if>
+			<if test="isOpen != null">
+				is_open,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="userId != null">
+				#{userId},
+			</if>
+			<if test="title != null">
+				#{title},
+			</if>
+			<if test="titlePic != null">
+				#{titlePic},
+			</if>
+			<if test="content != null">
+				#{content},
+			</if>
+			<if test="shareNum != null">
+				#{shareNum},
+			</if>
+			<if test="path != null">
+				#{path},
+			</if>
+			<if test="type != null">
+				#{type},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="postClassId != null">
+				#{postClassId},
+			</if>
+			<if test="shareId != null">
+				#{shareId},
+			</if>
+			<if test="isOpen != null">
+				#{isOpen},
+			</if>
+		</trim>
+	</insert>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from Post
+		where id = #{id}
+	</delete>
+
+	<update id="updateByPrimaryKeySelective" parameterType="cn.peyton.plum.chatter.pojo.Post">
+		update Post
+		<set>
+			<if test="userId != null">
+				user_id = #{userId},
+			</if>
+			<if test="title != null">
+				title = #{title},
+			</if>
+			<if test="titlePic != null">
+				title_pic = #{titlePic},
+			</if>
+			<if test="content != null">
+				content = #{content},
+			</if>
+			<if test="shareNum != null">
+				share_num = #{shareNum},
+			</if>
+			<if test="path != null">
+				path = #{path},
+			</if>
+			<if test="type != null">
+				type = #{type},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>
+			<if test="postClassId != null">
+				post_class_id = #{postClassId},
+			</if>
+			<if test="shareId != null">
+				share_id = #{shareId},
+			</if>
+			<if test="isOpen != null">
+				is_open = #{isOpen},
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="cn.peyton.plum.chatter.pojo.Post">
+		update Post
+		set 
+			user_id = #{userId},
+			title = #{title},
+			title_pic = #{titlePic},
+			content = #{content},
+			share_num = #{shareNum},
+			path = #{path},
+			type = #{type},
+			create_time = #{createTime},
+			post_class_id = #{postClassId},
+			share_id = #{shareId},
+			is_open = #{isOpen}
+		where id = #{id}
+	</update>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List"/>
+		from Post
+		where id = #{id}
+	</select>
+
+	<!-- new create method   -->
+    <select id="findByShareId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from Post
+        where id = #{id}
+    </select>
+
+    <select id="findByClassId" resultMap="BaseResultMap" parameterType="map">
+        select
+        <include refid="Base_Column_List"/>
+        from Post
+        where post_class_id = #{postClassId} and is_open=1
+        order by create_time desc
+        limit #{page.offset},#{page.pageSize}
+    </select>
+
+    <select id="search" resultMap="BaseResultMap" parameterType="map">
+        select
+        <include refid="Base_Column_List"/>
+        from Post
+        where title like concat('%',#{keyword},'%')  and is_open=1
+        order by create_time desc
+        limit #{page.offset},#{page.pageSize}
+    </select>
+
+    <select id="findByTopicId" resultMap="BaseResultMap" parameterType="map">
+        select
+            p.id,user_id,title,title_pic,content,share_num,p.path,p.type,
+                p.create_time,p.post_class_id,p.share_id,is_open
+        from Post as p,topic_post as tp
+        where tp.post_id = p.id
+        and tp.topic_id=#{topicId}
+        and is_open=1
+        ORDER BY p.create_time DESC
+        limit #{page.offset},#{page.pageSize}
+    </select>
+
+    <select id="findByUserId" resultMap="BaseResultMap" parameterType="map">
+        select
+            id, user_id, title,title_pic,content,share_num,post.path,
+            post.type,create_time,post_class_id,share_id,is_open
+        from Post
+        where user_id=#{userId}  and is_open=1
+        ORDER BY create_time DESC
+        limit #{page.offset},#{page.pageSize}
+    </select>
+    <select id="findByPKUserId" resultMap="BaseResultMap" parameterType="map">
+        select
+            id, user_id, title,title_pic,content,share_num,post.path,
+            post.type,create_time,post_class_id,share_id,is_open
+        from Post
+        where user_id=#{userId}
+        ORDER BY create_time DESC
+        limit #{page.offset},#{page.pageSize}
+    </select>
+</mapper>
