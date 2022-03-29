@@ -28,8 +28,12 @@ public class Comment implements Serializable {
 	/** 文章 postId  */
 	private Integer postId;
 
-	//================================== Constructor =======================================//
-
+    //================================== Constructor =======================================//
+    public Comment() {
+        if (null == user) {
+            user = new User();
+        }
+    }
 	//================================== Method =======================================//
 
 

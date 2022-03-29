@@ -1,7 +1,9 @@
 package cn.peyton.plum.common;
 
 import cn.peyton.plum.core.base.JSONResult;
+import cn.peyton.plum.core.exception.StatusCode;
 import cn.peyton.plum.core.exception.child.AdviceException;
+import cn.peyton.plum.core.exception.child.TransactionalException;
 import org.apache.tomcat.util.http.fileupload.impl.FileSizeLimitExceededException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -29,6 +31,11 @@ public class GraceExceptionHandler {
     public JSONResult exceptionHandler(AdviceException e) {
         return JSONResult.fail(10001,e.getMessage());
     }
+
+    // @ExceptionHandler({Exception.class})
+    // public JSONResult transactionalHandler(Exception e) {
+    //     return JSONResult.fail(StatusCode.FAIL.getCode(), e.getMessage(),"持久层数据出错,事务回滚!");
+    // }
 
 
 }

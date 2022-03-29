@@ -35,8 +35,8 @@ API路由 根目录baseurl={http://192.168.3.2:8080/api/routine}
 
 24. Post("/adsense","AdsenseController.findByType"); 获取广告列表
 25. Post("/user/support","SupportController.create"); 用户顶踩
-26. Post("","");
-27. Post("","");
+26. Post("/user/comment","CommentController.create"); 用户评论
+27. Post("/comment/postid","CommentController.findByPostId"); 获取当前文章的所有评论
 28. Post("","");
 29. Post("","");
 30. Post("","");

@@ -30,8 +30,12 @@ public class CommentParam implements Serializable {
 	/** 编号  */
 	private Integer postId;
 
-	//================================== Constructor =======================================//
-
+    //================================== Constructor =======================================//
+    public CommentParam() {
+        if (null == userParam) {
+            userParam = new UserParam();
+        }
+    }
 	//================================== Method =======================================//
 
 
