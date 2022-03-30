@@ -91,7 +91,13 @@
 		where id = #{id}
 	</select>
 
+    <!-- new create method   -->
 
-	<!-- new create method   -->
+    <select id="finds" resultMap="BaseResultMap" parameterType="cn.peyton.plum.core.mybatis.utils.PageQuery">
+        select
+            <include refid="Base_Column_List"/>
+        from feedback
+        limit #{page.offset},#{page.pageSize}
+    </select>
 
 </mapper>

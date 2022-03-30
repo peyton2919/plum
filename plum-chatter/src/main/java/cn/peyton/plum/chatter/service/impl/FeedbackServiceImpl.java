@@ -1,10 +1,14 @@
 package cn.peyton.plum.chatter.service.impl;
 
+import cn.peyton.plum.chatter.bo.FeedbackBo;
 import cn.peyton.plum.chatter.mapper.FeedbackMapper;
+import cn.peyton.plum.chatter.param.FeedbackParam;
 import cn.peyton.plum.chatter.service.FeedbackService;
+import cn.peyton.plum.core.mybatis.utils.PageQuery;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * <h3>意见反馈 Service 实现类 .service.impl</h3>
@@ -20,4 +24,13 @@ public class FeedbackServiceImpl implements FeedbackService {
 	@Resource
 	private FeedbackMapper feedbackMapper;
 
+    @Override
+    public boolean create(FeedbackParam param) {
+        return feedbackMapper.insertSelective(param.convert()) > 0 ? true : false;
+    }
+
+    @Override
+    public List<FeedbackParam> finds(PageQuery page) {
+        return new FeedbackBo().adapter(feedbackMapper.finds(page));
+    }
 }

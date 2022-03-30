@@ -13,6 +13,9 @@ API路由 根目录baseurl={http://192.168.3.2:8080/api/routine}
    
 8. Post("/user/follow","FollowController.follow"); 用户关注
 9. Post("/user/unfollow","FollowController.unFollow"); 用户取消关注
+   Post("/user/friends","FollowController.friends"); 互注列表
+   Post("/user/fens","FollowController.fens"); 粉丝列表
+   Post("/user/follows","FollowController.follows"); 关注列表
 
 10. Post("/postclass","PostClassController.finds"); 获取所有文章分类
 11. Post("/topicclass","TopicClassController.finds");获取所有话题分类
@@ -43,8 +46,8 @@ API路由 根目录baseurl={http://192.168.3.2:8080/api/routine}
 30. Post("/user/repassword","UserController.editPassword"); 修改用户密码
 31. Post("/user/addblack","BlackListController.addBlack"); 加入黑名单
 32. Post("/user/removeblack","BlackListController.removeBlack"); 移除黑名单
-33. Post("","");
-34. Post("","");
+33. Post("/user/feedback","FeedbackController.create"); 用户反馈
+34. Post("/user/feedbacklist","FeedbackController.feedbacklist); 获取用户反馈列表
 35. Post("","");
 36. Post("","");
 37. Post("","");

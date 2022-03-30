@@ -1,6 +1,7 @@
 package cn.peyton.plum.chatter.param;
 
 import cn.peyton.plum.chatter.pojo.Feedback;
+import cn.peyton.plum.core.validator.constraints.NotBlank;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -22,6 +23,7 @@ public class FeedbackParam implements Serializable {
 	/** 发送id  */
 	private Integer fromId;
 	/** 数据  */
+	@NotBlank(message = "反馈信息不能为空!")
 	private String data;
 	/** 创建时间  */
 	private Date createTime;

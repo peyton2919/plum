@@ -88,6 +88,9 @@ public class MyWebConfig implements WebMvcConfigurer {
         excludePath.add("/js/*");
         excludePath.add("/img/*");
 
+        registry.addInterceptor(authenticationInterceptor())
+                .addPathPatterns("/**/user/**"); //拦截规则
+
         // addPathPatterns 用于添加拦截规则
         // excludePathPatterns 用户排除拦截
         registry.addInterceptor(parameterInterceptor())
@@ -97,8 +100,7 @@ public class MyWebConfig implements WebMvcConfigurer {
         registry.addInterceptor(tokenInterceptor())
                 .addPathPatterns("/**/token/**");
 
-        registry.addInterceptor(authenticationInterceptor())
-                .addPathPatterns("/**/user/**"); //拦截规则
+
     }
 
     /**
