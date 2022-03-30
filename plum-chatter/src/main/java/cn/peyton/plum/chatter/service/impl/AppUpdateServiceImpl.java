@@ -2,6 +2,7 @@ package cn.peyton.plum.chatter.service.impl;
 
 
 import cn.peyton.plum.chatter.mapper.AppUpdateMapper;
+import cn.peyton.plum.chatter.param.AppUpdateParam;
 import cn.peyton.plum.chatter.service.AppUpdateService;
 import org.springframework.stereotype.Service;
 
@@ -21,4 +22,14 @@ public class AppUpdateServiceImpl implements AppUpdateService {
 	@Resource
 	private AppUpdateMapper appUpdateMapper;
 
+    @Override
+    public AppUpdateParam findByNewApp() {
+        return new AppUpdateParam().compat(appUpdateMapper.findByNewApp());
+    }
+
+    @Override
+    public boolean update(AppUpdateParam param) {
+
+        return appUpdateMapper.updateByPrimaryKeySelective(param.convert()) > 0 ? true : false;
+    }
 }

@@ -91,7 +91,15 @@
 		where id = #{id}
 	</select>
 
+    <!-- new create method   -->
 
-	<!-- new create method   -->
+    <select id="findByNewApp" resultMap="BaseResultMap">
+        SELECT
+            <include refid="Base_Column_List"></include>
+        FROM app_update
+        where status=1
+        ORDER BY create_time desc
+        LIMIT 0,1
+    </select>
 
 </mapper>

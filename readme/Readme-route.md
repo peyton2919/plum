@@ -48,7 +48,7 @@ API路由 根目录baseurl={http://192.168.3.2:8080/api/routine}
 32. Post("/user/removeblack","BlackListController.removeBlack"); 移除黑名单
 33. Post("/user/feedback","FeedbackController.create"); 用户反馈
 34. Post("/user/feedbacklist","FeedbackController.feedbacklist); 获取用户反馈列表
-35. Post("","");
+35. Post("/update","AppUpdateController.update"); 检查更新
 36. Post("","");
 37. Post("","");
 38. Post("","");
