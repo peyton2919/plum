@@ -35,4 +35,5 @@ public class BlackListServiceImpl implements BlackListService {
     public boolean delete(Integer userId, Integer blackId) {
         return blackListMapper.deleteByUserIdAndBlackId(userId, blackId) > 0 ? true : false;
     }
+
 }

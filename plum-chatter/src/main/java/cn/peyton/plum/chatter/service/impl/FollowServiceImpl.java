@@ -5,6 +5,7 @@ import cn.peyton.plum.chatter.mapper.FollowMapper;
 import cn.peyton.plum.chatter.param.FollowParam;
 import cn.peyton.plum.chatter.pojo.Follow;
 import cn.peyton.plum.chatter.service.FollowService;
+import cn.peyton.plum.core.mybatis.utils.PageQuery;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -45,5 +46,16 @@ public class FollowServiceImpl implements FollowService {
     @Override
     public boolean delete(int userId, int followId) {
         return followMapper.deleteByUserIdAndFollowId(userId, followId) > 0 ? true : false;
+    }
+
+    @Override
+    public List<FollowParam> friends(Integer userId, PageQuery page) {
+        return new FollowBo().adapter(followMapper.friends(userId,page));
+    }
+
+    @Override
+    public List<FollowParam> follows(Integer userId, PageQuery page, boolean fens) {
+
+        return new FollowBo().adapter(followMapper.follows(userId, page, fens));
     }
 }

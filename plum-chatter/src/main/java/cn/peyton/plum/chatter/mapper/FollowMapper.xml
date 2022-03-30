@@ -104,7 +104,30 @@
 
     </select>
 
+    <select id="friends" resultMap="BaseResultMap">
+        SELECT
+            <include refid="Base_Column_List"></include>
+        from follow
+        WHERE user_id
+        IN
+        (SELECT follow_id from follow WHERE user_id = #{userId})
+        and follow_id = #{userId}
+        limit #{page.offset},#{page.pageSize}
+    </select>
 
+    <select id="follows"  resultMap="BaseResultMap">
+        SELECT
+            <include refid="Base_Column_List"></include>
+        from follow
+        WHERE
+        <if test="fens">
+            follow_id= #{userId}
+        </if>
+        <if test="!fens">
+            user_id= #{userId}
+        </if>
+        limit #{page.offset},#{page.pageSize}
+    </select>
 
 
 </mapper>

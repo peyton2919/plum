@@ -35,4 +35,6 @@ public interface BlackListService {
      * @return true 表示 删除成功; false 表示 取反
      */
     boolean delete(Integer userId, Integer blackId);
+
+
 }

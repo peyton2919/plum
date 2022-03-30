@@ -1,6 +1,8 @@
 package cn.peyton.plum.chatter.service;
 
+import cn.peyton.plum.chatter.param.BlackListParam;
 import cn.peyton.plum.chatter.param.FollowParam;
+import cn.peyton.plum.core.mybatis.utils.PageQuery;
 
 import java.util.List;
 
@@ -45,4 +47,28 @@ public interface FollowService {
      * @return true 表示 成功; false 表示 取反;
      */
     boolean delete(int userId,int followId);
+
+    /**
+     * <h4>互关列表</h4>
+     * @param userId 用户ID
+     * @param page 分页对象
+     * @return 互关列表
+     */
+    List<FollowParam> friends(Integer userId, PageQuery page);
+
+    /**
+     * <h4>粉丝、关注列表</h4>
+     * <pre>
+     *     fens = true
+     *     where follow_id = #{userId}
+     *     fens = false
+     *     where user_id = #{userId}
+     * </pre>
+     *
+     * @param userId 用户ID
+     * @param page   分页对象
+     * @param fens   true 表示 粉丝列表; false 表示 关注列表
+     * @return 互关列表
+     */
+    List<FollowParam> follows(Integer userId, PageQuery page, boolean fens);
 }

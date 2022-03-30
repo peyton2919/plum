@@ -4,17 +4,19 @@ import cn.peyton.plum.chatter.param.FollowParam;
 import cn.peyton.plum.chatter.param.UserParam;
 import cn.peyton.plum.chatter.service.FollowService;
 import cn.peyton.plum.chatter.service.UserService;
-import cn.peyton.plum.controller.PROPERTY;
+import cn.peyton.plum.common.UserUtil;
 import cn.peyton.plum.controller.route.ChatterApiRoutineController;
 import cn.peyton.plum.core.base.JSONResult;
 import cn.peyton.plum.core.exception.StatusCode;
+import cn.peyton.plum.core.mybatis.utils.PageQuery;
 import cn.peyton.plum.core.validator.Valid;
+import cn.peyton.plum.core.validator.constraints.Min;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * <h3>用户关注 Controller 类 .controller</h3>
@@ -43,39 +45,45 @@ public class FollowController extends ChatterApiRoutineController<FollowParam, I
     // 用户关注
     @Valid
     @PostMapping("/user/follow")
-    public JSONResult<FollowParam> follow(int followId, HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        UserParam _sessionUserParam = (UserParam) session.getAttribute(PROPERTY.SESSION_USER);
-        int _userId = _sessionUserParam.getId();
+    public JSONResult<FollowParam> follow(
+            @Min(message = "数值不能小于1！", value = 1)
+            int followId, HttpServletRequest request) {
+        UserParam _userParam= UserUtil.getUserParam(request);
+        int _userId = _userParam.getId();
         // 不能关注自己
         if (followId == _userId) {
             return JSONResult.fail(StatusCode.FAIL.getCode(), "不能关注自己！");
+        }
+        //判断用户是否存在
+        if (!userService.isUserId(followId)) {
+            return JSONResult.fail(StatusCode.FAIL.getCode(), "关注用户不存在！");
         }
         // 判断是否已经关注过
         if (followService.isFollow(followId, _userId)) {
             return JSONResult.fail(StatusCode.FAIL.getCode(), "已经关注过！");
         }
-        //判断用户是否存在
-        if (userService.isUserId(_userId)) {
-            return JSONResult.fail(StatusCode.FAIL.getCode(), "关注用户不存在！");
-        }
+
         // 保存对象
         if (followService.save(_userId, followId)) {
             return JSONResult.success("关注成功!");
         }
         return JSONResult.fail(StatusCode.FAIL.getCode(), "关注失败！");
     }
-
     // 用户取消关注
     @PostMapping("/user/unfollow")
     @Valid
-    public JSONResult<FollowParam> unFollow(int followId, HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        UserParam _sessionUserParam = (UserParam) session.getAttribute(PROPERTY.SESSION_USER);
-        int _userId = _sessionUserParam.getId();
+    public JSONResult<FollowParam> unFollow(
+            @Min(message = "数值不能小于1！", value = 1)
+            int followId, HttpServletRequest request) {
+        UserParam _userParam= UserUtil.getUserParam(request);
+        int _userId = _userParam.getId();
         // 不能取消关注自己
         if (followId == _userId) {
             return JSONResult.fail(StatusCode.FAIL.getCode(), "不能取消关注自己！");
+        }
+        // 判断用户是否合法
+        if (!userService.isUserId(followId)) {
+            return JSONResult.fail(StatusCode.FAIL.getCode(), "关注用户不存在！");
         }
         // 判断是否已经关注过
         if (!followService.isFollow(followId, _userId)) {
@@ -85,7 +93,37 @@ public class FollowController extends ChatterApiRoutineController<FollowParam, I
         if (followService.delete(_userId, followId)) {
             return JSONResult.success("关注删除成功!");
         }
-
         return JSONResult.fail(StatusCode.FAIL.getCode(), "关注删除失败！");
+    }
+
+    // 互注列表
+    @Valid
+    @PostMapping("/user/friends")
+    public JSONResult<List<FollowParam>> friends(
+            @Min(message = "数值不能小于1！", value = 1)
+                    Integer pageNo, HttpServletRequest request) {
+        UserParam _userParam = UserUtil.getUserParam(request);
+        return JSONResult.success(followService.friends(_userParam.getId(),new PageQuery(pageNo)));
+    }
+
+    // 粉丝列表
+    @Valid
+    @PostMapping("/user/fens")
+    public JSONResult<List<FollowParam>> fens(
+            @Min(message = "数值不能小于1！", value = 1)
+            Integer pageNo, HttpServletRequest request) {
+        UserParam _userParam = UserUtil.getUserParam(request);
+        return JSONResult.success(followService.follows(_userParam.getId(),new PageQuery(pageNo),true));
+    }
+
+    // 关注列表
+    @Valid
+    @PostMapping("/user/follows")
+    public JSONResult<List<FollowParam>> follows(
+            @Min(message = "数值不能小于1！", value = 1)
+                    Integer pageNo, HttpServletRequest request) {
+        UserParam _userParam = UserUtil.getUserParam(request);
+
+        return JSONResult.success(followService.follows(_userParam.getId(),new PageQuery(pageNo),false));
     }
 }

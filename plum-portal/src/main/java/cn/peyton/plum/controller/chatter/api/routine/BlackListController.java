@@ -64,7 +64,6 @@ public final class BlackListController extends ChatterApiRoutineController<Black
         return JSONResult.fail("加入黑名单失败!");
     }
 
-    //
     // 移除黑名单
     @PostMapping("/user/removeblack")
     @Valid
@@ -87,8 +86,8 @@ public final class BlackListController extends ChatterApiRoutineController<Black
         if (blackListService.delete(_userParam.getId(), blackId)) {
             return JSONResult.success("移除黑名单成功！");
         }
-
         return JSONResult.fail("移除黑名单失败!");
     }
+
 
 }

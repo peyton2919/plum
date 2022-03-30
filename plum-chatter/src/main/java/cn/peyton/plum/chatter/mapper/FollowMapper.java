@@ -1,6 +1,7 @@
 package cn.peyton.plum.chatter.mapper;
 
 import cn.peyton.plum.chatter.pojo.Follow;
+import cn.peyton.plum.core.mybatis.utils.PageQuery;
 
 import java.util.List;
 
@@ -81,5 +82,28 @@ public interface FollowMapper {
      * @return 1 表示 删除成功; 0 表示 取反;
      */
     int deleteByUserIdAndFollowId(int userId,int followId);
+
+    /**
+     * <h4>互关列表</h4>
+     * @param userId 用户ID
+     * @param page 分页对象
+     * @return 互关列表
+     */
+    List<Follow> friends(Integer userId, PageQuery page);
+
+    /**
+     * <h4>粉丝、关注列表</h4>
+     * <pre>
+     *     fens = true
+     *     where follow_id = #{userId}
+     *     fens = false
+     *     where user_id = #{userId}
+     * </pre>
+     * @param userId 用户ID
+     * @param page 分页对象
+     * @param fens true 表示 粉丝列表; false 表示 关注列表
+     * @return 互关列表
+     */
+    List<Follow> follows(Integer userId, PageQuery page,boolean fens);
 
 }

@@ -72,4 +72,5 @@ public interface BlackListMapper {
      */
     int deleteByUserIdAndBlackId(Integer userId, Integer blackId);
 
+
 }

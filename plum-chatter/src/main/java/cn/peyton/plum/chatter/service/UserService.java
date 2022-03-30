@@ -1,7 +1,6 @@
 package cn.peyton.plum.chatter.service;
 
 import cn.peyton.plum.chatter.param.UserParam;
-import cn.peyton.plum.chatter.pojo.User;
 import cn.peyton.plum.core.mybatis.utils.PageQuery;
 
 import java.util.List;
