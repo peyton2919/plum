@@ -1,16 +1,22 @@
 package cn.peyton.plum.controller.chatter.api.routine;
 
 import cn.peyton.plum.chatter.param.*;
+import cn.peyton.plum.chatter.pojo.UserInfo;
 import cn.peyton.plum.chatter.service.*;
+import cn.peyton.plum.common.UserUtil;
 import cn.peyton.plum.controller.PROPERTY;
 import cn.peyton.plum.controller.common.AliSMSUtil;
 import cn.peyton.plum.controller.route.ChatterApiRoutineController;
 import cn.peyton.plum.core.base.JSONResult;
 import cn.peyton.plum.core.exception.StatusCode;
+import cn.peyton.plum.core.img.ImageProcessing;
 import cn.peyton.plum.core.mybatis.utils.PageQuery;
 import cn.peyton.plum.core.token.TokenUtil;
+import cn.peyton.plum.core.utils.FileUtil;
+import cn.peyton.plum.core.utils.PathUtil;
 import cn.peyton.plum.core.validator.Regulation;
 import cn.peyton.plum.core.validator.Valid;
+import cn.peyton.plum.core.validator.constraints.Length;
 import cn.peyton.plum.core.validator.constraints.Min;
 import cn.peyton.plum.core.validator.constraints.NotBlank;
 import cn.peyton.plum.core.validator.constraints.Phone;
@@ -19,11 +25,13 @@ import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -60,6 +68,9 @@ public class UserController extends ChatterApiRoutineController<UserParam,Intege
     private UserService userService;
     @Resource
     private UserBindService userBindService;
+    @Resource
+    private UserInfoService userInfoService;
+
     @Resource
     private CommentService commentService;
     @Resource
@@ -360,4 +371,76 @@ public class UserController extends ChatterApiRoutineController<UserParam,Intege
     }
     // ****************************************************************************************** //
 
+    // 编辑用户头像
+    @PostMapping("/user/edituserpic")
+    public JSONResult<UserParam> editUserPic(MultipartFile file,HttpServletRequest request) {
+        UserParam _userParam = UserUtil.getUserParam(request);
+        String _path = null;
+        if (null == file) {
+            return JSONResult.fail(StatusCode.FAIL.getCode(), "图片不能为空！");
+        }
+        try {
+            _path = ImageProcessing.execute(file.getInputStream(),
+                    file.getOriginalFilename(), PROPERTY.IMG_AVATAR_LOCATION, null);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return JSONResult.error(StatusCode.ERROR.getCode(), "文件上传IO异常！", 200, 11005);
+        }
+        try {
+            if (userService.updateUserPic(_userParam.getId(), _path)) {
+                return JSONResult.success("头像更像成功！",null,_path);
+            }
+        } catch (Exception e) {
+
+        }finally {
+            //删除头像
+            FileUtil.delFile(PROPERTY.IMG_AVATAR_LOCATION + _path);
+        }
+
+        return JSONResult.fail("头像更新失败");
+    }
+
+    // 编辑用户资料
+    @Valid
+    @PostMapping("/user/edituserinfo")
+    public JSONResult<UserInfoParam> editUserInfo(UserInfoParam param, HttpServletRequest request) {
+        UserParam _userParam = UserUtil.getUserParam(request);
+        param.setUserId(_userParam.getId());
+        if (userInfoService.updateUserInfo(param)) {
+            return JSONResult.success("编辑用户资料成功！", param);
+        }
+        return JSONResult.fail("编辑用户资料失败!");
+    }
+
+    // 修改用户密码
+    @Valid
+    @PostMapping("/user/repassword")
+    public JSONResult<UserParam> editPassword(
+            @NotBlank(message = "旧密码不能为空！")
+            @Length(min = 6,max = 20,message = "密码长度为6~20的字符!")
+            String oldPassword,
+            @NotBlank(message = "新密码不能为空！")
+            @Length(min = 6,max = 20,message = "密码长度为6~20的字符!")
+            String newPassword,
+            @NotBlank(message = "确认密码不能为空！")
+            String confirmPassword, HttpServletRequest request) {
+        UserParam _userParam = UserUtil.getUserParam(request);
+        // 从数据库中找出的密码
+        String _dPW = userService.findPasswordById(_userParam.getId(), oldPassword);
+        // 判断旧密码是否正确
+        if (null == _dPW) {
+            return JSONResult.fail("旧密码不正确,请重新输入");
+        }
+        if (!newPassword.equals(confirmPassword)) {
+            return JSONResult.fail("确认密码不正确,请重新输入");
+        }
+        if (_dPW.equals(userService.encryptPW(newPassword))) {
+            return JSONResult.fail("新密码与旧密码相同,不需要修改");
+        }
+        if (userService.updatePassword(_userParam.getId(),newPassword)) {
+            return JSONResult.success("密码修改成功！");
+        }
+
+        return JSONResult.fail("密码修改失败！");
+    }
 }

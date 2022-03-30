@@ -18,10 +18,27 @@ package cn.peyton.plum.controller;
  * </pre>
  */
 public interface PROPERTY {
+
+    /**
+     * @return 获取 class目录
+     */
+    static String getLocation() {
+        return Thread.currentThread().getContextClassLoader().getResource("").getPath();
+    }
+    /** 用户登录 类型为 账户 */
     String ACCOUNT = "account";
+    /** 用户登录 类型为 手机 */
     String PHONE = "phone";
+    /** 用户登录 类型为 第三方 */
     String OTHER = "other";
+    /** 用户登录 类型为 邮箱 */
     String EMAIL = "email";
     /** 用户登录成功时，存在 session中的 用户传参对象 key */
     String SESSION_USER = "SESSION_USER_PARAM_2203231855";
+    /** 存放广告图片位置 */
+    String IMG_ADSENSE_LOCATION = getLocation()+"static/imgs/ad/";
+    /** 存放用户头像图片位置 */
+    String IMG_AVATAR_LOCATION = getLocation()+"static/imgs/avatar/";
+    /** 存放其他图片位置 */
+    String IMG_OTHER_LOCATION = getLocation()+"static/imgs/other/";
 }

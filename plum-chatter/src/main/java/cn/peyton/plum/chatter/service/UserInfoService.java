@@ -20,4 +20,11 @@ public interface UserInfoService {
      */
     boolean updateUserInfo(UserInfoParam param);
 
+    /**
+     * <h4>根据用户ID 查找 用户扩展对象</h4>
+     * @param usrId 用户ID
+     * @return 用户扩展传递对象
+     */
+    UserInfoParam findByUserId(Integer usrId);
+
 }

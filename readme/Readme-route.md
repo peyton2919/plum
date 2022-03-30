@@ -37,9 +37,31 @@ API路由 根目录baseurl={http://192.168.3.2:8080/api/routine}
 25. Post("/user/support","SupportController.create"); 用户顶踩
 26. Post("/user/comment","CommentController.create"); 用户评论
 27. Post("/comment/postid","CommentController.findByPostId"); 获取当前文章的所有评论
-28. Post("","");
-29. Post("","");
-30. Post("","");
+
+28. Post("/user/edituserpic","UserController.editUserPic"); 编辑用户头像
+29. Post("/user/edituserinfo","UserController.editUserInfo"); 编辑用户信息
+30. Post("/user/repassword","UserController.editPassword"); 修改用户密码
+31. Post("/user/addblack","BlackListController.addBlack"); 加入黑名单
+32. Post("/user/removeblack","BlackListController.removeBlack"); 移除黑名单
+33. Post("","");
+34. Post("","");
+35. Post("","");
+36. Post("","");
+37. Post("","");
+38. Post("","");
+39. Post("","");
+40. Post("","");
+41. Post("","");
+42. Post("","");
+43. Post("","");
+44. Post("","");
+45. Post("","");
+46. Post("","");
+47. Post("","");
+48. Post("","");
+49. Post("","");
+50. Post("","");
+
 
 
 

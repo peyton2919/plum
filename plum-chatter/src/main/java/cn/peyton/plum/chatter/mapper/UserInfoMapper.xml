@@ -129,7 +129,7 @@
         select
         <include refid="Base_Column_List"/>
         from user_info
-        where user_id = #{id}
+        where user_id = #{userId}
     </select>
 
 </mapper>

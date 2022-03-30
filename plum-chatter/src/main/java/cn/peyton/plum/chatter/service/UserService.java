@@ -18,6 +18,13 @@ import java.util.List;
 public interface UserService {
 
     /**
+     * <h4>字符加密</h4>
+     * @param pw 需要加密的字段
+     * @return 加密后的字段
+     */
+    String encryptPW(String pw);
+
+    /**
      * <h4>用户注册</h4>
      * @param param 用户传参对象
      * @return 用户传参对象
@@ -46,7 +53,7 @@ public interface UserService {
      * @param status 状态 0 表示 禁用 ; 1 表示 可用 ;
      * @return true 表示 查到数据 ; false 表示 没查到数据 ;
      */
-    boolean isStatus(String keyword, String type,int status);
+    boolean isStatus(String keyword, String type,Integer status);
 
     /**
      * <h4>判断用户是否重命名</h4>
@@ -98,14 +105,14 @@ public interface UserService {
      * @param phone 手机号码
      * @return true 表示 可用 有绑定过; false 表示 取反;
      */
-    boolean isBindPhone(int userId, String phone);
+    boolean isBindPhone(Integer userId, String phone);
     /**
      * <h4>判断 手机号码 是否被 他人绑定</h4>
      * @param userId 用户编号
      * @param email 邮箱地址
      * @return true 表示 可用 有绑定过; false 表示 取反;
      */
-    boolean isBindEmail(int userId, String email);
+    boolean isBindEmail(Integer userId, String email);
 
     /**
      * <h4>更新用户头像</h4>
@@ -113,7 +120,7 @@ public interface UserService {
      * @param userPic 头像地址
      * @return true 表示 插入成功; false表示 取反;
      */
-    boolean updateUserPic(int id, String userPic);
+    boolean updateUserPic(Integer id, String userPic);
 
     /**
      * <h4>更新 用户密码</h4>
@@ -121,13 +128,22 @@ public interface UserService {
      * @param password 密码
      * @return true 表示 插入成功; false表示 取反;
      */
-    boolean updatePassword(int id, String password);
+    boolean updatePassword(Integer id, String password);
 
     /**
      * <h4>判断用户编号 是否存在</h4>
      * @param userId 用户编号
      * @return  true 表示 用户存在; false 表示 取反;
      */
-    boolean isUserId(int userId);
+    boolean isUserId(Integer userId);
+
+    /**
+     * <h4>根据 用户 ID 查找密码 </h4>
+     * @param id 用户ID
+     * @param oldPassword 旧密码
+     * @return 为不空 表示 找到密码; 否则 表示 取反
+     */
+    String findPasswordById(Integer id,String oldPassword);
+
 
 }

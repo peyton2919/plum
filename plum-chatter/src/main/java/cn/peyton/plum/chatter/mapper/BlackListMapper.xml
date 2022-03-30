@@ -48,7 +48,7 @@
 		where id = #{id}
 	</delete>
 
-	<update id="updateByPrimaryKeySelective" parameterType="cn.peyton.plum.chatter.pojo.BlackList">
+    <update id="updateByPrimaryKeySelective" parameterType="cn.peyton.plum.chatter.pojo.BlackList">
 		update black_list
 		<set>
 			<if test="blackId != null">
@@ -80,7 +80,16 @@
 		where id = #{id}
 	</select>
 
+    <!-- new create method   -->
+    <select id="checkUserIdAndBlackId" resultType="java.lang.Integer">
+        SELECT
+            count(id)
+        FROM black_list
+        WHERE user_id=#{userId} and black_id=#{blackId}
+    </select>
 
-	<!-- new create method   -->
-
+    <delete id="deleteByUserIdAndBlackId">
+        delete from black_list
+		where user_id = #{userId} and black_id = #{blackId}
+    </delete>
 </mapper>

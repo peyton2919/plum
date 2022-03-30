@@ -60,6 +60,7 @@ public class CommentController extends ChatterApiRoutineController<CommentParam,
         if (null != _cp) {
             return JSONResult.success("评论发表成功！", _cp);
         }
+
         return JSONResult.fail(StatusCode.FAIL.getCode(), "评论发表失败");
     }
 

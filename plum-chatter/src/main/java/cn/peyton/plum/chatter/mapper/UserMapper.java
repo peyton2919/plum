@@ -193,4 +193,12 @@ public interface UserMapper {
      * @return
      */
     List<User> findUserAndFollowByUserId(int userId);
+
+    /**
+     * <h4>根据 用户 ID 查找密码 </h4>
+     * @param id 用户ID
+     * @return 密码
+     */
+    String findPasswordById(Integer id);
+
 }

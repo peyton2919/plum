@@ -2,6 +2,7 @@ package cn.peyton.plum.core.base;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.config.MethodInvokingFactoryBean;
 
 import java.io.Serializable;
 
@@ -33,6 +34,7 @@ public final class JsonMapper implements Serializable {
             objectMapper = new ObjectMapper();
         }
         try {
+
             return objectMapper.readValue(jsonStr, valueType);
         } catch (Exception e) {
             e.printStackTrace();

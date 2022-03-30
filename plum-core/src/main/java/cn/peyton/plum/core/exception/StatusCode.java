@@ -17,7 +17,7 @@ public enum StatusCode {
     SUCCESS(200,"SUCCESS"),
     /** 错误返回码 */
     FAIL(800,"fail"),
-    UNUSUAL(700,"异常"),
+    ERROR(700,"异常"),
     //自定义系列
     USER_NAME_IS_NOT_NULL(7001,"【参数校验】用户名不能为空"),
     PWD_IS_NOT_NULL(7002,"【参数校验】密码不能为空"),

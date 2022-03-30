@@ -58,9 +58,9 @@ public interface UserInfoMapper {
 
     /**
      * <h>根据用户编号 查找 用户扩展对象</h>
-     * @param id 用户编号
-     * @return
+     * @param userId 用户编号
+     * @return 用户扩展传递对象
      */
-    UserInfo findByUserId(Integer id);
+    UserInfo findByUserId(Integer userId);
 
 }

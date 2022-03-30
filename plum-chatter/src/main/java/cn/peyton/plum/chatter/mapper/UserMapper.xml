@@ -252,7 +252,7 @@
     <update id="updateUserPic">
         update user
 		set
-			user_pic = #{userPic}
+			user_pic = #{userPic}、
 		where id = #{id}
     </update>
 
@@ -289,6 +289,13 @@
             count(id)
         from user
         where id=#{userId}
+    </select>
+
+    <select id="findPasswordById" resultType="java.lang.String">
+        select
+            password
+        from user
+        where id =#{id}
     </select>
 
 

@@ -29,9 +29,14 @@ public class UserInfoServiceImpl implements UserInfoService {
         if (null == userInfo) {
             result = userInfoMapper.insertSelective(param.convert());
         }else {
+            param.setId(userInfo.getId());
             result = userInfoMapper.updateByPrimaryKeySelective(param.convert());
         }
-
         return result > 0 ? true : false;
+    }
+
+    @Override
+    public UserInfoParam findByUserId(Integer usrId) {
+        return new UserInfoParam().compat(userInfoMapper.findByUserId(usrId));
     }
 }

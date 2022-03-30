@@ -147,8 +147,7 @@ public final class ImageProcessing  implements Serializable {
      * @param targetAddr
      */
     private static void makeDirPath(String targetAddr) {
-        String realFileParentPath = PathUtil.getImgBasePath() + targetAddr;
-        File dirPath = new File(realFileParentPath);
+        File dirPath = new File(targetAddr);
         if (!dirPath.exists()) {
             dirPath.mkdirs();
         }

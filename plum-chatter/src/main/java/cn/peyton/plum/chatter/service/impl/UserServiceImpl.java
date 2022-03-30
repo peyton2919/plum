@@ -30,6 +30,11 @@ public class UserServiceImpl implements UserService {
 	private UserMapper userMapper;
 
     @Override
+    public String encryptPW(String pw) {
+        return BaseCipher.encoderMD5(pw,KEY_PASSWORD_ENCODER);
+    }
+
+    @Override
     public UserParam reg(UserParam param) {
         // 密码加密
         param.setPassword(BaseCipher.encoderMD5(param.getPassword(),KEY_PASSWORD_ENCODER));
@@ -60,7 +65,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean isStatus(String keyword, String type,int status) {
+    public boolean isStatus(String keyword, String type,Integer status) {
         return userMapper.checkStatus(keyword,type,status) > 0 ? true : false;
     }
 
@@ -95,27 +100,38 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean isBindPhone(int userId, String phone) {
+    public boolean isBindPhone(Integer userId, String phone) {
         return userMapper.checkBindPhone(userId, phone) > 0 ? true : false;
     }
 
     @Override
-    public boolean isBindEmail(int userId, String email) {
+    public boolean isBindEmail(Integer userId, String email) {
         return userMapper.checkBindEmail(userId,email) > 0 ? true : false;
     }
 
     @Override
-    public boolean updateUserPic(int id, String userPic) {
+    public boolean updateUserPic(Integer id, String userPic) {
         return userMapper.updateUserPic(id, userPic) > 0 ? true : false;
     }
 
     @Override
-    public boolean updatePassword(int id, String password) {
-        return userMapper.updatePassword(id, password) > 0 ? true : false;
+    public boolean updatePassword(Integer id, String password) {
+        return userMapper.updatePassword(id, encryptPW(password)) > 0 ? true : false;
     }
 
     @Override
-    public boolean isUserId(int userId) {
+    public boolean isUserId(Integer userId) {
         return userMapper.checkUserId(userId) > 0 ? true : false;
     }
+
+    @Override
+    public String findPasswordById(Integer id,String oldPassword) {
+        String _pw = userMapper.findPasswordById(id);
+        if (null == _pw) { return null; }
+        if (_pw.equals(BaseCipher.encoderMD5(oldPassword,KEY_PASSWORD_ENCODER))){
+            return _pw;
+        }
+        return null;
+    }
+
 }
