@@ -66,7 +66,3 @@ local.properties
 
 .idea/inspectionProfiles/
 .idea/workspace.xml
-
-/.idea/
-/part00-common/target/
-/part01-lambda/target/
