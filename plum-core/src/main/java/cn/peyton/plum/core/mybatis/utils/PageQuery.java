@@ -7,6 +7,10 @@ import java.io.Serializable;
 /**
  * <h3>分页查询 实体类</h3>
  * <pre>
+ *     PageQuery page:
+ *     limit #{page.offset},#{page.pageSize}
+ * </pre>
+ * <pre>
  * @email: <a href="mailto:fz2919@tom.com">fz2919@tom.com</a>
  * @create date: 2018/11/16 14:26
  * @author: <a href="http://www.peyton.cn">peyton</a>

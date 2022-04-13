@@ -1,5 +1,7 @@
 package cn.peyton.plum.controller;
 
+import org.yaml.snakeyaml.nodes.AnchorNode;
+
 /**
  * <h3>Controller 属性 与 key </h3>
  * <h3>登录类型</h3>
@@ -35,10 +37,28 @@ public interface PROPERTY {
     String EMAIL = "email";
     /** 用户登录成功时，存在 session中的 用户传参对象 key */
     String SESSION_USER = "SESSION_USER_PARAM_2203231855";
-    /** 存放广告图片位置 */
-    String IMG_ADSENSE_LOCATION = getLocation()+"static/imgs/ad/";
-    /** 存放用户头像图片位置 */
-    String IMG_AVATAR_LOCATION = getLocation()+"static/imgs/avatar/";
-    /** 存放其他图片位置 */
-    String IMG_OTHER_LOCATION = getLocation()+"static/imgs/other/";
+    /** 产品图片 存放位置 */
+    String PATH_IMG_PRODUCT = getLocation()+"static/images/product/";
+    /** 广告图片 存放位置 */
+    String PATH_IMG_AD = getLocation()+"static/images/ad/";
+    /** 头像图片 存放位置 */
+    String PATH_IMG_AVATAR = getLocation()+"static/images/avatar/";
+
+    // ================================================== //
+    /** 邮箱 */
+    String NAME_EMAIL = "邮箱";
+    /** 手机 */
+    String NAME_PHONE = "手机";
+    /** 状态 为 0 */
+    Integer STATUS_0 = 0;
+    /** 状态 为 1 */
+    Integer STATUS_1 = 1;
+    /** 状态 为 2 */
+    Integer STATUS_2 = 2;
+    /** 状态 为 3 */
+    Integer STATUS_3 = 3;
+
+
+
+
 }

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.peyton.plum.mall.mapper.ImageClassMapper">
+	<resultMap id="ResultImageClassMap" type="cn.peyton.plum.mall.pojo.ImageClass">
+		<id column="id" property="id" jdbcType="INTEGER"/>
+		<result column="name" property="name" jdbcType="VARCHAR"/>
+		<result column="seq" property="seq" jdbcType="INTEGER"/>
+	</resultMap>
+
+	<sql id="Column_image_class_List">
+		id,name,seq
+	</sql>
+
+	<insert id="insert" parameterType="cn.peyton.plum.mall.pojo.ImageClass" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into image_class(name,seq)
+		values (#{name},#{seq})
+	</insert>
+
+	<insert id="insertSelective" parameterType="cn.peyton.plum.mall.pojo.ImageClass" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into image_class
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="name != null">name,</if>
+			<if test="seq != null">seq,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="name != null">#{name},</if>
+			<if test="seq != null">#{seq},</if>
+		</trim>
+	</insert>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from image_class
+		where id = #{id}
+	</delete>
+
+	<update id="updateByPrimaryKeySelective" parameterType="cn.peyton.plum.mall.pojo.ImageClass">
+		update image_class
+		<set>
+			<if test="name != null">name = #{name},</if>
+			<if test="seq != null">seq = #{seq},</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="cn.peyton.plum.mall.pojo.ImageClass">
+		update image_class
+		set 
+			name = #{name},
+			seq = #{seq}
+		where id = #{id}
+	</update>
+
+	<select id="selectByPrimaryKey" resultMap="ResultImageClassMap"  parameterType="java.lang.Integer">
+		select
+		<include refid="Column_image_class_List"/>
+		from image_class
+		where id = #{id}
+	</select>
+
+	<!-- new create method   -->
+
+</mapper>

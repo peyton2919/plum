@@ -94,9 +94,10 @@ public interface PostMapper {
      * <h4>根据话题 ID 查找,只查isOpen=1</h4>
      * @param topicId 话题 ID
      * @param page 分页对象
+     * type 0 表示 按分享数排序, 1 表示 按最新时间排序
      * @return
      */
-    List<PostParam> findByTopicId(int topicId, PageQuery page);
+    List<PostParam> findByTopicId(int topicId, PageQuery page,int type);
 
     /**
      * <h4>根据用户 ID 查找,只查isOpen=1</h4>

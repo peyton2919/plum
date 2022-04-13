@@ -144,5 +144,10 @@ public interface UserService {
      */
     String findPasswordById(Integer id,String oldPassword);
 
-
+    /**
+     * <h4>根据 ID 查找 用户对象</h4>
+     * @param id
+     * @return 用户对象
+     */
+    UserParam findById(Integer id);
 }

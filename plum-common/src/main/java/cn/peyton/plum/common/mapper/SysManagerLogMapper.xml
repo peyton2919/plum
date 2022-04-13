@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.peyton.plum.common.mapper.SysManagerLogMapper">
+	<resultMap id="ResultSysManagerLogMap" type="cn.peyton.plum.common.pojo.SysManagerLog">
+		<id column="id" property="id" jdbcType="BIGINT"/>
+		<result column="manager_id" property="managerId" jdbcType="INTEGER"/>
+		<result column="old_value" property="oldValue" jdbcType="LONGVARCHAR"/>
+		<result column="new_value" property="newValue" jdbcType="LONGVARCHAR"/>
+		<result column="operate_ip" property="operateIp" jdbcType="VARCHAR"/>
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+	</resultMap>
+
+	<sql id="Column_sys_manager_log_List">
+		id,manager_id,old_value,new_value,operate_ip,create_time
+	</sql>
+
+	<insert id="insert" parameterType="cn.peyton.plum.common.pojo.SysManagerLog" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into sys_manager_log(manager_id,old_value,new_value,operate_ip,create_time)
+		values (#{managerId},#{oldValue},#{newValue},#{operateIp},#{createTime})
+	</insert>
+
+	<insert id="insertSelective" parameterType="cn.peyton.plum.common.pojo.SysManagerLog" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into sys_manager_log
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="managerId != null">manager_id,</if>
+			<if test="oldValue != null">old_value,</if>
+			<if test="newValue != null">new_value,</if>
+			<if test="operateIp != null">operate_ip,</if>
+			<if test="createTime != null">create_time,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="managerId != null">#{managerId},</if>
+			<if test="oldValue != null">#{oldValue},</if>
+			<if test="newValue != null">#{newValue},</if>
+			<if test="operateIp != null">#{operateIp},</if>
+			<if test="createTime != null">#{createTime},</if>
+		</trim>
+	</insert>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from sys_manager_log
+		where id = #{id}
+	</delete>
+
+	<update id="updateByPrimaryKeySelective" parameterType="cn.peyton.plum.common.pojo.SysManagerLog">
+		update sys_manager_log
+		<set>
+			<if test="managerId != null">manager_id = #{managerId},</if>
+			<if test="oldValue != null">old_value = #{oldValue},</if>
+			<if test="newValue != null">new_value = #{newValue},</if>
+			<if test="operateIp != null">operate_ip = #{operateIp},</if>
+			<if test="createTime != null">create_time = #{createTime},</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="cn.peyton.plum.common.pojo.SysManagerLog">
+		update sys_manager_log
+		set 
+			manager_id = #{managerId},
+			old_value = #{oldValue},
+			new_value = #{newValue},
+			operate_ip = #{operateIp},
+			create_time = #{createTime}
+		where id = #{id}
+	</update>
+
+	<select id="selectByPrimaryKey" resultMap="ResultSysManagerLogMap"  parameterType="java.lang.Long">
+		select
+		<include refid="Column_sys_manager_log_List"/>
+		from sys_manager_log
+		where id = #{id}
+	</select>
+
+	<!-- new create method   -->
+
+</mapper>

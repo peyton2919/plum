@@ -57,8 +57,7 @@ public class TokenInterceptor implements HandlerInterceptor {
                     //
                     response.setStatus(200);
                     HttpServletResponseUtil.returnJson(
-                            response, JsonMapper.toJSon(JSONResult.error(StatusCode.TOKEN_EXPIRE)));
-                    // response.setHeader("token",null);
+                            response, JsonMapper.toJSon(JSONResult.fail(StatusCode.TOKEN_EXPIRE)));
                     return false;
                 }
             }

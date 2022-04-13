@@ -33,7 +33,7 @@ public class UserBindParam implements Serializable {
 	/** 头像地址  */
 	private String avatarUrl;
 	/** 过期时间 */
-	private Long expiresIn;
+	private long expiresIn;
 
 	//================================== Constructor =======================================//
 
@@ -129,14 +129,14 @@ public class UserBindParam implements Serializable {
     /**
      * @return 过期时间
      */
-    public Long getExpiresIn() {
+    public long getExpiresIn() {
         return expiresIn;
     }
 
     /**
      * @param expiresIn 过期时间
      */
-    public void setExpiresIn(Long expiresIn) {
+    public void setExpiresIn(long expiresIn) {
         this.expiresIn = expiresIn;
     }
 

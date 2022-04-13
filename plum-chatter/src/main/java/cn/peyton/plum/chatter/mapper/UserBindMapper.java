@@ -1,5 +1,6 @@
 package cn.peyton.plum.chatter.mapper;
 
+import cn.peyton.plum.chatter.param.UserBindParam;
 import cn.peyton.plum.chatter.pojo.UserBind;
 
 import java.util.List;
@@ -73,5 +74,13 @@ public interface UserBindMapper {
      * @return true 表示 可用 没有绑定过; false 表示 取反;
      */
     int checkBindOther(int userId,String openId, String type);
+
+    /**
+     * <h4>根据openId和type 查找 用户绑定</h4>
+     * @param openId
+     * @param type
+     * @return 用户绑定对象
+     */
+    UserBind findByOpenIdAndType(String openId,String type);
 
 }

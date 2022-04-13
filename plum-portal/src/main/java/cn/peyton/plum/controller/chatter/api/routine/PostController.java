@@ -11,6 +11,7 @@ import cn.peyton.plum.core.utils.StringUtil;
 import cn.peyton.plum.core.validator.Valid;
 import cn.peyton.plum.core.validator.constraints.Min;
 import cn.peyton.plum.core.validator.constraints.NotBlank;
+import cn.peyton.plum.core.validator.constraints.Size;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -64,10 +65,11 @@ public class PostController extends ChatterApiRoutineController<PostParam,Intege
     @PostMapping("/post/topicid")
     @Valid
     public JSONResult<List<PostParam>> findByTopicId(
-            @Min(message = "要大于0的数！")Integer topicId,
-            @Min(message = "要大于0的数！") Integer pageNo) {
+            @Min(message = "要大于0的数！") Integer topicId,
+            @Min(message = "要大于0的数！") Integer pageNo,
+            @Size(min = 0, max = 1, message = "数值超出规定范围！") Integer type) {
 
-        return JSONResult.success(postService.findByTopicId(topicId, new PageQuery(pageNo)));
+        return JSONResult.success(postService.findByTopicId(topicId, new PageQuery(pageNo),type));
     }
 
     // 获取指定文章分类下的文章列表

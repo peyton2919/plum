@@ -44,24 +44,23 @@ public class CommentController extends ChatterApiRoutineController<CommentParam,
         // 判断 fid不为0时
         if (param.getFId() != 0) {
             if (!commentService.isCommentByFId(param.getFId())) {
-                return JSONResult.fail(StatusCode.FAIL.getCode(), "找不到父评论！");
+                return JSONResult.fail(StatusCode.FAIL_NOT_PARENT_COMMENT);
             }
         }
         // 判断 post文章是否存在
         if (!postService.isPost(param.getPostId())) {
-            return JSONResult.fail(StatusCode.FAIL.getCode(), "找不到文章！");
+            return JSONResult.fail(StatusCode.FAIL_NOT_EXIST);
         }
         // 判断是否非法数据
         if (!commentService.isCommentByFIdAndPostId(param.getFId(), param.getPostId())) {
-            return JSONResult.fail(StatusCode.FAIL.getCode(), "评论逻辑出错了！");
+            return JSONResult.fail(StatusCode.FAIL_COMMENT_LOGIC);
         }
         param.getUserParam().setId(_userParam.getId());
         CommentParam _cp = commentService.create(param);
         if (null != _cp) {
-            return JSONResult.success("评论发表成功！", _cp);
+            return JSONResult.success(StatusCode.SUCCESS_OPERATE_UPDATE.getMsg(), _cp);
         }
-
-        return JSONResult.fail(StatusCode.FAIL.getCode(), "评论发表失败");
+        return JSONResult.fail(StatusCode.FAIL_OPERATE_UPDATE);
     }
 
     // 获取当前文章的所有评论

@@ -51,6 +51,8 @@ public class PostParam implements Serializable {
 	private Integer isOpen;
     /** 图片集合 */
     private List<Images> imageList;
+    /** 评论数 */
+    private Integer commentCount;
     /** 顶  */
     private Integer ding;
     /** 踩  */
@@ -276,6 +278,20 @@ public class PostParam implements Serializable {
     }
 
     /**
+     * @return 评论数
+     */
+    public Integer getCommentCount() {
+        return commentCount;
+    }
+
+    /**
+     * @param commentCount 评论数
+     */
+    public void setCommentCount(Integer commentCount) {
+        this.commentCount = commentCount;
+    }
+
+    /**
 	 * <h4>对象转成Post对象<h4> 
 	 * <pre>
 	 * 	 转换字段如下:
@@ -296,7 +312,7 @@ public class PostParam implements Serializable {
 		post.setPostClassId(postClassId);
 		post.setSharePost(new PostBo().convert(getSharePostParam()));
 		post.setIsOpen(isOpen);
-		post.setImageList(imageList);
+		// post.setImageList(imageList);
 		return post;
 	} 
 	/**
@@ -322,7 +338,7 @@ public class PostParam implements Serializable {
 		this.setPostClassId(post.getPostClassId());
 		this.setSharePostParam(new PostBo().compat(post.getSharePost()));
 		this.setIsOpen(post.getIsOpen());
-		this.setImageList(post.getImageList());
+		// this.setImageList(post.getImageList());
 		return this;
 	} 
 }

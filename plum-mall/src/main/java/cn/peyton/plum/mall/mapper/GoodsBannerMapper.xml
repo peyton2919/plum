@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.peyton.plum.mall.mapper.GoodsBannerMapper">
+	<resultMap id="ResultGoodsBannerMap" type="cn.peyton.plum.mall.pojo.GoodsBanner">
+		<id column="id" property="id" jdbcType="BIGINT"/>
+		<result column="url" property="url" jdbcType="VARCHAR"/>
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+		<result column="goods_id" property="goodsId" jdbcType="BIGINT"></result>
+	</resultMap>
+
+	<sql id="Column_goods_banner_List">
+		id,goods_id,url,create_time
+	</sql>
+
+	<insert id="insert" parameterType="cn.peyton.plum.mall.pojo.GoodsBanner" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into goods_banner(goods_id,url,create_time)
+		values (#{goodsId},#{url},#{createTime})
+	</insert>
+
+	<insert id="insertSelective" parameterType="cn.peyton.plum.mall.pojo.GoodsBanner" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into goods_banner
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="goodsId != null">goods_id,</if>
+			<if test="url != null">url,</if>
+			<if test="createTime != null">create_time,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="goodsId != null">#{goodsId},</if>
+			<if test="url != null">#{url},</if>
+			<if test="createTime != null">#{createTime},</if>
+		</trim>
+	</insert>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from goods_banner
+		where id = #{id}
+	</delete>
+
+	<update id="updateByPrimaryKeySelective" parameterType="cn.peyton.plum.mall.pojo.GoodsBanner">
+		update goods_banner
+		<set>
+			<if test="goods != null">goods_id = #{goodsId},</if>
+			<if test="url != null">url = #{url},</if>
+			<if test="createTime != null">create_time = #{createTime},</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="cn.peyton.plum.mall.pojo.GoodsBanner">
+		update goods_banner
+		set 
+			goods_id = #{goodsId},
+			url = #{url},
+			create_time = #{createTime}
+		where id = #{id}
+	</update>
+
+	<select id="selectByPrimaryKey" resultMap="ResultGoodsBannerMap"  parameterType="java.lang.Long">
+		select
+		<include refid="Column_goods_banner_List"/>
+		from goods_banner
+		where id = #{id}
+	</select>
+
+    <!-- new create method   -->
+    <select id="findByGoodsId" resultType="cn.peyton.plum.mall.pojo.GoodsBanner">
+        select <include refid="Column_goods_banner_List"></include>
+        from goods_banner
+        where goods_id =#{goodsId} ORDER BY create_time DESC LIMIT 10
+    </select>
+</mapper>

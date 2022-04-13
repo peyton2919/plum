@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.peyton.plum.mall.mapper.ExpressCompanyMapper">
+	<resultMap id="ResultExpressCompanyMap" type="cn.peyton.plum.mall.pojo.ExpressCompany">
+		<id column="id" property="id" jdbcType="INTEGER"/>
+		<result column="name" property="name" jdbcType="VARCHAR"/>
+		<result column="code" property="code" jdbcType="VARCHAR"/>
+		<result column="seq" property="seq" jdbcType="INTEGER"/>
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+	</resultMap>
+
+	<sql id="Column_express_company_List">
+		id,name,code,seq,create_time
+	</sql>
+
+	<insert id="insert" parameterType="cn.peyton.plum.mall.pojo.ExpressCompany" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into express_company(name,code,seq,create_time)
+		values (#{name},#{code},#{seq},#{createTime})
+	</insert>
+
+	<insert id="insertSelective" parameterType="cn.peyton.plum.mall.pojo.ExpressCompany" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into express_company
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="name != null">name,</if>
+			<if test="code != null">code,</if>
+			<if test="seq != null">seq,</if>
+			<if test="createTime != null">create_time,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="name != null">#{name},</if>
+			<if test="code != null">#{code},</if>
+			<if test="seq != null">#{seq},</if>
+			<if test="createTime != null">#{createTime},</if>
+		</trim>
+	</insert>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from express_company
+		where id = #{id}
+	</delete>
+
+	<update id="updateByPrimaryKeySelective" parameterType="cn.peyton.plum.mall.pojo.ExpressCompany">
+		update express_company
+		<set>
+			<if test="name != null">name = #{name},</if>
+			<if test="code != null">code = #{code},</if>
+			<if test="seq != null">seq = #{seq},</if>
+			<if test="createTime != null">create_time = #{createTime},</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="cn.peyton.plum.mall.pojo.ExpressCompany">
+		update express_company
+		set 
+			name = #{name},
+			code = #{code},
+			seq = #{seq},
+			create_time = #{createTime}
+		where id = #{id}
+	</update>
+
+	<select id="selectByPrimaryKey" resultMap="ResultExpressCompanyMap"  parameterType="java.lang.Integer">
+		select
+		<include refid="Column_express_company_List"/>
+		from express_company
+		where id = #{id}
+	</select>
+
+	<!-- new create method   -->
+
+</mapper>

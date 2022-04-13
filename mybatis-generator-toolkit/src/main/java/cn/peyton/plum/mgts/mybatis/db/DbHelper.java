@@ -2,7 +2,7 @@ package cn.peyton.plum.mgts.mybatis.db;
 
 import cn.peyton.plum.mgts.mybatis.entity.Column;
 import cn.peyton.plum.mgts.mybatis.entity.Table;
-import cn.peyton.plum.mgts.mybatis.util.ConvertUtils;
+import cn.peyton.plum.mgts.mybatis.util.ConvertUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import java.sql.*;
@@ -391,7 +391,7 @@ public final class DbHelper {
         }
 
         // 2. 设置 表的对象名
-        table.setObjectName(ConvertUtils.removePrefixTableName2ObjName(_tableName,removeTablePrefix));
+        table.setObjectName(ConvertUtil.removePrefixTableName2ObjName(_tableName,removeTablePrefix));
 
         // 3.设置表 行的集合
         List<Column> _columns = new ArrayList<>();
@@ -417,9 +417,9 @@ public final class DbHelper {
                     // 设置 外键表名(数据库）
                     String _tabName = rs.getString(Column.ImportedKeys.PK_TABLE_NAME);
                     // 设置 根据表名 设置成 对象类型
-                    String _objType = ConvertUtils.removePrefixTableName2ObjName(_tabName, removeTablePrefix);
+                    String _objType = ConvertUtil.removePrefixTableName2ObjName(_tabName, removeTablePrefix);
                     // 设置 根据表名 设置成 对象名称
-                    String _objName = ConvertUtils.toFirstLowerCase(_objType);
+                    String _objName = ConvertUtil.toFirstLowerCase(_objType);
                     // 设置 是否外键 默认false不是
                     _columns.get(i).setFk(true);
                     // 设置 外键表名(数据库）
@@ -470,16 +470,16 @@ public final class DbHelper {
             _columns.get(i).getInteriorNameConversion().setOriginal(_columns.get(i).getColumnName());
             // 设置 属性 首字母 大写
             _columns.get(i).getInteriorNameConversion().setFirstConvertUpperCase(
-                    ConvertUtils.convertFirst(_fieldName));
+                    ConvertUtil.convertFirst(_fieldName));
             if (_columns.get(i).getFk()) {
                 //设置名称
-                String _name = ConvertUtils.removeTailField(_columns.get(i).getColumnName(),"_id");
-                _fieldName =  ConvertUtils.toFirstLowerCase(_name);
+                String _name = ConvertUtil.removeTailField(_columns.get(i).getColumnName(),"_id");
+                _fieldName =  ConvertUtil.toFirstLowerCase(_name);
                 // 设置 专属 对象名称{关联外键表的表名转换}
                 _columns.get(i).setFkExclusiveObjectName(_fieldName);
                 // 设置 专属 外键对象主键属性名称
                 _columns.get(i).setFkExclusiveChildFieldName(
-                        ConvertUtils.convertColumnName2FieldName(
+                        ConvertUtil.convertColumnName2FieldName(
                                 _columns.get(i).getExpandForeignKey().getPkColumnName()));
                 // 设置 专属 对象类型{关联外键表的表名转换}
                 _columns.get(i).setFkExclusiveObjectType(_columns.get(i).getExpandForeignKey().getPkFieldType());
@@ -487,7 +487,7 @@ public final class DbHelper {
                 _columns.get(i).getInteriorNameConversion().setFirstConvertLowerCase(_fieldName);
                 // 设置 属性 首字母 大写
                 _columns.get(i).getInteriorNameConversion().setFirstConvertUpperCase(
-                        ConvertUtils.convertFirst(_name));
+                        ConvertUtil.convertFirst(_name));
             }
 
         }
@@ -513,11 +513,14 @@ public final class DbHelper {
             //设置字段注释
             column.setRemarks(rs.getString(Column.Constants.REMARKS));
             //设置属性类型和所需引用的包
-            column.setFieldType(ConvertUtils.convertFieldType(column.getColumnType(), column.getImportPackage()));
+            column.setFieldType(ConvertUtil.convertFieldType(column.getColumnType(), column.getImportPackage()));
             //设置属性名称
-            column.setFieldName(ConvertUtils.convertColumnName2FieldName(column.getColumnName()));
-            //设置字段长度
-            column.setColumnSize(Integer.valueOf(rs.getString(Column.Constants.COLUMN_SIZE)));
+            column.setFieldName(ConvertUtil.convertColumnName2FieldName(column.getColumnName()));
+            if (!column.getFieldType().contains("Boolean")) {
+                //设置字段长度
+                column.setColumnSize(Integer.valueOf(rs.getString(Column.Constants.COLUMN_SIZE)));
+            }
+
             //设置字段小数位
             column.setDecimalDigits(rs.getInt(Column.Constants.DECIMAL_DIGITS));
             //--------------------------------- 表信息 扩展类 ----------------------------------------//

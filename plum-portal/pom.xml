@@ -21,6 +21,12 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
+            <groupId>cn.peyton</groupId>
+            <artifactId>plum-mall</artifactId>
+            <version>1.0.0.220319</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
             <version>RELEASE</version>

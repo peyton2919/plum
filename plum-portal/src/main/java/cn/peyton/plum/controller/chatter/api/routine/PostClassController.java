@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -35,7 +36,7 @@ public class PostClassController extends ChatterApiRoutineController<PostClassPa
     // 获取所有文章分类
     @PostMapping("/postclass")
     public JSONResult<List<PostClassParam>> finds() {
-
+        
         return JSONResult.success(postClassService.finds());
     }
 

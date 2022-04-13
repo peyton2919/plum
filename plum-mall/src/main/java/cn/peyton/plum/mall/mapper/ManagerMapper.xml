@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.peyton.plum.mall.mapper.ManagerMapper">
+	<resultMap id="ResultManagerMap" type="cn.peyton.plum.mall.pojo.Manager">
+		<id column="id" property="id" jdbcType="INTEGER"/>
+		<result column="role_id" property="roleId" jdbcType="INTEGER"/>
+		<result column="status" property="status" jdbcType="TINYINT"/>
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+		<result column="username" property="username" jdbcType="VARCHAR"/>
+		<result column="password" property="password" jdbcType="VARCHAR"/>
+		<result column="avatar" property="avatar" jdbcType="VARCHAR"/>
+		<result column="is_admin" property="isAdmin" jdbcType="TINYINT"/>
+	</resultMap>
+
+	<sql id="Column_manager_List">
+		id,role_id,status,create_time,username,password,avatar,is_admin
+	</sql>
+
+	<insert id="insert" parameterType="cn.peyton.plum.mall.pojo.Manager" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into manager(role_id,status,create_time,username,password,avatar,is_admin)
+		values (#{roleId},#{status},#{createTime},#{username},#{password},#{avatar},#{isAdmin})
+	</insert>
+
+	<insert id="insertSelective" parameterType="cn.peyton.plum.mall.pojo.Manager" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into manager
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="roleId != null">role_id,</if>
+			<if test="status != null">status,</if>
+			<if test="createTime != null">create_time,</if>
+			<if test="username != null">username,</if>
+			<if test="password != null">password,</if>
+			<if test="avatar != null">avatar,</if>
+			<if test="isAdmin != null">is_admin,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="roleId != null">#{roleId},</if>
+			<if test="status != null">#{status},</if>
+			<if test="createTime != null">#{createTime},</if>
+			<if test="username != null">#{username},</if>
+			<if test="password != null">#{password},</if>
+			<if test="avatar != null">#{avatar},</if>
+			<if test="isAdmin != null">#{isAdmin},</if>
+		</trim>
+	</insert>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from manager
+		where id = #{id}
+	</delete>
+
+	<update id="updateByPrimaryKeySelective" parameterType="cn.peyton.plum.mall.pojo.Manager">
+		update manager
+		<set>
+			<if test="roleId != null">role_id = #{roleId},</if>
+			<if test="status != null">status = #{status},</if>
+			<if test="createTime != null">create_time = #{createTime},</if>
+			<if test="username != null">username = #{username},</if>
+			<if test="password != null">password = #{password},</if>
+			<if test="avatar != null">avatar = #{avatar},</if>
+			<if test="isAdmin != null">is_admin = #{isAdmin},</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="cn.peyton.plum.mall.pojo.Manager">
+		update manager
+		set 
+			role_id = #{roleId},
+			status = #{status},
+			create_time = #{createTime},
+			username = #{username},
+			password = #{password},
+			avatar = #{avatar},
+			is_admin = #{isAdmin}
+		where id = #{id}
+	</update>
+
+	<select id="selectByPrimaryKey" resultMap="ResultManagerMap"  parameterType="java.lang.Integer">
+		select
+		<include refid="Column_manager_List"/>
+		from manager
+		where id = #{id}
+	</select>
+
+	<!-- new create method   -->
+
+</mapper>

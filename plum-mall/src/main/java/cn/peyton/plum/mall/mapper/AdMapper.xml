@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.peyton.plum.mall.mapper.AdMapper">
+	<resultMap id="ResultAdMap" type="cn.peyton.plum.mall.pojo.Ad">
+		<id column="id" property="id" jdbcType="BIGINT"/>
+		<result column="title" property="title" jdbcType="VARCHAR"/>
+		<result column="src" property="src" jdbcType="VARCHAR"/>
+		<result column="url" property="url" jdbcType="VARCHAR"/>
+		<result column="type" property="type" jdbcType="TINYINT"/>
+		<result column="location" property="location" jdbcType="TINYINT"/>
+		<result column="hot" property="hot" jdbcType="INTEGER"/>
+		<result column="click_num" property="clickNum" jdbcType="INTEGER"/>
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+		<result column="status" property="status" jdbcType="TINYINT"/>
+	</resultMap>
+
+	<sql id="Column_ad_List">
+		id,title,src,url,type,location,hot,click_num,create_time,status
+	</sql>
+
+	<insert id="insert" parameterType="cn.peyton.plum.mall.pojo.Ad" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into ad(title,src,url,type,location,hot,click_num,create_time,status)
+		values (#{title},#{src},#{url},#{type},#{location},#{hot},#{clickNum},#{createTime},#{status})
+	</insert>
+
+	<insert id="insertSelective" parameterType="cn.peyton.plum.mall.pojo.Ad" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into ad
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="title != null">title,</if>
+			<if test="src != null">src,</if>
+			<if test="url != null">url,</if>
+			<if test="type != null">type,</if>
+			<if test="location != null">location,</if>
+			<if test="hot != null">hot,</if>
+			<if test="clickNum != null">click_num,</if>
+			<if test="createTime != null">create_time,</if>
+			<if test="status != null">status,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="title != null">#{title},</if>
+			<if test="src != null">#{src},</if>
+			<if test="url != null">#{url},</if>
+			<if test="type != null">#{type},</if>
+			<if test="location != null">#{location},</if>
+			<if test="hot != null">#{hot},</if>
+			<if test="clickNum != null">#{clickNum},</if>
+			<if test="createTime != null">#{createTime},</if>
+			<if test="status != null">#{status},</if>
+		</trim>
+	</insert>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from ad
+		where id = #{id}
+	</delete>
+
+	<update id="updateByPrimaryKeySelective" parameterType="cn.peyton.plum.mall.pojo.Ad">
+		update ad
+		<set>
+			<if test="title != null">title = #{title},</if>
+			<if test="src != null">src = #{src},</if>
+			<if test="url != null">url = #{url},</if>
+			<if test="type != null">type = #{type},</if>
+			<if test="location != null">location = #{location},</if>
+			<if test="hot != null">hot = #{hot},</if>
+			<if test="clickNum != null">click_num = #{clickNum},</if>
+			<if test="createTime != null">create_time = #{createTime},</if>
+			<if test="status != null">status = #{status},</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="cn.peyton.plum.mall.pojo.Ad">
+		update ad
+		set 
+			title = #{title},
+			src = #{src},
+			url = #{url},
+			type = #{type},
+			location = #{location},
+			hot = #{hot},
+			click_num = #{clickNum},
+			create_time = #{createTime},
+			status = #{status}
+		where id = #{id}
+	</update>
+
+    <select id="selectByPrimaryKey" resultMap="ResultAdMap"  parameterType="java.lang.Long">
+		select
+		<include refid="Column_ad_List"/>
+		from ad
+		where id = #{id}
+	</select>
+
+    <!-- new create method   -->
+
+    <select id="findAllByType" resultType="cn.peyton.plum.mall.pojo.Ad">
+        select
+        <include refid="Column_ad_List"/>
+        from ad
+        where 1=1
+        <if test="type == 0"> and status=1 and type =0 ORDER BY RAND() LIMIT 1</if>
+        <if test="type == 1">
+           and id in ((SELECT id FROM (select id FROM ad where type=1 and location=0 AND status=1 ORDER BY RAND() LIMIT 1)ad)
+            ,(SELECT id FROM (select id FROM ad where type=1 and location=1 AND status=1 ORDER BY RAND() LIMIT 1)ad)
+            ,(SELECT id FROM (select id FROM ad where type=1 and location=2 AND status=1 ORDER BY RAND() LIMIT 1)ad))
+        </if>
+        <if test="type == 2">
+            and status=1 and type =2 ORDER BY RAND() LIMIT #{row}
+        </if>
+        <if test="type == 3">
+           and status =1 and type =3 ORDER BY location desc  LIMIT #{row}
+        </if>
+    </select>
+    <update id="updateByHotAndClickNum">
+        update Ad set hot = hot+1,click_num = click_num+1 WHERE id=#{id}
+    </update>
+</mapper>

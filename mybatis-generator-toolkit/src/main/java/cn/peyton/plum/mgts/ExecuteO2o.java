@@ -1,6 +1,10 @@
 package cn.peyton.plum.mgts;
 
 
+import cn.peyton.plum.mgts.mybatis.Generation;
+import cn.peyton.plum.mgts.mybatis.entity.Table;
+import cn.peyton.plum.mgts.mybatis.util.DatabaseUtil;
+
 /**
  * <h3></h3>
  * <pre>
@@ -19,15 +23,19 @@ public final class ExecuteO2o {
     public static String PARAM = "cn.peyton.plum.o2o.param";
     public static String PATH = "f:/o2o/";
 
-   // public static void main(String[] args){
-   //     Generation generation = new Generation(DatabaseUtils.MYSQL_DRIVER, DatabaseUtils.URL,
-   //             DatabaseUtils.USERNAME, DatabaseUtils.PASSWORD);
-   //
-   //     generation.create("tb_",PATH,MAPPER,POJO,true);
-   //     generation.createParamCompatConvert(null,"tb_","","tb_,sys_",PATH,PARAM);
-
-
+   public static void main(String[] args){
+       DatabaseUtil databaseUtil = new DatabaseUtil("db_o2o");
+       Generation generation = new Generation(databaseUtil);
+       //
+       // generation.create("tb_",PATH,MAPPER,POJO,true);
+       // generation.createParamCompatConvert(null,"tb_","","tb_,sys_",PATH,PARAM);
+       //
+       //
        // generation.create("tb_shop","tb_",PATH,MAPPER,POJO,true);
+
+       Table cart = generation.getTable("cart", null);
+       System.out.println(cart);
+
        // List<Table> tables = DbHelper.getTables(null,"tb_");
 
        // Person person = new Person();
@@ -59,6 +67,6 @@ public final class ExecuteO2o {
 //            }
 //        }
 
-   // }
+   }
 
 }

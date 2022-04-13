@@ -131,45 +131,33 @@ public final class HttpServletRequestUtil implements Serializable {
                     field.setAccessible(true);
                     String type = field.getType().getTypeName();
                     String _v = value[0];
-                    if (type.equals("int")){
-                        field.setInt(_bean,Integer.parseInt((_v == null || "".equals(_v)) ? "0" : _v));
-                    }else if ( type.equals("java.lang.Integer")){
-                        field.set(_bean,Integer.valueOf(_v));
-                    }else if (type.equals("float")){
-                        field.setFloat(_bean,Float.parseFloat((_v == null || "".equals(_v)) ? "0" : _v));
-                    }else if (type.equals("java.lang.Float")){
-                        field.setFloat(_bean,Float.valueOf(_v));
-                    }else if (type.equals("long")){
-                        field.setLong(_bean,Long.parseLong((_v == null || "".equals(_v)) ? "0" : _v));
-                    }else if (type.equals("java.lang.Long")){
-                        field.setLong(_bean,Long.valueOf(_v));
-                    }else if (type.equals("double")){
-                        field.setDouble(_bean,Double.parseDouble((_v == null || "".equals(_v)) ? "0" : _v));
-                    }else if (type.equals("java.lang.Double")){
-                        field.setDouble(_bean,Double.valueOf(_v));
-                    }else if (type.equals("short")){
-                        field.setShort(_bean,Short.parseShort((_v == null || "".equals(_v)) ? "0" : _v));
-                    }else if (type.equals("java.lang.Short")){
-                        field.setShort(_bean,Short.valueOf(_v));
-                    }else if (type.equals("char")){
-                        field.setChar(_bean, (_v == null) ? ' ' : _v.charAt(0));
-                    }else if (type.equals("boolean")) {
-                        field.setBoolean(_bean,Boolean.parseBoolean((_v == null || "".equals(_v)) ? "false" : _v));
-                    }else if (type.equals("java.lang.Boolean")) {
-                        field.setBoolean(_bean,Boolean.valueOf(_v));
-                    }else if (type.equals("java.util.Date")){
+                    String _tmp =(_v == null || "".equals(_v)) ? "0" : _v;
+                    if (type.endsWith("int") || type.endsWith("Integer")) {
+                        field.set(_bean, Integer.parseInt(_tmp));
+                    } else if (type.endsWith("float") || type.endsWith("Float")) {
+                        field.set(_bean, Float.parseFloat(_tmp));
+                    } else if (type.endsWith("long") || type.endsWith("Long")) {
+                        field.set(_bean,Long.valueOf(_tmp));
+                    } else if (type.endsWith("double") || type.endsWith("Double")) {
+                        field.set(_bean, Double.parseDouble(_tmp));
+                    } else if (type.endsWith("short") || type.endsWith("Short")) {
+                        field.set(_bean, Short.parseShort(_tmp));
+                    } else if (type.endsWith("char")) {
+                        field.set(_bean, (_v == null) ? ' ' : _v.charAt(0));
+                    } else if (type.endsWith("boolean") || type.endsWith("Boolean")) {
+                        field.set(_bean, Boolean.parseBoolean((_v == null || "".equals(_v)) ? "false" : _v));
+                    } else if (type.equals("java.util.Date")) {
                         Date date = DateUtil.conventStr2Date(_v, "yyyy-MM-dd HH:mm:ss");
                         if (null != date) {
-                            field.set(_bean,date);
+                            field.set(_bean, date);
                         }
-                    }else {
-                        field.set(_bean,_v);
+                    } else {
+                        field.set(_bean, _v);
                     }
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
         }
         return _bean;
     }

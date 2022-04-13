@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.peyton.plum.mall.mapper.SupplierMapper">
+	<resultMap id="ResultSupplierMap" type="cn.peyton.plum.mall.pojo.Supplier">
+		<id column="id" property="id" jdbcType="BIGINT"/>
+		<result column="name" property="name" jdbcType="VARCHAR"/>
+		<result column="login_name" property="loginName" jdbcType="VARCHAR"/>
+		<result column="avatar" property="avatar" jdbcType="VARCHAR"/>
+		<result column="pwd" property="pwd" jdbcType="VARCHAR"/>
+		<result column="tel" property="tel" jdbcType="VARCHAR"/>
+		<result column="phone" property="phone" jdbcType="VARCHAR"/>
+		<result column="add" property="add" jdbcType="VARCHAR"/>
+		<result column="qq" property="qq" jdbcType="VARCHAR"/>
+		<result column="fax" property="fax" jdbcType="VARCHAR"/>
+		<result column="email" property="email" jdbcType="VARCHAR"/>
+		<result column="loc" property="loc" jdbcType="INTEGER"/>
+		<result column="status" property="status" jdbcType="TINYINT"/>
+		<result column="created_time" property="createdTime" jdbcType="TIMESTAMP"/>
+		<result column="updated_time" property="updatedTime" jdbcType="TIMESTAMP"/>
+		<result column="encrypt" property="encrypt" jdbcType="VARCHAR"/>
+		<result column="last_ip" property="lastIp" jdbcType="VARCHAR"/>
+		<result column="explain" property="explain" jdbcType="VARCHAR"/>
+		<result column="web_site" property="webSite" jdbcType="VARCHAR"/>
+		<result column="web_code" property="webCode" jdbcType="VARCHAR"/>
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+	</resultMap>
+
+	<sql id="Column_supplier_List">
+		id,name,login_name,avatar,pwd,tel,phone,add,qq,fax,email,loc,status,created_time,updated_time,encrypt,last_ip,explain,web_site,web_code,create_time
+	</sql>
+
+	<insert id="insert" parameterType="cn.peyton.plum.mall.pojo.Supplier" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into supplier(name,login_name,avatar,pwd,tel,phone,add,qq,fax,email,loc,status,created_time,updated_time,encrypt,last_ip,explain,web_site,web_code,create_time)
+		values (#{name},#{loginName},#{avatar},#{pwd},#{tel},#{phone},#{add},#{qq},#{fax},#{email},#{loc},#{status},#{createdTime},#{updatedTime},#{encrypt},#{lastIp},#{explain},#{webSite},#{webCode},#{createTime})
+	</insert>
+
+	<insert id="insertSelective" parameterType="cn.peyton.plum.mall.pojo.Supplier" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into supplier
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="name != null">name,</if>
+			<if test="loginName != null">login_name,</if>
+			<if test="avatar != null">avatar,</if>
+			<if test="pwd != null">pwd,</if>
+			<if test="tel != null">tel,</if>
+			<if test="phone != null">phone,</if>
+			<if test="add != null">add,</if>
+			<if test="qq != null">qq,</if>
+			<if test="fax != null">fax,</if>
+			<if test="email != null">email,</if>
+			<if test="loc != null">loc,</if>
+			<if test="status != null">status,</if>
+			<if test="createdTime != null">created_time,</if>
+			<if test="updatedTime != null">updated_time,</if>
+			<if test="encrypt != null">encrypt,</if>
+			<if test="lastIp != null">last_ip,</if>
+			<if test="explain != null">explain,</if>
+			<if test="webSite != null">web_site,</if>
+			<if test="webCode != null">web_code,</if>
+			<if test="createTime != null">create_time,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="name != null">#{name},</if>
+			<if test="loginName != null">#{loginName},</if>
+			<if test="avatar != null">#{avatar},</if>
+			<if test="pwd != null">#{pwd},</if>
+			<if test="tel != null">#{tel},</if>
+			<if test="phone != null">#{phone},</if>
+			<if test="add != null">#{add},</if>
+			<if test="qq != null">#{qq},</if>
+			<if test="fax != null">#{fax},</if>
+			<if test="email != null">#{email},</if>
+			<if test="loc != null">#{loc},</if>
+			<if test="status != null">#{status},</if>
+			<if test="createdTime != null">#{createdTime},</if>
+			<if test="updatedTime != null">#{updatedTime},</if>
+			<if test="encrypt != null">#{encrypt},</if>
+			<if test="lastIp != null">#{lastIp},</if>
+			<if test="explain != null">#{explain},</if>
+			<if test="webSite != null">#{webSite},</if>
+			<if test="webCode != null">#{webCode},</if>
+			<if test="createTime != null">#{createTime},</if>
+		</trim>
+	</insert>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from supplier
+		where id = #{id}
+	</delete>
+
+	<update id="updateByPrimaryKeySelective" parameterType="cn.peyton.plum.mall.pojo.Supplier">
+		update supplier
+		<set>
+			<if test="name != null">name = #{name},</if>
+			<if test="loginName != null">login_name = #{loginName},</if>
+			<if test="avatar != null">avatar = #{avatar},</if>
+			<if test="pwd != null">pwd = #{pwd},</if>
+			<if test="tel != null">tel = #{tel},</if>
+			<if test="phone != null">phone = #{phone},</if>
+			<if test="add != null">add = #{add},</if>
+			<if test="qq != null">qq = #{qq},</if>
+			<if test="fax != null">fax = #{fax},</if>
+			<if test="email != null">email = #{email},</if>
+			<if test="loc != null">loc = #{loc},</if>
+			<if test="status != null">status = #{status},</if>
+			<if test="createdTime != null">created_time = #{createdTime},</if>
+			<if test="updatedTime != null">updated_time = #{updatedTime},</if>
+			<if test="encrypt != null">encrypt = #{encrypt},</if>
+			<if test="lastIp != null">last_ip = #{lastIp},</if>
+			<if test="explain != null">explain = #{explain},</if>
+			<if test="webSite != null">web_site = #{webSite},</if>
+			<if test="webCode != null">web_code = #{webCode},</if>
+			<if test="createTime != null">create_time = #{createTime},</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="cn.peyton.plum.mall.pojo.Supplier">
+		update supplier
+		set 
+			name = #{name},
+			login_name = #{loginName},
+			avatar = #{avatar},
+			pwd = #{pwd},
+			tel = #{tel},
+			phone = #{phone},
+			add = #{add},
+			qq = #{qq},
+			fax = #{fax},
+			email = #{email},
+			loc = #{loc},
+			status = #{status},
+			created_time = #{createdTime},
+			updated_time = #{updatedTime},
+			encrypt = #{encrypt},
+			last_ip = #{lastIp},
+			explain = #{explain},
+			web_site = #{webSite},
+			web_code = #{webCode},
+			create_time = #{createTime}
+		where id = #{id}
+	</update>
+
+	<select id="selectByPrimaryKey" resultMap="ResultSupplierMap"  parameterType="java.lang.Long">
+		select
+		<include refid="Column_supplier_List"/>
+		from supplier
+		where id = #{id}
+	</select>
+
+	<!-- new create method   -->
+
+</mapper>

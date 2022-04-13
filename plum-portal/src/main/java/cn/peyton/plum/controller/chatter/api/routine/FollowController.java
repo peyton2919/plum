@@ -52,22 +52,22 @@ public class FollowController extends ChatterApiRoutineController<FollowParam, I
         int _userId = _userParam.getId();
         // 不能关注自己
         if (followId == _userId) {
-            return JSONResult.fail(StatusCode.FAIL.getCode(), "不能关注自己！");
+            return JSONResult.fail(StatusCode.FAIL_NOT_OPERATE_SELF);
         }
         //判断用户是否存在
         if (!userService.isUserId(followId)) {
-            return JSONResult.fail(StatusCode.FAIL.getCode(), "关注用户不存在！");
+            return JSONResult.fail(StatusCode.USER_NOT_EXIST);
         }
         // 判断是否已经关注过
         if (followService.isFollow(followId, _userId)) {
-            return JSONResult.fail(StatusCode.FAIL.getCode(), "已经关注过！");
+            return JSONResult.fail(StatusCode.FAIL_FOLLOW);
         }
 
         // 保存对象
         if (followService.save(_userId, followId)) {
-            return JSONResult.success("关注成功!");
+            return JSONResult.success(StatusCode.SUCCESS_OPERATE_UPDATE.getMsg());
         }
-        return JSONResult.fail(StatusCode.FAIL.getCode(), "关注失败！");
+        return JSONResult.fail(StatusCode.FAIL_OPERATE_UPDATE);
     }
     // 用户取消关注
     @PostMapping("/user/unfollow")
@@ -79,21 +79,21 @@ public class FollowController extends ChatterApiRoutineController<FollowParam, I
         int _userId = _userParam.getId();
         // 不能取消关注自己
         if (followId == _userId) {
-            return JSONResult.fail(StatusCode.FAIL.getCode(), "不能取消关注自己！");
+            return JSONResult.fail(StatusCode.FAIL_NOT_CANCEL_OPERATE_SELF);
         }
         // 判断用户是否合法
         if (!userService.isUserId(followId)) {
-            return JSONResult.fail(StatusCode.FAIL.getCode(), "关注用户不存在！");
+            return JSONResult.fail(StatusCode.USER_NOT_EXIST);
         }
         // 判断是否已经关注过
         if (!followService.isFollow(followId, _userId)) {
-            return JSONResult.fail(StatusCode.FAIL.getCode(), "该用户没关注过！");
+            return JSONResult.fail(StatusCode.FAIL_NOT_FOLLOW);
         }
         // 删除 关注
         if (followService.delete(_userId, followId)) {
-            return JSONResult.success("关注删除成功!");
+            return JSONResult.success(StatusCode.SUCCESS_OPERATE_UPDATE.getMsg());
         }
-        return JSONResult.fail(StatusCode.FAIL.getCode(), "关注删除失败！");
+        return JSONResult.fail(StatusCode.FAIL_OPERATE_UPDATE);
     }
 
     // 互注列表
@@ -102,8 +102,8 @@ public class FollowController extends ChatterApiRoutineController<FollowParam, I
     public JSONResult<List<FollowParam>> friends(
             @Min(message = "数值不能小于1！", value = 1)
                     Integer pageNo, HttpServletRequest request) {
-        UserParam _userParam = UserUtil.getUserParam(request);
-        return JSONResult.success(followService.friends(_userParam.getId(),new PageQuery(pageNo)));
+        UserParam _user = UserUtil.getUserParam(request);
+        return JSONResult.success(followService.friends(_user.getId(),new PageQuery(pageNo)));
     }
 
     // 粉丝列表
@@ -112,8 +112,8 @@ public class FollowController extends ChatterApiRoutineController<FollowParam, I
     public JSONResult<List<FollowParam>> fens(
             @Min(message = "数值不能小于1！", value = 1)
             Integer pageNo, HttpServletRequest request) {
-        UserParam _userParam = UserUtil.getUserParam(request);
-        return JSONResult.success(followService.follows(_userParam.getId(),new PageQuery(pageNo),true));
+        UserParam _user = UserUtil.getUserParam(request);
+        return JSONResult.success(followService.follows(_user.getId(),new PageQuery(pageNo),true));
     }
 
     // 关注列表
@@ -122,8 +122,8 @@ public class FollowController extends ChatterApiRoutineController<FollowParam, I
     public JSONResult<List<FollowParam>> follows(
             @Min(message = "数值不能小于1！", value = 1)
                     Integer pageNo, HttpServletRequest request) {
-        UserParam _userParam = UserUtil.getUserParam(request);
+        UserParam _user = UserUtil.getUserParam(request);
 
-        return JSONResult.success(followService.follows(_userParam.getId(),new PageQuery(pageNo),false));
+        return JSONResult.success(followService.follows(_user.getId(),new PageQuery(pageNo),false));
     }
 }

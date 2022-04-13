@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.peyton.plum.mall.mapper.SysProvinceMapper">
+	<resultMap id="ResultSysProvinceMap" type="cn.peyton.plum.mall.pojo.SysProvince">
+		<id column="id" property="id" jdbcType="INTEGER"/>
+		<result column="sys_area_id" property="sysAreaId" jdbcType="TINYINT"/>
+		<result column="name" property="name" jdbcType="VARCHAR"/>
+		<result column="seq" property="seq" jdbcType="INTEGER"/>
+	</resultMap>
+
+	<sql id="Column_sys_province_List">
+		id,sys_area_id,name,seq
+	</sql>
+
+	<insert id="insert" parameterType="cn.peyton.plum.mall.pojo.SysProvince" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into sys_province(sys_area_id,name,seq)
+		values (#{sysAreaId},#{name},#{seq})
+	</insert>
+
+	<insert id="insertSelective" parameterType="cn.peyton.plum.mall.pojo.SysProvince" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into sys_province
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="sysAreaId != null">sys_area_id,</if>
+			<if test="name != null">name,</if>
+			<if test="seq != null">seq,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="sysAreaId != null">#{sysAreaId},</if>
+			<if test="name != null">#{name},</if>
+			<if test="seq != null">#{seq},</if>
+		</trim>
+	</insert>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from sys_province
+		where id = #{id}
+	</delete>
+
+	<update id="updateByPrimaryKeySelective" parameterType="cn.peyton.plum.mall.pojo.SysProvince">
+		update sys_province
+		<set>
+			<if test="sysAreaId != null">sys_area_id = #{sysAreaId},</if>
+			<if test="name != null">name = #{name},</if>
+			<if test="seq != null">seq = #{seq},</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="cn.peyton.plum.mall.pojo.SysProvince">
+		update sys_province
+		set 
+			sys_area_id = #{sysAreaId},
+			name = #{name},
+			seq = #{seq}
+		where id = #{id}
+	</update>
+
+	<select id="selectByPrimaryKey" resultMap="ResultSysProvinceMap"  parameterType="java.lang.Integer">
+		select
+		<include refid="Column_sys_province_List"/>
+		from sys_province
+		where id = #{id}
+	</select>
+
+	<!-- new create method   -->
+
+</mapper>

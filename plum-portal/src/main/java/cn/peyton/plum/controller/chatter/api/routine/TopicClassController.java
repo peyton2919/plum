@@ -1,7 +1,6 @@
 package cn.peyton.plum.controller.chatter.api.routine;
 
 import cn.peyton.plum.chatter.param.TopicClassParam;
-import cn.peyton.plum.chatter.pojo.TopicClass;
 import cn.peyton.plum.chatter.service.TopicClassService;
 import cn.peyton.plum.controller.route.ChatterApiRoutineController;
 import cn.peyton.plum.core.base.JSONResult;

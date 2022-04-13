@@ -1,6 +1,7 @@
 package cn.peyton.plum.core.redis;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,11 +35,11 @@ public class RedisConfig {
     public JedisPoolConfig jedisPoolConfig() {
         JedisPoolConfig config = new JedisPoolConfig();
         //最大空闲数
-//        config.setMaxIdle(10);
+       config.setMaxIdle(10);
         //最小空闲数
-//        config.setMinIdle(5);
+       config.setMinIdle(5);
         //最大链接数
-//        config.setMaxTotal(20);
+       config.setMaxTotal(20);
 
         return config;
     }
@@ -64,7 +65,7 @@ public class RedisConfig {
      * 3. 创建RedisTemplate: 用于执行 Redis 操作方法
      */
     @Bean
-    public RedisTemplate<String, Object> redisTemplate(JedisConnectionFactory factory) {
+    public RedisTemplate<String, Object> redisTemplate(@Qualifier("jedisConnectionFactory") JedisConnectionFactory factory) {
         RedisTemplate<String, Object> template = new RedisTemplate<String, Object>();
         //关联
         template.setConnectionFactory(factory);

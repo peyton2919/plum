@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.peyton.plum.mall.mapper.OrderMapper">
+	<resultMap id="ResultOrderMap" type="cn.peyton.plum.mall.pojo.Order">
+		<id column="id" property="id" jdbcType="BIGINT"/>
+		<result column="coupon_member_id" property="couponMemberId" jdbcType="INTEGER"/>
+		<result column="no" property="no" jdbcType="VARCHAR"/>
+		<result column="address" property="address" jdbcType="LONGVARCHAR"/>
+		<result column="total_price" property="totalPrice" jdbcType="DECIMAL"/>
+		<result column="remark" property="remark" jdbcType="VARCHAR"/>
+		<result column="paid_time" property="paidTime" jdbcType="TIMESTAMP"/>
+		<result column="payment_method" property="paymentMethod" jdbcType="VARCHAR"/>
+		<result column="payment_no" property="paymentNo" jdbcType="VARCHAR"/>
+		<result column="refund_status" property="refundStatus" jdbcType="VARCHAR"/>
+		<result column="refund_no" property="refundNo" jdbcType="VARCHAR"/>
+		<result column="closed" property="closed" jdbcType="TINYINT"/>
+		<result column="ship_status" property="shipStatus" jdbcType="VARCHAR"/>
+		<result column="ship_data" property="shipData" jdbcType="LONGVARCHAR"/>
+		<result column="extra" property="extra" jdbcType="LONGVARCHAR"/>
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+		<result column="reviewed" property="reviewed" jdbcType="TINYINT"/>
+		<result column="status" property="status" jdbcType="TINYINT"/>
+		<association column="member_id" property="member" javaType="cn.peyton.plum.mall.pojo.Member"
+			 select="cn.peyton.plum.mall.mapper.MemberMapper.selectByPrimaryKey" jdbcType="BIGINT">
+		</association>
+	</resultMap>
+
+	<sql id="Column_order_List">
+		id,coupon_member_id,member_id,no,address,total_price,remark,paid_time,payment_method,payment_no,refund_status,refund_no,closed,ship_status,ship_data,extra,create_time,reviewed,status
+	</sql>
+
+	<insert id="insert" parameterType="cn.peyton.plum.mall.pojo.Order" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into order(coupon_member_id,member_id,no,address,total_price,remark,paid_time,payment_method,payment_no,refund_status,refund_no,closed,ship_status,ship_data,extra,create_time,reviewed,status)
+		values (#{couponMemberId},#{member.id},#{no},#{address},#{totalPrice},#{remark},#{paidTime},#{paymentMethod},#{paymentNo},#{refundStatus},#{refundNo},#{closed},#{shipStatus},#{shipData},#{extra},#{createTime},#{reviewed},#{status})
+	</insert>
+
+	<insert id="insertSelective" parameterType="cn.peyton.plum.mall.pojo.Order" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into order
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="couponMemberId != null">coupon_member_id,</if>
+			<if test="member != null">member_id,</if>
+			<if test="no != null">no,</if>
+			<if test="address != null">address,</if>
+			<if test="totalPrice != null">total_price,</if>
+			<if test="remark != null">remark,</if>
+			<if test="paidTime != null">paid_time,</if>
+			<if test="paymentMethod != null">payment_method,</if>
+			<if test="paymentNo != null">payment_no,</if>
+			<if test="refundStatus != null">refund_status,</if>
+			<if test="refundNo != null">refund_no,</if>
+			<if test="closed != null">closed,</if>
+			<if test="shipStatus != null">ship_status,</if>
+			<if test="shipData != null">ship_data,</if>
+			<if test="extra != null">extra,</if>
+			<if test="createTime != null">create_time,</if>
+			<if test="reviewed != null">reviewed,</if>
+			<if test="status != null">status,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="couponMemberId != null">#{couponMemberId},</if>
+			<if test="member != null">#{member.id},</if>
+			<if test="no != null">#{no},</if>
+			<if test="address != null">#{address},</if>
+			<if test="totalPrice != null">#{totalPrice},</if>
+			<if test="remark != null">#{remark},</if>
+			<if test="paidTime != null">#{paidTime},</if>
+			<if test="paymentMethod != null">#{paymentMethod},</if>
+			<if test="paymentNo != null">#{paymentNo},</if>
+			<if test="refundStatus != null">#{refundStatus},</if>
+			<if test="refundNo != null">#{refundNo},</if>
+			<if test="closed != null">#{closed},</if>
+			<if test="shipStatus != null">#{shipStatus},</if>
+			<if test="shipData != null">#{shipData},</if>
+			<if test="extra != null">#{extra},</if>
+			<if test="createTime != null">#{createTime},</if>
+			<if test="reviewed != null">#{reviewed},</if>
+			<if test="status != null">#{status},</if>
+		</trim>
+	</insert>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from order
+		where id = #{id}
+	</delete>
+
+	<update id="updateByPrimaryKeySelective" parameterType="cn.peyton.plum.mall.pojo.Order">
+		update order
+		<set>
+			<if test="couponMemberId != null">coupon_member_id = #{couponMemberId},</if>
+			<if test="member != null">member_id = #{member.id},</if>
+			<if test="no != null">no = #{no},</if>
+			<if test="address != null">address = #{address},</if>
+			<if test="totalPrice != null">total_price = #{totalPrice},</if>
+			<if test="remark != null">remark = #{remark},</if>
+			<if test="paidTime != null">paid_time = #{paidTime},</if>
+			<if test="paymentMethod != null">payment_method = #{paymentMethod},</if>
+			<if test="paymentNo != null">payment_no = #{paymentNo},</if>
+			<if test="refundStatus != null">refund_status = #{refundStatus},</if>
+			<if test="refundNo != null">refund_no = #{refundNo},</if>
+			<if test="closed != null">closed = #{closed},</if>
+			<if test="shipStatus != null">ship_status = #{shipStatus},</if>
+			<if test="shipData != null">ship_data = #{shipData},</if>
+			<if test="extra != null">extra = #{extra},</if>
+			<if test="createTime != null">create_time = #{createTime},</if>
+			<if test="reviewed != null">reviewed = #{reviewed},</if>
+			<if test="status != null">status = #{status},</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="cn.peyton.plum.mall.pojo.Order">
+		update order
+		set 
+			coupon_member_id = #{couponMemberId},
+			member_id = #{member.id},
+			no = #{no},
+			address = #{address},
+			total_price = #{totalPrice},
+			remark = #{remark},
+			paid_time = #{paidTime},
+			payment_method = #{paymentMethod},
+			payment_no = #{paymentNo},
+			refund_status = #{refundStatus},
+			refund_no = #{refundNo},
+			closed = #{closed},
+			ship_status = #{shipStatus},
+			ship_data = #{shipData},
+			extra = #{extra},
+			create_time = #{createTime},
+			reviewed = #{reviewed},
+			status = #{status}
+		where id = #{id}
+	</update>
+
+	<select id="selectByPrimaryKey" resultMap="ResultOrderMap"  parameterType="java.lang.Long">
+		select
+		<include refid="Column_order_List"/>
+		from order
+		where id = #{id}
+	</select>
+
+	<!-- new create method   -->
+
+</mapper>

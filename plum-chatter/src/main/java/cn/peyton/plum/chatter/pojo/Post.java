@@ -40,8 +40,10 @@ public class Post implements Serializable {
 	private Post sharePost;
 	/** 1开放，0仅自己可见  */
 	private Integer isOpen;
-    /** 图片集合 */
-	private List<Images> imageList;
+    /** 评论数 */
+	// private Integer commentCount;
+    // /** 图片集合 */
+	// private List<Images> imageList;
 
 	//================================== Constructor =======================================//
 
@@ -219,17 +221,31 @@ public class Post implements Serializable {
 	}
 
     /**
+     * @return 评论数
+     */
+    // public Integer getCommentCount() {
+    //     return commentCount;
+    // }
+
+    /**
+     * @param commentCount 评论数
+     */
+    // public void setCommentCount(Integer commentCount) {
+    //     this.commentCount = commentCount;
+    // }
+
+    /**
      * @return 图片集合
      */
-    public List<Images> getImageList() {
-        return imageList;
-    }
+    // public List<Images> getImageList() {
+    //     return imageList;
+    // }
 
     /**
      * @param imageList 图片集合
      */
-    public void setImageList(List<Images> imageList) {
-        if (null == imageList){ imageList= Lists.newArrayList(); }
-        this.imageList = imageList;
-    }
+    // public void setImageList(List<Images> imageList) {
+    //     if (null == imageList){ imageList= Lists.newArrayList(); }
+    //     this.imageList = imageList;
+    // }
 }

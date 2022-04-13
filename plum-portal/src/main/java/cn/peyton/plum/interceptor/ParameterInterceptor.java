@@ -61,16 +61,12 @@ public class ParameterInterceptor implements HandlerInterceptor {
             //判断如果是 对象类型 这个拦截器则暂时不做处理
             if (!HttpServletRequestUtil.isBaseType(_filedType)) { continue; }
             String _filedName = _p.getName();
-            String[] _strs = _parameterMap.get(_filedName);
-            if (null == _strs||"".equals(_strs[0])) {
-                String _errMsg = "入参异常: {" +
-                        "拦截器: ["+ ParameterInterceptor.class.getName() +"]; "+
-                        "类名称: [" + _method.getDeclaringClass().getName() +
-                        "];  方法名称：[" + _method.getName() + "];  参数名称: [" + _filedName + "]不能为空值;}";
-
+            String[] _ps = _parameterMap.get(_filedName);
+            if (null == _ps||"".equals(_ps[0])) {
+                String _errMsg = "参数名称: [" + _filedName + "]不能为空值;";
                 HttpServletResponseUtil.returnJson(response
-                        ,JsonMapper.toJSon(
-                        JSONResult.error(10000,_errMsg,response.getStatus())));
+                        ,JsonMapper.toJSon(JSONResult.fail(StatusCode.FAIL_PARAM.getCode(),_errMsg)));
+
                 return false;
             }
         }
@@ -94,18 +90,19 @@ public class ParameterInterceptor implements HandlerInterceptor {
                 String _filedName = _pm.getName();
                 if (HttpServletRequestUtil.isBaseType(_typeName)) {
                     String _val = null;
-                    String[] _strs = _parameterMap.get(_filedName);
-                    if (null != _strs && _strs.length > 0) {
-                        _val = _strs[0];
+                    String[] _ps = _parameterMap.get(_filedName);
+                    if (null != _ps && _ps.length > 0) {
+                        _val = _ps[0];
                     }
                     Annotation[] _annotations = _pm.getAnnotations();
                     //判断属性上是否有注解, 有标记注解 为 true
-                    if (null != _annotations && _annotations.length>0) {
+                    if (null != _annotations && _annotations.length > 0) {
                         Validation.valid(_errMap, _annotations, _filedName, _typeName, _val, _single);
                     }
                 } else {
-                    //调用赋值方法，并验证
-                    _errMap = Validation.valid(HttpServletRequestUtil.voluation(_parameterMap,_typeName), _validAnnotation.single());
+                    //调用赋值方法: HttpServletRequestUtil.voluation，并验证方法: Validation.valid
+                    _errMap = Validation.valid(HttpServletRequestUtil.voluation(_parameterMap,_typeName),
+                            _validAnnotation.single());
                 }
                 //_single 为 true 时表示单一验证，有一个验证不通过就直接跳出
                 if (_single && _errMap.size() >0) {
@@ -114,7 +111,7 @@ public class ParameterInterceptor implements HandlerInterceptor {
             }
             if (null != _errMap && _errMap.size() >0){
                 HttpServletResponseUtil.returnJson(
-                        response, JsonMapper.toJSon(JSONResult.success(StatusCode.VALID_ERROR,_errMap)));
+                        response, JsonMapper.toJSon(JSONResult.fail(_errMap)));
                 return false;
             }
         }

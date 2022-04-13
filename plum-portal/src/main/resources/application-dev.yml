@@ -6,7 +6,7 @@ spring:
   datasource:  #数据源相关的配置节点
     username: root
     password: hc2919
-    url: jdbc:mysql://localhost:3306/db_chatter?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false
+    url: jdbc:mysql://localhost:3306/db_plum?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false
     driver-class-name: com.mysql.jdbc.Driver #mysql / MariaDB 驱动
     #    第一种数据源 Hikari   === 开始
     type: com.zaxxer.hikari.HikariDataSource
@@ -55,7 +55,8 @@ spring:
         max-idle: 3
         max-wait: -1
         min-idle: 0
-    timeout: 1000
+    timeout: 30000
+
 #mybatis 相关配置
 mybatis:
   mapper-locations: classpath*:cn/peyton/plum/**/mapper/*.xml  #所有 mapper 映射的文件所在目录位置

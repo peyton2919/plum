@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.peyton.plum.mall.mapper.GoodsTypeMapper">
+	<resultMap id="ResultGoodsTypeMap" type="cn.peyton.plum.mall.pojo.GoodsType">
+		<id column="id" property="id" jdbcType="INTEGER"/>
+		<result column="name" property="name" jdbcType="VARCHAR"/>
+		<result column="seq" property="seq" jdbcType="INTEGER"/>
+		<result column="status" property="status" jdbcType="TINYINT"/>
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+	</resultMap>
+
+	<sql id="Column_goods_type_List">
+		id,name,seq,status,create_time
+	</sql>
+
+	<insert id="insert" parameterType="cn.peyton.plum.mall.pojo.GoodsType" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into goods_type(name,seq,status,create_time)
+		values (#{name},#{seq},#{status},#{createTime})
+	</insert>
+
+	<insert id="insertSelective" parameterType="cn.peyton.plum.mall.pojo.GoodsType" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into goods_type
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="name != null">name,</if>
+			<if test="seq != null">seq,</if>
+			<if test="status != null">status,</if>
+			<if test="createTime != null">create_time,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="name != null">#{name},</if>
+			<if test="seq != null">#{seq},</if>
+			<if test="status != null">#{status},</if>
+			<if test="createTime != null">#{createTime},</if>
+		</trim>
+	</insert>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from goods_type
+		where id = #{id}
+	</delete>
+
+	<update id="updateByPrimaryKeySelective" parameterType="cn.peyton.plum.mall.pojo.GoodsType">
+		update goods_type
+		<set>
+			<if test="name != null">name = #{name},</if>
+			<if test="seq != null">seq = #{seq},</if>
+			<if test="status != null">status = #{status},</if>
+			<if test="createTime != null">create_time = #{createTime},</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="cn.peyton.plum.mall.pojo.GoodsType">
+		update goods_type
+		set 
+			name = #{name},
+			seq = #{seq},
+			status = #{status},
+			create_time = #{createTime}
+		where id = #{id}
+	</update>
+
+	<select id="selectByPrimaryKey" resultMap="ResultGoodsTypeMap"  parameterType="java.lang.Integer">
+		select
+		<include refid="Column_goods_type_List"/>
+		from goods_type
+		where id = #{id}
+	</select>
+
+	<!-- new create method   -->
+
+</mapper>

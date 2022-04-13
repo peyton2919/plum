@@ -45,8 +45,8 @@ public final class SupportController extends ChatterApiRoutineController<Support
         //判断当前记录是否有操作过
         if (null != _param) {
             if (_param.getType() == supportParam.getType()) {
-                return JSONResult.fail(StatusCode.FAIL.getCode(),
-                        ((supportParam.getType()==0)?"已经顶过了,":"已经踩过了,")+"不能重复操作!");
+                return JSONResult.fail(StatusCode.NOT_REPEAT_OPERATION.getCode(),
+                        ((supportParam.getType() == 0) ? "已经顶过了," : "已经踩过了,") + "不能重复操作!");
             }
             _param.setType(supportParam.getType());
 
@@ -56,12 +56,12 @@ public final class SupportController extends ChatterApiRoutineController<Support
         }
         //判断文章是否存在
         if (!postService.isPost(supportParam.getPostId())) {
-            return JSONResult.fail(StatusCode.FAIL.getCode(), "文章不存在！");
+            return JSONResult.fail(StatusCode.FAIL_NOT_EXIST);
         }
         supportParam.setUserId(_userParam.getId());
         if (null != supportService.create(supportParam)){
             return JSONResult.success((supportParam.getType() == 0) ? "顶成功" : "踩成功");
         }
-        return JSONResult.success("操作失败!");
+        return JSONResult.fail(StatusCode.FAIL_OPERATE_UPDATE);
     }
 }

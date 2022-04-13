@@ -3,7 +3,7 @@ package cn.peyton.plum.mgts.mybatis.template;
 import cn.peyton.plum.mgts.mybatis.db.DbHelper;
 import cn.peyton.plum.mgts.mybatis.entity.Column;
 import cn.peyton.plum.mgts.mybatis.entity.Table;
-import cn.peyton.plum.mgts.mybatis.util.ConvertUtils;
+import cn.peyton.plum.mgts.mybatis.util.ConvertUtil;
 
 import java.util.List;
 
@@ -64,7 +64,7 @@ public final class CompatTemplate extends BaseTemplate{
         List<Column> columnList = table.getColumns();
         StringBuffer sb = new StringBuffer();
         int size = columnList.size();
-        String _ron = ConvertUtils.toFirstLowerCase(paramObjectName);
+        String _ron = ConvertUtil.toFirstLowerCase(paramObjectName);
         sb.append("\t/**\r\n");
         sb.append("\t * <h4>" + paramObjectName + "对象转成" + resultObjectName + "对象<h4> \r\n");
         //标题注解

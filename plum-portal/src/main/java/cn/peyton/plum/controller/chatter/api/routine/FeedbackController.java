@@ -6,6 +6,7 @@ import cn.peyton.plum.chatter.service.FeedbackService;
 import cn.peyton.plum.common.UserUtil;
 import cn.peyton.plum.controller.route.ChatterApiRoutineController;
 import cn.peyton.plum.core.base.JSONResult;
+import cn.peyton.plum.core.exception.StatusCode;
 import cn.peyton.plum.core.mybatis.utils.PageQuery;
 import cn.peyton.plum.core.validator.Valid;
 import cn.peyton.plum.core.validator.constraints.Min;
@@ -41,9 +42,9 @@ public final class FeedbackController extends ChatterApiRoutineController<Feedba
         param.setFromId(_userParam.getId());
         param.setToId(0);
         if (feedbackService.create(param)) {
-            return JSONResult.success("反馈信息已提交成功！");
+            return JSONResult.success(StatusCode.SUCCESS_OPERATE_UPDATE.getMsg());
         }
-        return JSONResult.fail("反馈提交失败！");
+        return JSONResult.fail(StatusCode.FAIL_OPERATE_UPDATE);
     }
 
     // 获取用户反馈列表

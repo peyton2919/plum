@@ -5,6 +5,7 @@ import cn.peyton.plum.chatter.pojo.AppUpdate;
 import cn.peyton.plum.chatter.service.AppUpdateService;
 import cn.peyton.plum.controller.route.ChatterApiRoutineController;
 import cn.peyton.plum.core.base.JSONResult;
+import cn.peyton.plum.core.exception.StatusCode;
 import cn.peyton.plum.core.validator.Valid;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,18 +37,18 @@ public final class AppUpdateController extends ChatterApiRoutineController<AppUp
         //查询 最新一条数据并 status =1
         AppUpdateParam _param = appUpdateService.findByNewApp();
         if (null == _param) {
-            return JSONResult.fail("暂无更新版本");
+            return JSONResult.fail(StatusCode.FAIL_NOT_UPDATE_APP);
         }
         if (_param.getVersion().equals(param.getVersion())) {
-            return JSONResult.fail("暂无更新版本");
+            return JSONResult.fail(StatusCode.FAIL_NOT_UPDATE_APP);
         }
         //todo 逻辑需要处理数值大小
         _param.setVersion(param.getVersion());
         _param.setCreateTime(new Date());
         if (appUpdateService.update(_param)) {
-            return JSONResult.success("更新成功！");
+            return JSONResult.success(StatusCode.SUCCESS_OPERATE_UPDATE.getMsg());
         }
 
-        return JSONResult.fail("更新失败！");
+        return JSONResult.fail(StatusCode.FAIL_OPERATE_UPDATE);
     }
 }

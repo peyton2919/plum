@@ -17,6 +17,7 @@
         <!--<association  property="user" javaType="cn.peyton.plum.chatter.pojo.User"-->
         <!--             column="user_id" select="cn.peyton.plum.chatter.mapper.UserMapper.findByExpand">-->
         <!--</association>-->
+
         <association property="userParam" javaType="cn.peyton.plum.chatter.param.UserParam"
                      column="user_id" select="cn.peyton.plum.chatter.mapper.UserMapper.findSimpleById">
         </association>
@@ -27,6 +28,11 @@
 
         <association property="cai" javaType="int" column="id"
                     select="cn.peyton.plum.chatter.mapper.SupportMapper.findCaiByPostId">
+        </association>
+
+        <association property="commentCount" javaType="int" column="id"
+                     select="cn.peyton.plum.chatter.mapper.CommentMapper.countByPostId">
+
         </association>
 
         <association property="ding" javaType="int" column="id"
@@ -232,7 +238,10 @@
         where tp.post_id = p.id
         and tp.topic_id=#{topicId}
         and is_open=1
-        ORDER BY p.create_time DESC
+        ORDER BY
+        <if test="type ==0">p.share_num</if>
+        <if test="type ==1">p.create_time</if>
+        DESC
         limit #{page.offset},#{page.pageSize}
     </select>
 

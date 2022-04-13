@@ -1,7 +1,7 @@
 package cn.peyton.plum.mgts;
 
 import cn.peyton.plum.mgts.mybatis.Generation;
-import cn.peyton.plum.mgts.mybatis.util.DatabaseUtils;
+import cn.peyton.plum.mgts.mybatis.util.DatabaseUtil;
 
 /**
  * <h3></h3>
@@ -22,8 +22,8 @@ public final class ExecuteCommunity {
     public static String PATH = "f:/community/";
 
    public static void main(String[] args){
-       Generation generation = new Generation(DatabaseUtils.MYSQL_DRIVER, DatabaseUtils.URL_CHATTER,
-               DatabaseUtils.USERNAME, DatabaseUtils.PASSWORD);
+       DatabaseUtil databaseUtil =new DatabaseUtil("db_chatter");
+       Generation generation = new Generation(databaseUtil);
 
        generation.create("",PATH,MAPPER,POJO,true);
        generation.createParamCompatConvert(null,"","","tb_,sys_",PATH,PARAM);

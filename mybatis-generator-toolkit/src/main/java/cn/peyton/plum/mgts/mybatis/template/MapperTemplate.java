@@ -3,7 +3,7 @@ package cn.peyton.plum.mgts.mybatis.template;
 import cn.peyton.plum.mgts.mybatis.db.DbHelper;
 import cn.peyton.plum.mgts.mybatis.entity.Column;
 import cn.peyton.plum.mgts.mybatis.entity.Table;
-import cn.peyton.plum.mgts.mybatis.util.ConvertUtils;
+import cn.peyton.plum.mgts.mybatis.util.ConvertUtil;
 
 import java.util.List;
 
@@ -153,34 +153,45 @@ public class MapperTemplate extends BaseTemplate {
         List<Column> columnList = _table.getColumns();
         int size = columnList.size();
         Column pkColumn = DbHelper.getPrimaryKeyColumn(columnList, pkName);
+        String _resultMap = "Result" + _table.getObjectName() + "Map";
+        String _columnList = "Column_" + _table.getTableName() + "_List";
 
         sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\r\n");
         sb.append("<!DOCTYPE mapper PUBLIC \"-//mybatis.org//DTD Mapper 3.0//EN\" \"http://mybatis.org/dtd/mybatis-3-mapper.dtd\">\r\n");
         sb.append("<mapper namespace=\"" + mapperPackageName + "." + _table.getObjectName() + "Mapper\">\r\n");
         //=================================== create resultMap [BaseResultMap] ====================================//
         //resultMap
-        sb.append("\t<resultMap id=\"BaseResultMap\" type=\"" + entityPackageName + "." + _table.getObjectName() + "\">\r\n");
+        sb.append("\t<resultMap id=\""+_resultMap+"\" type=\"" + entityPackageName + "." + _table.getObjectName() + "\">\r\n");
 
-
+        StringBuilder _fkSB = new StringBuilder();
         for (int i = 0; i < size; i++) {
             Column column = columnList.get(i);
             if (column.getColumnName().equals(pkName)) {
                 sb.append("\t\t<id ");
-            } else {
+            }else if (column.getFk()){
+                _fkSB.append("\t\t<association ");
+                String _property = column.getFkExclusiveObjectName() + "\" javaType=\"" + entityPackageName + "." + column.getFkExclusiveObjectType() +
+                                "\"\n\t\t\t select=\"" + mapperPackageName+"."+column.getFkExclusiveObjectType()+"Mapper.selectByPrimaryKey";
+                _fkSB.append("column=\"" + column.getColumnName() +
+                        "\" property=\"" + _property +
+                        "\" jdbcType=\"" + column.getColumnType() + "\">\r\n\t\t</association>\r\n");
+            }else {
                 sb.append("\t\t<result ");
             }
-            String _property = (column.getFk()) ?
-                    column.getFkExclusiveObjectName() + "." + column.getFkExclusiveChildFieldName() :
-                    column.getFieldName();
-            sb.append("column=\"" + column.getColumnName() +
-                    "\" property=\"" + _property +
-                    "\" jdbcType=\"" + column.getColumnType() + "\"/>\r\n");
+            if (!column.getFk()){
+                sb.append("column=\"" + column.getColumnName() +
+                        "\" property=\"" + column.getFieldName() +
+                        "\" jdbcType=\"" + column.getColumnType() + "\"/>\r\n");
+            }
+
         }
+
+        sb.append(_fkSB);
         sb.append("\t</resultMap>\r\n");
         sb.append("\r\n");
 
         //================================ create SQL [Base_Column_List] =======================================//
-        sb.append("\t<sql id=\"Base_Column_List\">\r\n");
+        sb.append("\t<sql id=\""+_columnList+"\">\r\n");
         sb.append("\t\t");
         for (int i = 0; i < size; i++) {
             sb.append(columnList.get(i).getColumnName());
@@ -236,9 +247,9 @@ public class MapperTemplate extends BaseTemplate {
             if (!pkColumn.getColumnName().equals(columnList.get(i).getColumnName())) {
                 String _property = (columnList.get(i).getFk()) ?
                         columnList.get(i).getFkExclusiveObjectName() : columnList.get(i).getFieldName();
-                sb.append("\t\t\t<if test=\"" + _property + " != null\">\r\n");
-                sb.append("\t\t\t\t" + columnList.get(i).getColumnName() + ",\r\n");
-                sb.append("\t\t\t</if>\r\n");
+                sb.append("\t\t\t<if test=\"" + _property + " != null\">");
+                sb.append(columnList.get(i).getColumnName());
+                sb.append(",</if>\r\n");
             }
         }
         sb.append("\t\t</trim>\r\n");
@@ -250,9 +261,8 @@ public class MapperTemplate extends BaseTemplate {
                         columnList.get(i).getFkExclusiveObjectName() : columnList.get(i).getFieldName();
                 String _ex = (columnList.get(i).getFk()) ?
                         ("." + columnList.get(i).getFkExclusiveChildFieldName()) : "";
-                sb.append("\t\t\t<if test=\"" + _property + " != null\">\r\n");
-                sb.append("\t\t\t\t#{" + (_property + _ex) + "},\r\n");
-                sb.append("\t\t\t</if>\r\n");
+                sb.append("\t\t\t<if test=\"" + _property + " != null\">");
+                sb.append("#{" + (_property + _ex) + "},</if>\r\n");
             }
         }
         sb.append("\t\t</trim>\r\n");
@@ -260,7 +270,7 @@ public class MapperTemplate extends BaseTemplate {
         sb.append("\r\n");
 
         //================================== create delete =====================================//
-        sb.append("\t<delete id=\"deleteByPrimaryKey\" parameterType=\"" + ConvertUtils.convertFieldTypePath(pkColumn.getColumnType()) + "\">\r\n");
+        sb.append("\t<delete id=\"deleteByPrimaryKey\" parameterType=\"" + ConvertUtil.convertFieldTypePath(pkColumn.getColumnType()) + "\">\r\n");
         sb.append("\t\tdelete from " + _table.getTableName() + "\r\n");
         sb.append("\t\twhere " + pkColumn.getColumnName() + " = #{" + pkColumn.getFieldName() + "}\r\n");
         sb.append("\t</delete>\r\n");
@@ -281,9 +291,8 @@ public class MapperTemplate extends BaseTemplate {
                         columnList.get(i).getFkExclusiveObjectName() : columnList.get(i).getFieldName();
                 String _ex = (columnList.get(i).getFk()) ?
                         ("." + columnList.get(i).getFkExclusiveChildFieldName()) : "";
-                sb.append("\t\t\t<if test=\"" + _property + " != null\">\r\n");
-                sb.append("\t\t\t\t" + tColumn.getColumnName() + " = #{" + (_property + _ex) + "},\r\n");
-                sb.append("\t\t\t</if>\r\n");
+                sb.append("\t\t\t<if test=\"" + _property + " != null\">");
+                sb.append(tColumn.getColumnName() + " = #{" + (_property + _ex) + "},</if>\r\n");
             }
         }
         sb.append("\t\t</set>\r\n");
@@ -314,14 +323,13 @@ public class MapperTemplate extends BaseTemplate {
 
         //================================== create select =====================================//
         //" + DbHelper.convertFieldTypePath(pkColumn.getNameType()) + "
-        sb.append("\t<select id=\"selectByPrimaryKey\" resultMap=\"BaseResultMap\" " +
-                "parameterType=\"" + ConvertUtils.convertFieldTypePath(pkColumn.getColumnType()) + "\">\r\n");
+        sb.append("\t<select id=\"selectByPrimaryKey\" resultMap=\""+_resultMap+"\"  " +
+                "parameterType=\"" + ConvertUtil.convertFieldTypePath(pkColumn.getColumnType()) + "\">\r\n");
         sb.append("\t\tselect\r\n");
-        sb.append("\t\t<include refid=\"Base_Column_List\"/>\r\n");
+        sb.append("\t\t<include refid=\"" + _columnList + "\"/>\r\n");
         sb.append("\t\tfrom " + _table.getTableName() + "\r\n");
         sb.append("\t\twhere " + pkFiledColumn + " = #{" + pkFiledName + "}\r\n");
         sb.append("\t</select>\r\n");
-        sb.append("\r\n");
         sb.append("\r\n");
         sb.append("\t<!-- new create method   -->");
         sb.append("\r\n");

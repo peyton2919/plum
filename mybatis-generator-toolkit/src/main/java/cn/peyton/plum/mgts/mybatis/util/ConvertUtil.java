@@ -9,7 +9,7 @@ package cn.peyton.plum.mgts.mybatis.util;
  * Version: 1.0.0
  * </pre>
  */
-public final class ConvertUtils {
+public final class ConvertUtil {
 
     /**
      * <h3>一个字符转换大写字符</h3>
@@ -107,25 +107,25 @@ public final class ConvertUtils {
                 sbpackage.append("import java.util.Date;\r\n");
             }
             return "Date";
-        } else if ("bit".equals(columnType) ||
-                "int".equals(columnType) ||
-                "integer".equals(columnType) ||
-                "tinyint".equals(columnType) ||
-                "smallint".equals(columnType)) {
+        } else if ("bit".equals(columnType)) {
+            return "Boolean";
+        } else if ("int".equals(columnType) || "integer".equals(columnType) || "tinyint".equals(columnType)) {
             return "Integer";
-        } else if ("float".equals(columnType)) {
+        }else if ("smallint".equals(columnType)) {
+            return "Short";
+        } else if ("float".equals(columnType) || "real".equals(columnType)) {
             return "Float";
         }else if ("bigint".equals(columnType)) {
             return "Long";
-        }else if ("float".equals(columnType)) {
-            return "Float";
-        } else if ("double".equals(columnType)) {
+        }else if ("double".equals(columnType)) {
             return "Double";
-        }else if ("decimal".equals(columnType)) {
+        }else if ("decimal".equals(columnType) || "numeric".equals(columnType) || "money".equals(columnType)) {
             if (null != sbpackage) {
                 sbpackage.append("import java.math.BigDecimal;\r\n");
             }
             return "BigDecimal";
+        } else if ("binary".equals(columnType) || "varbinary".equals(columnType) || "longvarbinary".equals(columnType)) {
+            return "Byte[]";
         }
         return "ErrorType";
     }
@@ -173,11 +173,11 @@ public final class ConvertUtils {
                 int tLength = splits[i].length();
                 String tTemp = splits[i].toLowerCase();
                 if (tSb.substring(0, tLength).toLowerCase().equals(tTemp)) {
-                    return ConvertUtils.convertTableName2ObjName(tSb.substring(tLength));
+                    return ConvertUtil.convertTableName2ObjName(tSb.substring(tLength));
                 }
             }
         }
-        return ConvertUtils.convertTableName2ObjName(tableName);
+        return ConvertUtil.convertTableName2ObjName(tableName);
     }
 
     /**
@@ -193,7 +193,7 @@ public final class ConvertUtils {
             int _position = columnName.lastIndexOf(removeSuffix);
             columnName = columnName.substring(0, _position);
         }
-        return ConvertUtils.convertTableName2ObjName(columnName);
+        return ConvertUtil.convertTableName2ObjName(columnName);
     }
 
 

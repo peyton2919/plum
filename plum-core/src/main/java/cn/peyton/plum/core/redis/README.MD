@@ -1,3 +1,9 @@
+redis 配置密码
+获取密码: config get requirepass 
+设置密码: config set requirepass 密码
+        auth 密码
+
+
 4、关于配置文件中的注解：
 4-1： @Configuration
 在整个RedisConfig文件的上文，可理解为用spring的时候xml里面的标签

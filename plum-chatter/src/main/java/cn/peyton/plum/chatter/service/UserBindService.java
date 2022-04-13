@@ -31,9 +31,9 @@ public interface UserBindService {
     /**
      * <h4>插入 用户绑定</h4>
      * @param param 用户绑定传参对象
-     * @return true 表示 插入成功; false表示 取反;
+     * @return 对象 表示 插入成功 表示 ; null 取反;
      */
-    boolean insert(UserBindParam param);
+    UserBindParam create(UserBindParam param);
 
     /**
      * <h>根据用户编号 查找 用户绑定对象</h>
@@ -41,6 +41,14 @@ public interface UserBindService {
      * @return
      */
     List<UserBindParam> findByUserId(Integer id);
+
+    /**
+     * <h4>根据openId和type 查找 用户绑定</h4>
+     * @param openId
+     * @param type
+     * @return 用户绑定对象
+     */
+    UserBindParam findByOpenIdAndType(String openId,String type);
 
 
 }

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.peyton.plum.mall.mapper.CouponMemberMapper">
+	<resultMap id="ResultCouponMemberMap" type="cn.peyton.plum.mall.pojo.CouponMember">
+		<id column="id" property="id" jdbcType="BIGINT"/>
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+		<result column="used" property="used" jdbcType="TINYINT"/>
+		<result column="status" property="status" jdbcType="TINYINT"/>
+		<association column="coupon_id" property="coupon" javaType="cn.peyton.plum.mall.pojo.Coupon"
+			 select="cn.peyton.plum.mall.mapper.CouponMapper.selectByPrimaryKey" jdbcType="BIGINT">
+		</association>
+		<association column="member_id" property="member" javaType="cn.peyton.plum.mall.pojo.Member"
+			 select="cn.peyton.plum.mall.mapper.MemberMapper.selectByPrimaryKey" jdbcType="BIGINT">
+		</association>
+	</resultMap>
+
+	<sql id="Column_coupon_member_List">
+		id,coupon_id,member_id,create_time,update_time,used,status
+	</sql>
+
+	<insert id="insert" parameterType="cn.peyton.plum.mall.pojo.CouponMember" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into coupon_member(coupon_id,member_id,create_time,update_time,used,status)
+		values (#{coupon.id},#{member.id},#{createTime},#{updateTime},#{used},#{status})
+	</insert>
+
+	<insert id="insertSelective" parameterType="cn.peyton.plum.mall.pojo.CouponMember" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into coupon_member
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="coupon != null">coupon_id,</if>
+			<if test="member != null">member_id,</if>
+			<if test="createTime != null">create_time,</if>
+			<if test="updateTime != null">update_time,</if>
+			<if test="used != null">used,</if>
+			<if test="status != null">status,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="coupon != null">#{coupon.id},</if>
+			<if test="member != null">#{member.id},</if>
+			<if test="createTime != null">#{createTime},</if>
+			<if test="updateTime != null">#{updateTime},</if>
+			<if test="used != null">#{used},</if>
+			<if test="status != null">#{status},</if>
+		</trim>
+	</insert>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from coupon_member
+		where id = #{id}
+	</delete>
+
+	<update id="updateByPrimaryKeySelective" parameterType="cn.peyton.plum.mall.pojo.CouponMember">
+		update coupon_member
+		<set>
+			<if test="coupon != null">coupon_id = #{coupon.id},</if>
+			<if test="member != null">member_id = #{member.id},</if>
+			<if test="createTime != null">create_time = #{createTime},</if>
+			<if test="updateTime != null">update_time = #{updateTime},</if>
+			<if test="used != null">used = #{used},</if>
+			<if test="status != null">status = #{status},</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="cn.peyton.plum.mall.pojo.CouponMember">
+		update coupon_member
+		set 
+			coupon_id = #{coupon.id},
+			member_id = #{member.id},
+			create_time = #{createTime},
+			update_time = #{updateTime},
+			used = #{used},
+			status = #{status}
+		where id = #{id}
+	</update>
+
+	<select id="selectByPrimaryKey" resultMap="ResultCouponMemberMap"  parameterType="java.lang.Long">
+		select
+		<include refid="Column_coupon_member_List"/>
+		from coupon_member
+		where id = #{id}
+	</select>
+
+	<!-- new create method   -->
+
+</mapper>

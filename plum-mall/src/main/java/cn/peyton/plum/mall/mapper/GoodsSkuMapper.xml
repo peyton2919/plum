@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.peyton.plum.mall.mapper.GoodsSkuMapper">
+	<resultMap id="ResultGoodsSkuMap" type="cn.peyton.plum.mall.pojo.GoodsSku">
+		<id column="id" property="id" jdbcType="BIGINT"/>
+		<result column="image" property="image" jdbcType="VARCHAR"/>
+		<result column="retail_price" property="retailPrice" jdbcType="DECIMAL"/>
+		<result column="market_price" property="marketPrice" jdbcType="DECIMAL"/>
+		<result column="cost_price" property="costPrice" jdbcType="DECIMAL"/>
+		<result column="stock" property="stock" jdbcType="INTEGER"/>
+		<result column="volume" property="volume" jdbcType="FLOAT"/>
+		<result column="weight" property="weight" jdbcType="FLOAT"/>
+		<result column="code" property="code" jdbcType="VARCHAR"/>
+		<result column="skus" property="skus" jdbcType="LONGVARCHAR"/>
+		<result column="status" property="status" jdbcType="TINYINT"/>
+		<association column="goods_id" property="goods" javaType="cn.peyton.plum.mall.pojo.Goods"
+			 select="cn.peyton.plum.mall.mapper.GoodsMapper.selectByPrimaryKey" jdbcType="BIGINT">
+		</association>
+	</resultMap>
+
+	<sql id="Column_goods_sku_List">
+		id,image,retail_price,market_price,cost_price,stock,volume,weight,code,goods_id,skus,status
+	</sql>
+
+	<insert id="insert" parameterType="cn.peyton.plum.mall.pojo.GoodsSku" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into goods_sku(image,retail_price,market_price,cost_price,stock,volume,weight,code,goods_id,skus,status)
+		values (#{image},#{retailPrice},#{marketPrice},#{costPrice},#{stock},#{volume},#{weight},#{code},#{goods.id},#{skus},#{status})
+	</insert>
+
+	<insert id="insertSelective" parameterType="cn.peyton.plum.mall.pojo.GoodsSku" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into goods_sku
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="image != null">image,</if>
+			<if test="retailPrice != null">retail_price,</if>
+			<if test="marketPrice != null">market_price,</if>
+			<if test="costPrice != null">cost_price,</if>
+			<if test="stock != null">stock,</if>
+			<if test="volume != null">volume,</if>
+			<if test="weight != null">weight,</if>
+			<if test="code != null">code,</if>
+			<if test="goods != null">goods_id,</if>
+			<if test="skus != null">skus,</if>
+			<if test="status != null">status,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="image != null">#{image},</if>
+			<if test="retailPrice != null">#{retailPrice},</if>
+			<if test="marketPrice != null">#{marketPrice},</if>
+			<if test="costPrice != null">#{costPrice},</if>
+			<if test="stock != null">#{stock},</if>
+			<if test="volume != null">#{volume},</if>
+			<if test="weight != null">#{weight},</if>
+			<if test="code != null">#{code},</if>
+			<if test="goods != null">#{goods.id},</if>
+			<if test="skus != null">#{skus},</if>
+			<if test="status != null">#{status},</if>
+		</trim>
+	</insert>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from goods_sku
+		where id = #{id}
+	</delete>
+
+	<update id="updateByPrimaryKeySelective" parameterType="cn.peyton.plum.mall.pojo.GoodsSku">
+		update goods_sku
+		<set>
+			<if test="image != null">image = #{image},</if>
+			<if test="retailPrice != null">retail_price = #{retailPrice},</if>
+			<if test="marketPrice != null">market_price = #{marketPrice},</if>
+			<if test="costPrice != null">cost_price = #{costPrice},</if>
+			<if test="stock != null">stock = #{stock},</if>
+			<if test="volume != null">volume = #{volume},</if>
+			<if test="weight != null">weight = #{weight},</if>
+			<if test="code != null">code = #{code},</if>
+			<if test="goods != null">goods_id = #{goods.id},</if>
+			<if test="skus != null">skus = #{skus},</if>
+			<if test="status != null">status = #{status},</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="cn.peyton.plum.mall.pojo.GoodsSku">
+		update goods_sku
+		set 
+			image = #{image},
+			retail_price = #{retailPrice},
+			market_price = #{marketPrice},
+			cost_price = #{costPrice},
+			stock = #{stock},
+			volume = #{volume},
+			weight = #{weight},
+			code = #{code},
+			goods_id = #{goods.id},
+			skus = #{skus},
+			status = #{status}
+		where id = #{id}
+	</update>
+
+	<select id="selectByPrimaryKey" resultMap="ResultGoodsSkuMap"  parameterType="java.lang.Long">
+		select
+		<include refid="Column_goods_sku_List"/>
+		from goods_sku
+		where id = #{id}
+	</select>
+
+	<!-- new create method   -->
+
+</mapper>

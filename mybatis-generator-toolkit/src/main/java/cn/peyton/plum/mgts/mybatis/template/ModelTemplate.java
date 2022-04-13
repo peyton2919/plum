@@ -2,7 +2,7 @@ package cn.peyton.plum.mgts.mybatis.template;
 
 import cn.peyton.plum.mgts.mybatis.entity.Column;
 import cn.peyton.plum.mgts.mybatis.entity.Table;
-import cn.peyton.plum.mgts.mybatis.util.ConvertUtils;
+import cn.peyton.plum.mgts.mybatis.util.ConvertUtil;
 
 import java.util.List;
 
@@ -55,7 +55,8 @@ public class ModelTemplate extends BaseTemplate {
         }
         //
         sb.append(table.getImportPackage());
-        String explain = (prefix == null) ? "实体类": "参数 传递类[用来展示数据]类";
+        sb.append("\r\nimport java.io.Serializable;\r\n");
+        String explain = (prefix == null) ? " 实体类": " 参数 传递类[用来展示数据]类";
         //调用父类方法创建头部
         createAnnotation(table.getComment() + explain);
         //创建类
@@ -79,7 +80,7 @@ public class ModelTemplate extends BaseTemplate {
      * <h3>创建对象</h3>
      */
     private static void createModelClass(String objName,String prefix) {
-        sb.append("public class " + ((objName == null) ? _table.getObjectName():objName) + "{\r\n");
+        sb.append("public class " + ((objName == null) ? _table.getObjectName():objName) + " implements Serializable {\r\n");
         createModelContent(prefix);
 
         sb.append("}\r\n");
@@ -89,7 +90,7 @@ public class ModelTemplate extends BaseTemplate {
      * <h3>创建对象</h3>
      */
     private static void createModelClass(String objName,String prefix, String  prefixResult) {
-        sb.append("public class " + ((objName == null) ? _table.getObjectName():objName) + "{\r\n");
+        sb.append("public class " + ((objName == null) ? _table.getObjectName():objName) + " implements Serializable {\r\n");
         createModelContent(prefix);
         sb.append(ConvertTemplate.createConvert(_table, _table.getObjectName(), prefixResult, prefix));
         sb.append(CompatTemplate.createCompat(_table, objName, prefixResult, _table.getObjectName(), prefix));
@@ -119,7 +120,7 @@ public class ModelTemplate extends BaseTemplate {
 
             if (null != prefix) {
                 _name = _name.replace(prefix, "");
-                _name = ConvertUtils.toFirstLowerCase(_name);
+                _name = ConvertUtil.toFirstLowerCase(_name);
             }
 
             //添加私有字段
@@ -148,7 +149,7 @@ public class ModelTemplate extends BaseTemplate {
 
             if (null != prefix) {
                 _name = _name.replace(prefix, "");
-                _name = ConvertUtils.toFirstLowerCase(_name);
+                _name = ConvertUtil.toFirstLowerCase(_name);
             }
 
             String _remarks =columnList.get(i).getRemarks();
@@ -156,13 +157,13 @@ public class ModelTemplate extends BaseTemplate {
             sb.append("\t/** \r\n");
             sb.append("\t * @param " + _name + " " + _remarks + " \r\n");
             sb.append("\t */ \r\n");
-            sb.append("\tpublic void " + PREFIX_SET + ConvertUtils.convertFirst(_name) + "(" +
+            sb.append("\tpublic void " + PREFIX_SET + ConvertUtil.convertFirst(_name) + "(" +
                     _type + " " + _name + "){\r\n\t\tthis."+  _name + " = " + _name + ";\r\n\t}\r\n\r\n");
 
             sb.append("\t/** \r\n");
             sb.append("\t * @return " + _remarks + " \r\n");
             sb.append("\t */ \r\n");
-            sb.append("\tpublic " + _type + " " + PREFIX_GET + ConvertUtils.convertFirst(_name) + "(){\r\n" +
+            sb.append("\tpublic " + _type + " " + PREFIX_GET + ConvertUtil.convertFirst(_name) + "(){\r\n" +
                     "\t\treturn "+  _name + ";\r\n\t}\r\n\r\n");
         }
     }

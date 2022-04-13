@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.peyton.plum.mall.mapper.AppIndexDataMapper">
+	<resultMap id="ResultAppIndexDataMap" type="cn.peyton.plum.mall.pojo.AppIndexData">
+		<id column="id" property="id" jdbcType="BIGINT"/>
+		<result column="type" property="type" jdbcType="VARCHAR"/>
+		<result column="data" property="data" jdbcType="LONGVARCHAR"/>
+		<result column="seq" property="seq" jdbcType="INTEGER"/>
+		<association column="app_index_category_id" property="appIndexCategory" javaType="cn.peyton.plum.mall.pojo.AppIndexCategory"
+			 select="cn.peyton.plum.mall.mapper.AppIndexCategoryMapper.selectByPrimaryKey" jdbcType="BIGINT">
+		</association>
+	</resultMap>
+
+	<sql id="Column_app_index_data_List">
+		id,type,data,seq,app_index_category_id
+	</sql>
+
+	<insert id="insert" parameterType="cn.peyton.plum.mall.pojo.AppIndexData" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into app_index_data(type,data,seq,app_index_category_id)
+		values (#{type},#{data},#{seq},#{appIndexCategory.id})
+	</insert>
+
+	<insert id="insertSelective" parameterType="cn.peyton.plum.mall.pojo.AppIndexData" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into app_index_data
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="type != null">type,</if>
+			<if test="data != null">data,</if>
+			<if test="seq != null">seq,</if>
+			<if test="appIndexCategory != null">app_index_category_id,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="type != null">#{type},</if>
+			<if test="data != null">#{data},</if>
+			<if test="seq != null">#{seq},</if>
+			<if test="appIndexCategory != null">#{appIndexCategory.id},</if>
+		</trim>
+	</insert>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from app_index_data
+		where id = #{id}
+	</delete>
+
+	<update id="updateByPrimaryKeySelective" parameterType="cn.peyton.plum.mall.pojo.AppIndexData">
+		update app_index_data
+		<set>
+			<if test="type != null">type = #{type},</if>
+			<if test="data != null">data = #{data},</if>
+			<if test="seq != null">seq = #{seq},</if>
+			<if test="appIndexCategory != null">app_index_category_id = #{appIndexCategory.id},</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="cn.peyton.plum.mall.pojo.AppIndexData">
+		update app_index_data
+		set 
+			type = #{type},
+			data = #{data},
+			seq = #{seq},
+			app_index_category_id = #{appIndexCategory.id}
+		where id = #{id}
+	</update>
+
+	<select id="selectByPrimaryKey" resultMap="ResultAppIndexDataMap"  parameterType="java.lang.Long">
+		select
+		<include refid="Column_app_index_data_List"/>
+		from app_index_data
+		where id = #{id}
+	</select>
+
+    <!-- new create method   -->
+    <select id="finds" resultMap="ResultAppIndexDataMap">
+        select
+        <include refid="Column_app_index_data_List"/>
+        from app_index_data
+    </select>
+    <select id="findByAppIndexCategoryId" resultType="cn.peyton.plum.mall.pojo.AppIndexData">
+        select
+        <include refid="Column_app_index_data_List"/>
+        from app_index_data
+        where app_index_category_id = #{indexCategoryIe}
+    </select>
+
+</mapper>

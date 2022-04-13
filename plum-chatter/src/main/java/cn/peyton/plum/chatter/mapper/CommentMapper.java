@@ -89,4 +89,11 @@ public interface CommentMapper {
      * @return 评论对象集合
      */
     List<Comment> findByPostId(Integer postId);
+
+    /**
+     * <h4>根据文章ID 查找 评论数</h4>
+     * @param postId
+     * @return 条数
+     */
+    int countByPostId(Integer postId);
 }

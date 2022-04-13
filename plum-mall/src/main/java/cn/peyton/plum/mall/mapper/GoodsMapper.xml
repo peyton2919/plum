@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.peyton.plum.mall.mapper.GoodsMapper">
+	<resultMap id="ResultGoodsMap" type="cn.peyton.plum.mall.pojo.Goods">
+		<id column="id" property="id" jdbcType="BIGINT"/>
+		<result column="title" property="title" jdbcType="VARCHAR"/>
+		<result column="category_id" property="categoryId" jdbcType="INTEGER"/>
+		<result column="cover" property="cover" jdbcType="VARCHAR"/>
+		<result column="rating" property="rating" jdbcType="FLOAT"/>
+		<result column="sale_count" property="saleCount" jdbcType="INTEGER"/>
+		<result column="review_count" property="reviewCount" jdbcType="INTEGER"/>
+		<result column="min_sku_price" property="minSkuPrice" jdbcType="DECIMAL"/>
+		<result column="min_price" property="minPrice" jdbcType="DECIMAL"/>
+		<result column="desc" property="desc" jdbcType="VARCHAR"/>
+		<result column="unit" property="unit" jdbcType="VARCHAR"/>
+		<result column="stock" property="stock" jdbcType="INTEGER"/>
+		<result column="min_stock" property="minStock" jdbcType="INTEGER"/>
+		<result column="ischeck" property="ischeck" jdbcType="TINYINT"/>
+		<result column="status" property="status" jdbcType="TINYINT"/>
+		<result column="stock_display" property="stockDisplay" jdbcType="TINYINT"/>
+		<result column="express_id" property="expressId" jdbcType="INTEGER"/>
+		<result column="sku_type" property="skuType" jdbcType="TINYINT"/>
+		<result column="sku_value" property="skuValue" jdbcType="VARCHAR"/>
+		<result column="content" property="content" jdbcType="LONGVARCHAR"/>
+		<result column="discount" property="discount" jdbcType="FLOAT"/>
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+		<result column="seq" property="seq" jdbcType="INTEGER"/>
+		<result column="brand_id" property="brandId" jdbcType="INTEGER"/>
+	</resultMap>
+
+    <resultMap id="ResultGoodsHotMap" type="cn.peyton.plum.mall.vo.GoodsHotVo">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="cover" property="cover" jdbcType="VARCHAR"/>
+        <result column="desc" property="desc" jdbcType="VARCHAR"/>
+        <result column="min_sku_price" property="minSkuPrice" jdbcType="DECIMAL"/>
+        <result column="min_price" property="minPrice" jdbcType="DECIMAL"/>
+    </resultMap>
+
+	<sql id="Column_goods_List">
+		id,title,category_id,cover,rating,sale_count,review_count,min_sku_price,min_price,`desc`,unit,stock,min_stock,ischeck,status,stock_display,express_id,sku_type,sku_value,content,discount,create_time,seq,brand_id
+	</sql>
+
+    <sql id="column_goods_hot_list">
+        id,title,cover,min_sku_price,min_price,`desc`
+    </sql>
+
+	<insert id="insert" parameterType="cn.peyton.plum.mall.pojo.Goods" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into goods(title,category_id,cover,rating,sale_count,review_count,min_sku_price,min_price,desc,unit,stock,min_stock,ischeck,status,stock_display,express_id,sku_type,sku_value,content,discount,create_time,seq,brand_id)
+		values (#{title},#{categoryId},#{cover},#{rating},#{saleCount},#{reviewCount},#{minSkuPrice},#{minPrice},#{desc},#{unit},#{stock},#{minStock},#{ischeck},#{status},#{stockDisplay},#{expressId},#{skuType},#{skuValue},#{content},#{discount},#{createTime},#{seq},#{brandId})
+	</insert>
+
+	<insert id="insertSelective" parameterType="cn.peyton.plum.mall.pojo.Goods" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into goods
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="title != null">title,</if>
+			<if test="categoryId != null">category_id,</if>
+			<if test="cover != null">cover,</if>
+			<if test="rating != null">rating,</if>
+			<if test="saleCount != null">sale_count,</if>
+			<if test="reviewCount != null">review_count,</if>
+			<if test="minSkuPrice != null">min_sku_price,</if>
+			<if test="minPrice != null">min_price,</if>
+			<if test="desc != null">desc,</if>
+			<if test="unit != null">unit,</if>
+			<if test="stock != null">stock,</if>
+			<if test="minStock != null">min_stock,</if>
+			<if test="ischeck != null">ischeck,</if>
+			<if test="status != null">status,</if>
+			<if test="stockDisplay != null">stock_display,</if>
+			<if test="expressId != null">express_id,</if>
+			<if test="skuType != null">sku_type,</if>
+			<if test="skuValue != null">sku_value,</if>
+			<if test="content != null">content,</if>
+			<if test="discount != null">discount,</if>
+			<if test="createTime != null">create_time,</if>
+			<if test="seq != null">seq,</if>
+			<if test="brandId != null">brand_id,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="title != null">#{title},</if>
+			<if test="categoryId != null">#{categoryId},</if>
+			<if test="cover != null">#{cover},</if>
+			<if test="rating != null">#{rating},</if>
+			<if test="saleCount != null">#{saleCount},</if>
+			<if test="reviewCount != null">#{reviewCount},</if>
+			<if test="minSkuPrice != null">#{minSkuPrice},</if>
+			<if test="minPrice != null">#{minPrice},</if>
+			<if test="desc != null">#{desc},</if>
+			<if test="unit != null">#{unit},</if>
+			<if test="stock != null">#{stock},</if>
+			<if test="minStock != null">#{minStock},</if>
+			<if test="ischeck != null">#{ischeck},</if>
+			<if test="status != null">#{status},</if>
+			<if test="stockDisplay != null">#{stockDisplay},</if>
+			<if test="expressId != null">#{expressId},</if>
+			<if test="skuType != null">#{skuType},</if>
+			<if test="skuValue != null">#{skuValue},</if>
+			<if test="content != null">#{content},</if>
+			<if test="discount != null">#{discount},</if>
+			<if test="createTime != null">#{createTime},</if>
+			<if test="seq != null">#{seq},</if>
+			<if test="brandId != null">#{brandId},</if>
+		</trim>
+	</insert>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from goods
+		where id = #{id}
+	</delete>
+
+	<update id="updateByPrimaryKeySelective" parameterType="cn.peyton.plum.mall.pojo.Goods">
+		update goods
+		<set>
+			<if test="title != null">title = #{title},</if>
+			<if test="categoryId != null">category_id = #{categoryId},</if>
+			<if test="cover != null">cover = #{cover},</if>
+			<if test="rating != null">rating = #{rating},</if>
+			<if test="saleCount != null">sale_count = #{saleCount},</if>
+			<if test="reviewCount != null">review_count = #{reviewCount},</if>
+			<if test="minSkuPrice != null">min_sku_price = #{minSkuPrice},</if>
+			<if test="minPrice != null">min_price = #{minPrice},</if>
+			<if test="desc != null">desc = #{desc},</if>
+			<if test="unit != null">unit = #{unit},</if>
+			<if test="stock != null">stock = #{stock},</if>
+			<if test="minStock != null">min_stock = #{minStock},</if>
+			<if test="ischeck != null">ischeck = #{ischeck},</if>
+			<if test="status != null">status = #{status},</if>
+			<if test="stockDisplay != null">stock_display = #{stockDisplay},</if>
+			<if test="expressId != null">express_id = #{expressId},</if>
+			<if test="skuType != null">sku_type = #{skuType},</if>
+			<if test="skuValue != null">sku_value = #{skuValue},</if>
+			<if test="content != null">content = #{content},</if>
+			<if test="discount != null">discount = #{discount},</if>
+			<if test="createTime != null">create_time = #{createTime},</if>
+			<if test="seq != null">seq = #{seq},</if>
+			<if test="brandId != null">brand_id = #{brandId},</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="cn.peyton.plum.mall.pojo.Goods">
+		update goods
+		set 
+			title = #{title},
+			category_id = #{categoryId},
+			cover = #{cover},
+			rating = #{rating},
+			sale_count = #{saleCount},
+			review_count = #{reviewCount},
+			min_sku_price = #{minSkuPrice},
+			min_price = #{minPrice},
+			desc = #{desc},
+			unit = #{unit},
+			stock = #{stock},
+			min_stock = #{minStock},
+			ischeck = #{ischeck},
+			status = #{status},
+			stock_display = #{stockDisplay},
+			express_id = #{expressId},
+			sku_type = #{skuType},
+			sku_value = #{skuValue},
+			content = #{content},
+			discount = #{discount},
+			create_time = #{createTime},
+			seq = #{seq},
+			brand_id = #{brandId}
+		where id = #{id}
+	</update>
+
+	<select id="selectByPrimaryKey" resultMap="ResultGoodsMap"  parameterType="java.lang.Long">
+		select
+		<include refid="Column_goods_List"/>
+		from goods
+		where id = #{id}
+	</select>
+    <!-- new create method   -->
+
+    <select id="findByHot" resultMap="ResultGoodsHotMap">
+        select <include refid="column_goods_hot_list"></include>
+        from goods where ischeck=1 and status=1
+        <if test="categoryId > 0">
+            and category_id=#{categoryId}
+        </if>
+         order BY seq desc
+        limit #{page.offset},#{page.pageSize}
+    </select>
+
+    <select id="findByHotAndRandTopNumber" resultMap="ResultGoodsHotMap">
+        select <include refid="column_goods_hot_list"/>
+        from goods where ischeck=1 and status=1
+        <if test="categoryId > 0">
+            and category_id=#{categoryId}
+        </if>
+        ORDER BY RAND() LIMIT #{row}
+    </select>
+
+
+</mapper>

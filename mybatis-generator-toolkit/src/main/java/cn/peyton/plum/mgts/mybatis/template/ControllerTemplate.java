@@ -1,6 +1,6 @@
 package cn.peyton.plum.mgts.mybatis.template;
 
-import cn.peyton.plum.mgts.mybatis.util.ConvertUtils;
+import cn.peyton.plum.mgts.mybatis.util.ConvertUtil;
 
 /**
  * <h3>controller 模板</h3>
@@ -30,7 +30,7 @@ public class ControllerTemplate extends BaseTemplate {
         sb.append("import org.springframework.web.bind.annotation.RequestMapping;\r\n");
         sb.append("import javax.annotation.Resource;\r\n\r\n");
 
-        createAnnotation(commentName + "Controller 类");
+        createAnnotation(commentName + " Controller 类");
         createControllerClass(objName);
         createFileContent(packageName, objName + "Controller", "java");
         return sb.toString();
@@ -42,7 +42,7 @@ public class ControllerTemplate extends BaseTemplate {
      * <h4>创建Controller 类</h4>
      */
     private static void createControllerClass(String objName) {
-        String tempObjName = ConvertUtils.toFirstLowerCase(objName);
+        String tempObjName = ConvertUtil.toFirstLowerCase(objName);
         sb.append("@Controller\r\n");
         sb.append("@RequestMapping(\"/\")\r\n");
         sb.append("public class " + objName + "Controller {\r\n\r\n");

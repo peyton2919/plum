@@ -1,6 +1,6 @@
 package cn.peyton.plum.mgts.mybatis.template;
 
-import cn.peyton.plum.mgts.mybatis.util.ConvertUtils;
+import cn.peyton.plum.mgts.mybatis.util.ConvertUtil;
 
 /**
  * <h3>Service 模板</h3>
@@ -42,7 +42,7 @@ public class ServiceTemplate extends BaseTemplate {
         if (null != packageName) {
             sb.append("package " + packageName + ";\r\n");
         }
-        createAnnotation(commentName+"Service 接口");
+        createAnnotation(commentName+" Service 接口");
         createServiceClass(objName);
         createFileContent(packageName, objName + "Service", "java");
         return sb.toString();
@@ -66,7 +66,7 @@ public class ServiceTemplate extends BaseTemplate {
         sb.append("import org.springframework.stereotype.Service;\r\n");
         sb.append("import javax.annotation.Resource;\r\n\r\n");
 
-        createAnnotation(commentName+"Service 实现类");
+        createAnnotation(commentName+" Service 实现类");
         createServiceImplClass(objName);
 
         createFileContent(packageName + ".impl", objName + "ServiceImpl", "java");
@@ -88,7 +88,7 @@ public class ServiceTemplate extends BaseTemplate {
      * <h4>创建Service接口</h4>
      */
     private static void createServiceImplClass(String objName) {
-        String tempObjName = ConvertUtils.toFirstLowerCase(objName);
+        String tempObjName = ConvertUtil.toFirstLowerCase(objName);
         sb.append("@Service(\"" + tempObjName + "Service\")\r\n");
         sb.append("public class " + objName + "ServiceImpl implements " + objName + "Service {\r\n");
 

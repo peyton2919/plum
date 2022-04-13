@@ -147,17 +147,17 @@ public final class Regulation implements Serializable {
 
     /**
      * <pre>
-     *      <h4>BigDecimal(10,2) 浮点小数(0-2) 验证</h4>
+     *      <h4>BigDecimal(10,3)正负数 浮点小数(0-3) 验证</h4>
      * </pre>
      */
-    public static final String REGEX_DECIMAL = "^\\d{0,10}.\\d{0,2}$";
+    public static final String REGEX_DECIMAL = "^(-)?(\\d{0,10}.\\d{0,3})$";
 
     /**
      * <pre>
      *      <h4>浮点小数  验证</h4>
      * </pre>
      */
-    public static final String REGEX_DOUBLE_ALL = "^(-)?(\\d+\\.+\\d+)$";
+    public static final String REGEX_DOUBLE_ALL = "^(-)?((\\d+\\.+\\d+)||\\d+)$";
 
     /**
      * <pre>
@@ -165,6 +165,13 @@ public final class Regulation implements Serializable {
      * </pre>
      */
     public static final String REGEX_INT_DOUBLE = "^((\\d+\\.+\\d+)||(\\d+))$";
+
+    /**
+     * <pre>
+     *      <h4>浮点小数 BigDecimal 12位号数 6位小数  验证</h4>
+     * </pre>
+     */
+    public static final String REGEX_BIG_DECIMAL = "^[1-9]\\d{0,12}(\\.\\d{1,6})?$|^0(\\.\\d{0,6})?$";
 
     /**
      * <pre>
@@ -202,7 +209,19 @@ public final class Regulation implements Serializable {
      */
     public static final String REGEX_ENGLISH_NUMERAL_UNDERLINE = "^\\w+$";
 
+    /**
+     * <pre>
+     *      <h4>用户名称长度6-18(包含A-Za-z0-9_-) 验证</h4>
+     * </pre>
+     */
+    public static final String REGEX_USERNAME_6_18 = "^[A-Za-z0-9_-]{6,18}$";
 
+    /**
+     * <pre>
+     *      <h4>用户名称长度6-18(包含A-Za-z0-9_-@#+=) 验证</h4>
+     * </pre>
+     */
+    public static final String REGEX_PASSWORD_6_18 = "^[A-Za-z0-9_-@#+=]{6,18}$";
 
     /**
      * <h4>正则校验</h4>
@@ -210,11 +229,12 @@ public final class Regulation implements Serializable {
      * @param valiField 要校验的字符
      * @return true 表示校验通过 ; false 表示没校验通过;
      */
-    public static boolean regex(String check, String valiField) {
+    public final static Boolean regex(String check, String valiField) {
         try {
             Pattern pattern = Pattern.compile(check);
             Matcher matcher = pattern.matcher(valiField);
-            return matcher.matches();
+            Boolean res = matcher.matches();
+            return res;
         } catch (GlobalException e) {
             log.error("正则匹配异常: 匹配规则:{} , 匹配字段:{}",check,valiField);
         }

@@ -32,13 +32,23 @@ public class UserBindServiceImpl implements UserBindService {
     }
 
     @Override
-    public boolean insert(UserBindParam param) {
+    public UserBindParam create(UserBindParam param) {
         UserBind userBind = param.convert();
-        return userBindMapper.insertSelective(userBind) > 0 ? true : false;
+        int result = userBindMapper.insertSelective(userBind);
+        if (result > 0) {
+            return param.compat(userBind);
+        }
+        return null;
     }
 
     @Override
     public List<UserBindParam> findByUserId(Integer id) {
         return new UserBindBo().adapter(userBindMapper.findByUserId(id));
+    }
+
+    @Override
+    public UserBindParam findByOpenIdAndType(String openId, String type) {
+        UserBind _userBind = userBindMapper.findByOpenIdAndType(openId, type);
+        return (null != _userBind) ? new UserBindParam().compat(_userBind) : null;
     }
 }

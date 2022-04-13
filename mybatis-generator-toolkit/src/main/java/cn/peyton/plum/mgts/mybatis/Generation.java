@@ -5,6 +5,7 @@ import cn.peyton.plum.mgts.mybatis.entity.Table;
 import cn.peyton.plum.mgts.mybatis.template.CompatTemplate;
 import cn.peyton.plum.mgts.mybatis.template.ConvertTemplate;
 import cn.peyton.plum.mgts.mybatis.template.TextTemplate;
+import cn.peyton.plum.mgts.mybatis.util.DatabaseUtil;
 
 import java.util.List;
 
@@ -35,6 +36,17 @@ public final class Generation {
         DbHelper.setURL(url);
         DbHelper.setUSRENAME(username);
         DbHelper.setPASSWORD(password);
+    }
+
+    /**
+     *
+     * @param util
+     */
+    public Generation(DatabaseUtil util){
+        DbHelper.setDRIVER(util.getDriver());
+        DbHelper.setURL(util.getUrl());
+        DbHelper.setUSRENAME(util.getUsername());
+        DbHelper.setPASSWORD(util.getPassword());
     }
 
     /**

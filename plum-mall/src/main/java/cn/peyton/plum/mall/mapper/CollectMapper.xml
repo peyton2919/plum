@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.peyton.plum.mall.mapper.CollectMapper">
+	<resultMap id="ResultCollectMap" type="cn.peyton.plum.mall.pojo.Collect">
+		<id column="id" property="id" jdbcType="BIGINT"/>
+		<result column="goods_sku_id" property="goodsSkuId" jdbcType="BIGINT"/>
+		<result column="member_id" property="memberId" jdbcType="BIGINT"/>
+		<result column="status" property="status" jdbcType="INTEGER"/>
+	</resultMap>
+
+	<sql id="Column_collect_List">
+		id,goods_sku_id,member_id,status
+	</sql>
+
+	<insert id="insert" parameterType="cn.peyton.plum.mall.pojo.Collect" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into collect(goods_sku_id,member_id,status)
+		values (#{goodsSkuId},#{memberId},#{status})
+	</insert>
+
+	<insert id="insertSelective" parameterType="cn.peyton.plum.mall.pojo.Collect" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into collect
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="goodsSkuId != null">goods_sku_id,</if>
+			<if test="memberId != null">member_id,</if>
+			<if test="status != null">status,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="goodsSkuId != null">#{goodsSkuId},</if>
+			<if test="memberId != null">#{memberId},</if>
+			<if test="status != null">#{status},</if>
+		</trim>
+	</insert>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from collect
+		where id = #{id}
+	</delete>
+
+	<update id="updateByPrimaryKeySelective" parameterType="cn.peyton.plum.mall.pojo.Collect">
+		update collect
+		<set>
+			<if test="goodsSkuId != null">goods_sku_id = #{goodsSkuId},</if>
+			<if test="memberId != null">member_id = #{memberId},</if>
+			<if test="status != null">status = #{status},</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="cn.peyton.plum.mall.pojo.Collect">
+		update collect
+		set 
+			goods_sku_id = #{goodsSkuId},
+			member_id = #{memberId},
+			status = #{status}
+		where id = #{id}
+	</update>
+
+	<select id="selectByPrimaryKey" resultMap="ResultCollectMap"  parameterType="java.lang.Long">
+		select
+		<include refid="Column_collect_List"/>
+		from collect
+		where id = #{id}
+	</select>
+
+	<!-- new create method   -->
+
+</mapper>

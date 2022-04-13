@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.peyton.plum.mall.mapper.SysCityMapper">
+	<resultMap id="ResultSysCityMap" type="cn.peyton.plum.mall.pojo.SysCity">
+		<id column="id" property="id" jdbcType="INTEGER"/>
+		<result column="sys_province_id" property="sysProvinceId" jdbcType="INTEGER"/>
+		<result column="name" property="name" jdbcType="VARCHAR"/>
+		<result column="zip" property="zip" jdbcType="VARCHAR"/>
+		<result column="seq" property="seq" jdbcType="INTEGER"/>
+	</resultMap>
+
+	<sql id="Column_sys_city_List">
+		id,sys_province_id,name,zip,seq
+	</sql>
+
+	<insert id="insert" parameterType="cn.peyton.plum.mall.pojo.SysCity" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into sys_city(sys_province_id,name,zip,seq)
+		values (#{sysProvinceId},#{name},#{zip},#{seq})
+	</insert>
+
+	<insert id="insertSelective" parameterType="cn.peyton.plum.mall.pojo.SysCity" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into sys_city
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="sysProvinceId != null">sys_province_id,</if>
+			<if test="name != null">name,</if>
+			<if test="zip != null">zip,</if>
+			<if test="seq != null">seq,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="sysProvinceId != null">#{sysProvinceId},</if>
+			<if test="name != null">#{name},</if>
+			<if test="zip != null">#{zip},</if>
+			<if test="seq != null">#{seq},</if>
+		</trim>
+	</insert>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from sys_city
+		where id = #{id}
+	</delete>
+
+	<update id="updateByPrimaryKeySelective" parameterType="cn.peyton.plum.mall.pojo.SysCity">
+		update sys_city
+		<set>
+			<if test="sysProvinceId != null">sys_province_id = #{sysProvinceId},</if>
+			<if test="name != null">name = #{name},</if>
+			<if test="zip != null">zip = #{zip},</if>
+			<if test="seq != null">seq = #{seq},</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="cn.peyton.plum.mall.pojo.SysCity">
+		update sys_city
+		set 
+			sys_province_id = #{sysProvinceId},
+			name = #{name},
+			zip = #{zip},
+			seq = #{seq}
+		where id = #{id}
+	</update>
+
+	<select id="selectByPrimaryKey" resultMap="ResultSysCityMap"  parameterType="java.lang.Integer">
+		select
+		<include refid="Column_sys_city_List"/>
+		from sys_city
+		where id = #{id}
+	</select>
+
+	<!-- new create method   -->
+
+</mapper>

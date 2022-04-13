@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.peyton.plum.mall.mapper.CartMapper">
+	<resultMap id="ResultCartMap" type="cn.peyton.plum.mall.pojo.Cart">
+		<id column="id" property="id" jdbcType="BIGINT"/>
+		<result column="shop_id" property="shopId" jdbcType="BIGINT"/>
+		<result column="skus_type" property="skusType" jdbcType="TINYINT"/>
+		<result column="num" property="num" jdbcType="INTEGER"/>
+		<result column="status" property="status" jdbcType="TINYINT"/>
+		<association column="member_id" property="member" javaType="cn.peyton.plum.mall.pojo.Member"
+			 select="cn.peyton.plum.mall.mapper.MemberMapper.selectByPrimaryKey" jdbcType="BIGINT">
+		</association>
+	</resultMap>
+
+	<sql id="Column_cart_List">
+		id,member_id,shop_id,skus_type,num,status
+	</sql>
+
+	<insert id="insert" parameterType="cn.peyton.plum.mall.pojo.Cart" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into cart(member_id,shop_id,skus_type,num,status)
+		values (#{member.id},#{shopId},#{skusType},#{num},#{status})
+	</insert>
+
+	<insert id="insertSelective" parameterType="cn.peyton.plum.mall.pojo.Cart" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into cart
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="member != null">member_id,</if>
+			<if test="shopId != null">shop_id,</if>
+			<if test="skusType != null">skus_type,</if>
+			<if test="num != null">num,</if>
+			<if test="status != null">status,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="member != null">#{member.id},</if>
+			<if test="shopId != null">#{shopId},</if>
+			<if test="skusType != null">#{skusType},</if>
+			<if test="num != null">#{num},</if>
+			<if test="status != null">#{status},</if>
+		</trim>
+	</insert>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from cart
+		where id = #{id}
+	</delete>
+
+	<update id="updateByPrimaryKeySelective" parameterType="cn.peyton.plum.mall.pojo.Cart">
+		update cart
+		<set>
+			<if test="member != null">member_id = #{member.id},</if>
+			<if test="shopId != null">shop_id = #{shopId},</if>
+			<if test="skusType != null">skus_type = #{skusType},</if>
+			<if test="num != null">num = #{num},</if>
+			<if test="status != null">status = #{status},</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="cn.peyton.plum.mall.pojo.Cart">
+		update cart
+		set 
+			member_id = #{member.id},
+			shop_id = #{shopId},
+			skus_type = #{skusType},
+			num = #{num},
+			status = #{status}
+		where id = #{id}
+	</update>
+
+	<select id="selectByPrimaryKey" resultMap="ResultCartMap"  parameterType="java.lang.Long">
+		select
+		<include refid="Column_cart_List"/>
+		from cart
+		where id = #{id}
+	</select>
+
+	<!-- new create method   -->
+
+</mapper>

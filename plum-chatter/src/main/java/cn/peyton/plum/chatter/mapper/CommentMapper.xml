@@ -26,73 +26,36 @@
 	<insert id="insertSelective" parameterType="cn.peyton.plum.chatter.pojo.Comment" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
 		insert into comment
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="user.id != null">
-				user_id,
-			</if>
-			<if test="fId != null">
-				f_id,
-			</if>
-			<if test="fnum != null">
-				fnum,
-			</if>
-			<if test="data != null">
-				data,
-			</if>
-			<if test="createTime != null">
-				create_time,
-			</if>
-			<if test="postId != null">
-				post_id,
-			</if>
+			<if test="user.id != null">user_id,</if>
+			<if test="fId != null">f_id,</if>
+			<if test="fnum != null">fnum,</if>
+			<if test="data != null">data,</if>
+			<if test="createTime != null">create_time,</if>
+			<if test="postId != null">post_id,</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="user.id != null">
-				#{user.id},
-			</if>
-			<if test="fId != null">
-				#{fId},
-			</if>
-			<if test="fnum != null">
-				#{fnum},
-			</if>
-			<if test="data != null">
-				#{data},
-			</if>
-			<if test="createTime != null">
-				#{createTime},
-			</if>
-			<if test="postId != null">
-				#{postId},
-			</if>
+			<if test="user.id != null">#{user.id},</if>
+			<if test="fId != null">#{fId},</if>
+			<if test="fnum != null">#{fnum},</if>
+			<if test="data != null">#{data},</if>
+			<if test="createTime != null">#{createTime},</if>
+			<if test="postId != null">#{postId},</if>
 		</trim>
 	</insert>
 
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-		delete from comment
-		where id = #{id}
+		delete from comment where id = #{id}
 	</delete>
 
 	<update id="updateByPrimaryKeySelective" parameterType="cn.peyton.plum.chatter.pojo.Comment">
 		update comment
 		<set>
-			<if test="user.id != null">
-				user_id = #{user.id},
-			</if>
-			<if test="fId != null">
-				f_id = #{fId},
-			</if>
-			<if test="fnum != null">
-				fnum = #{fnum},
-			</if>
-			<if test="data != null">
-				data = #{data},
-			</if>
-			<if test="createTime != null">
-				create_time = #{createTime},
-			</if>
-			<if test="postId != null">
-				post_id = #{postId},
-			</if>
+			<if test="user.id != null">user_id = #{user.id},</if>
+			<if test="fId != null">f_id = #{fId},</if>
+			<if test="fnum != null">fnum = #{fnum},</if>
+			<if test="data != null">data = #{data},</if>
+			<if test="createTime != null">create_time = #{createTime},</if>
+			<if test="postId != null">post_id = #{postId},</if>
 		</set>
 		where id = #{id}
 	</update>
@@ -111,39 +74,29 @@
 
 
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-		select
-		<include refid="Base_Column_List"/>
-		from comment
-		where id = #{id}
+		select <include refid="Base_Column_List"/>
+		from comment where id = #{id}
 	</select>
 
     <!-- new create method   -->
     <select id="checkCommentByFId" resultType="java.lang.Integer">
-        select
-            count(id)
-        from comment
-        where id = #{fId}
+        select count(id) from comment where id = #{fId}
     </select>
 
     <select id="checkCommentByFIdAndPostId" resultType="java.lang.Integer">
-        select
-            count(id)
-        from comment
-        where id = #{fId} and post_id = #{postId}
+        select count(id) from comment where id = #{fId} and post_id = #{postId}
     </select>
 
-
     <update id="updateFnumInt">
-        UPDATE comment
-        SET fnum = fnum + 1
-        WHERE id=#{id}
+        UPDATE comment SET fnum = fnum + 1 WHERE id=#{id}
     </update>
 
     <select id="findByPostId" resultMap="BaseResultMap">
-        SELECT
-            <include refid="Base_Column_List"/>
-        FROM comment
-        WHERE post_id = #{postId}
+        SELECT <include refid="Base_Column_List"/>
+        FROM comment WHERE post_id = #{postId}
+    </select>
+    <select id="countByPostId" resultType="java.lang.Integer">
+        SELECT count(id) FROM comment WHERE post_id = #{postId}
     </select>
 
 </mapper>

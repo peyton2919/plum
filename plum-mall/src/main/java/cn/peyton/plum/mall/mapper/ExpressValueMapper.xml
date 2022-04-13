@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.peyton.plum.mall.mapper.ExpressValueMapper">
+	<resultMap id="ResultExpressValueMap" type="cn.peyton.plum.mall.pojo.ExpressValue">
+		<id column="id" property="id" jdbcType="INTEGER"/>
+		<result column="express_id" property="expressId" jdbcType="INTEGER"/>
+		<result column="region" property="region" jdbcType="LONGVARCHAR"/>
+		<result column="first" property="first" jdbcType="DOUBLE"/>
+		<result column="first_price" property="firstPrice" jdbcType="DECIMAL"/>
+		<result column="add" property="add" jdbcType="DOUBLE"/>
+		<result column="add_price" property="addPrice" jdbcType="DECIMAL"/>
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+	</resultMap>
+
+	<sql id="Column_express_value_List">
+		id,express_id,region,first,first_price,add,add_price,create_time
+	</sql>
+
+	<insert id="insert" parameterType="cn.peyton.plum.mall.pojo.ExpressValue" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into express_value(express_id,region,first,first_price,add,add_price,create_time)
+		values (#{expressId},#{region},#{first},#{firstPrice},#{add},#{addPrice},#{createTime})
+	</insert>
+
+	<insert id="insertSelective" parameterType="cn.peyton.plum.mall.pojo.ExpressValue" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into express_value
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="expressId != null">express_id,</if>
+			<if test="region != null">region,</if>
+			<if test="first != null">first,</if>
+			<if test="firstPrice != null">first_price,</if>
+			<if test="add != null">add,</if>
+			<if test="addPrice != null">add_price,</if>
+			<if test="createTime != null">create_time,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="expressId != null">#{expressId},</if>
+			<if test="region != null">#{region},</if>
+			<if test="first != null">#{first},</if>
+			<if test="firstPrice != null">#{firstPrice},</if>
+			<if test="add != null">#{add},</if>
+			<if test="addPrice != null">#{addPrice},</if>
+			<if test="createTime != null">#{createTime},</if>
+		</trim>
+	</insert>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from express_value
+		where id = #{id}
+	</delete>
+
+	<update id="updateByPrimaryKeySelective" parameterType="cn.peyton.plum.mall.pojo.ExpressValue">
+		update express_value
+		<set>
+			<if test="expressId != null">express_id = #{expressId},</if>
+			<if test="region != null">region = #{region},</if>
+			<if test="first != null">first = #{first},</if>
+			<if test="firstPrice != null">first_price = #{firstPrice},</if>
+			<if test="add != null">add = #{add},</if>
+			<if test="addPrice != null">add_price = #{addPrice},</if>
+			<if test="createTime != null">create_time = #{createTime},</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="cn.peyton.plum.mall.pojo.ExpressValue">
+		update express_value
+		set 
+			express_id = #{expressId},
+			region = #{region},
+			first = #{first},
+			first_price = #{firstPrice},
+			add = #{add},
+			add_price = #{addPrice},
+			create_time = #{createTime}
+		where id = #{id}
+	</update>
+
+	<select id="selectByPrimaryKey" resultMap="ResultExpressValueMap"  parameterType="java.lang.Integer">
+		select
+		<include refid="Column_express_value_List"/>
+		from express_value
+		where id = #{id}
+	</select>
+
+	<!-- new create method   -->
+
+</mapper>

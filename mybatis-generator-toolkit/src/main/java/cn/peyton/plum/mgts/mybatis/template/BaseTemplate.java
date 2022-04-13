@@ -3,7 +3,7 @@ package cn.peyton.plum.mgts.mybatis.template;
 import cn.peyton.plum.mgts.mybatis.entity.Column;
 import cn.peyton.plum.mgts.mybatis.entity.Table;
 import cn.peyton.plum.mgts.mybatis.file.FileUtil;
-import cn.peyton.plum.mgts.mybatis.util.ConvertUtils;
+import cn.peyton.plum.mgts.mybatis.util.ConvertUtil;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -39,7 +39,7 @@ public abstract class BaseTemplate {
     protected static void createAnnotation(String name) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         sb.append("/**\r\n");
-        sb.append(" * <h3> " + name + " .</h3>\r\n");
+        sb.append(" * <h3> " + name + "</h3>\r\n");
         sb.append(" * <pre>\r\n");
         sb.append(" * @author <a href=\"http://www.peyton.cn\">peyton</a>\r\n");
         sb.append(" * @email <a href=\"mailto:fz2919@tom.com\">fz2919@tom.com</a>\r\n");
@@ -130,14 +130,14 @@ public abstract class BaseTemplate {
                 int _rlen = fieldName.indexOf(prefixResult);
                 if (_rlen > -1) {
                     fieldResult = fieldName.substring(_rlen + prefixResult.length());
-                    fieldResult = ConvertUtils.toFirstLowerCase(fieldResult);
+                    fieldResult = ConvertUtil.toFirstLowerCase(fieldResult);
                 }else {
                     fieldResult = fieldName;
                 }
                 int _plen = fieldName.indexOf(prefixParam);
                 if (_plen > -1) {
                     fieldParam = fieldName.substring(_plen + prefixParam.length());
-                    fieldParam = ConvertUtils.toFirstLowerCase(fieldParam);
+                    fieldParam = ConvertUtil.toFirstLowerCase(fieldParam);
                 }else {
                     fieldParam = fieldName;
                 }
@@ -147,12 +147,12 @@ public abstract class BaseTemplate {
             }
 
             sb.append("\t\t");
-            String upperCaseField = ConvertUtils.convertFirst(fieldResult);
+            String upperCaseField = ConvertUtil.convertFirst(fieldResult);
             if (exist) {
                 sb.append(_ron + ".set" + upperCaseField + "(" + fieldParam + ");\r\n");
             }else {
                 sb.append("this.set" + upperCaseField + "(");
-                sb.append(_ron + ".get" + ConvertUtils.convertFirst(fieldParam) + "()");
+                sb.append(_ron + ".get" + ConvertUtil.convertFirst(fieldParam) + "()");
                 sb.append(");\r\n");
             }
         }

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.peyton.plum.mall.mapper.AppCategoryItemMapper">
+	<resultMap id="ResultAppCategoryItemMap" type="cn.peyton.plum.mall.pojo.AppCategoryItem">
+		<id column="id" property="id" jdbcType="BIGINT"/>
+		<result column="name" property="name" jdbcType="VARCHAR"/>
+		<result column="cover" property="cover" jdbcType="VARCHAR"/>
+		<result column="goods_id" property="goodsId" jdbcType="BIGINT"/>
+		<result column="seq" property="seq" jdbcType="INTEGER"/>
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+		<association column="category_id" property="category" javaType="cn.peyton.plum.mall.pojo.Category"
+			 select="cn.peyton.plum.mall.mapper.CategoryMapper.selectByPrimaryKey" jdbcType="INTEGER">
+		</association>
+	</resultMap>
+
+	<sql id="Column_app_category_item_List">
+		id,name,cover,category_id,goods_id,seq,create_time,update_time
+	</sql>
+
+	<insert id="insert" parameterType="cn.peyton.plum.mall.pojo.AppCategoryItem" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into app_category_item(name,cover,category_id,goods_id,seq,create_time,update_time)
+		values (#{name},#{cover},#{category.id},#{goodsId},#{seq},#{createTime},#{updateTime})
+	</insert>
+
+	<insert id="insertSelective" parameterType="cn.peyton.plum.mall.pojo.AppCategoryItem" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into app_category_item
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="name != null">name,</if>
+			<if test="cover != null">cover,</if>
+			<if test="category != null">category_id,</if>
+			<if test="goodsId != null">goods_id,</if>
+			<if test="seq != null">seq,</if>
+			<if test="createTime != null">create_time,</if>
+			<if test="updateTime != null">update_time,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="name != null">#{name},</if>
+			<if test="cover != null">#{cover},</if>
+			<if test="category != null">#{category.id},</if>
+			<if test="goodsId != null">#{goodsId},</if>
+			<if test="seq != null">#{seq},</if>
+			<if test="createTime != null">#{createTime},</if>
+			<if test="updateTime != null">#{updateTime},</if>
+		</trim>
+	</insert>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from app_category_item
+		where id = #{id}
+	</delete>
+
+	<update id="updateByPrimaryKeySelective" parameterType="cn.peyton.plum.mall.pojo.AppCategoryItem">
+		update app_category_item
+		<set>
+			<if test="name != null">name = #{name},</if>
+			<if test="cover != null">cover = #{cover},</if>
+			<if test="category != null">category_id = #{category.id},</if>
+			<if test="goodsId != null">goods_id = #{goodsId},</if>
+			<if test="seq != null">seq = #{seq},</if>
+			<if test="createTime != null">create_time = #{createTime},</if>
+			<if test="updateTime != null">update_time = #{updateTime},</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="cn.peyton.plum.mall.pojo.AppCategoryItem">
+		update app_category_item
+		set 
+			name = #{name},
+			cover = #{cover},
+			category_id = #{category.id},
+			goods_id = #{goodsId},
+			seq = #{seq},
+			create_time = #{createTime},
+			update_time = #{updateTime}
+		where id = #{id}
+	</update>
+
+	<select id="selectByPrimaryKey" resultMap="ResultAppCategoryItemMap"  parameterType="java.lang.Long">
+		select
+		<include refid="Column_app_category_item_List"/>
+		from app_category_item
+		where id = #{id}
+	</select>
+
+
+	<!-- new create method   -->
+
+</mapper>

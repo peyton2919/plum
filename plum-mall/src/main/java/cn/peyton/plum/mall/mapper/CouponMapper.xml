@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.peyton.plum.mall.mapper.CouponMapper">
+	<resultMap id="ResultCouponMap" type="cn.peyton.plum.mall.pojo.Coupon">
+		<id column="id" property="id" jdbcType="BIGINT"/>
+		<result column="name" property="name" jdbcType="VARCHAR"/>
+		<result column="type" property="type" jdbcType="TINYINT"/>
+		<result column="value" property="value" jdbcType="DECIMAL"/>
+		<result column="total" property="total" jdbcType="INTEGER"/>
+		<result column="used" property="used" jdbcType="INTEGER"/>
+		<result column="min_price" property="minPrice" jdbcType="DECIMAL"/>
+		<result column="start_time" property="startTime" jdbcType="TIMESTAMP"/>
+		<result column="end_time" property="endTime" jdbcType="TIMESTAMP"/>
+		<result column="status" property="status" jdbcType="TINYINT"/>
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+		<result column="seq" property="seq" jdbcType="INTEGER"/>
+		<result column="desc" property="desc" jdbcType="VARCHAR"/>
+	</resultMap>
+
+	<sql id="Column_coupon_List">
+		id,name,type,value,total,used,min_price,start_time,end_time,status,create_time,update_time,seq,desc
+	</sql>
+
+	<insert id="insert" parameterType="cn.peyton.plum.mall.pojo.Coupon" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into coupon(name,type,value,total,used,min_price,start_time,end_time,status,create_time,update_time,seq,desc)
+		values (#{name},#{type},#{value},#{total},#{used},#{minPrice},#{startTime},#{endTime},#{status},#{createTime},#{updateTime},#{seq},#{desc})
+	</insert>
+
+	<insert id="insertSelective" parameterType="cn.peyton.plum.mall.pojo.Coupon" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into coupon
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="name != null">name,</if>
+			<if test="type != null">type,</if>
+			<if test="value != null">value,</if>
+			<if test="total != null">total,</if>
+			<if test="used != null">used,</if>
+			<if test="minPrice != null">min_price,</if>
+			<if test="startTime != null">start_time,</if>
+			<if test="endTime != null">end_time,</if>
+			<if test="status != null">status,</if>
+			<if test="createTime != null">create_time,</if>
+			<if test="updateTime != null">update_time,</if>
+			<if test="seq != null">seq,</if>
+			<if test="desc != null">desc,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="name != null">#{name},</if>
+			<if test="type != null">#{type},</if>
+			<if test="value != null">#{value},</if>
+			<if test="total != null">#{total},</if>
+			<if test="used != null">#{used},</if>
+			<if test="minPrice != null">#{minPrice},</if>
+			<if test="startTime != null">#{startTime},</if>
+			<if test="endTime != null">#{endTime},</if>
+			<if test="status != null">#{status},</if>
+			<if test="createTime != null">#{createTime},</if>
+			<if test="updateTime != null">#{updateTime},</if>
+			<if test="seq != null">#{seq},</if>
+			<if test="desc != null">#{desc},</if>
+		</trim>
+	</insert>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from coupon
+		where id = #{id}
+	</delete>
+
+	<update id="updateByPrimaryKeySelective" parameterType="cn.peyton.plum.mall.pojo.Coupon">
+		update coupon
+		<set>
+			<if test="name != null">name = #{name},</if>
+			<if test="type != null">type = #{type},</if>
+			<if test="value != null">value = #{value},</if>
+			<if test="total != null">total = #{total},</if>
+			<if test="used != null">used = #{used},</if>
+			<if test="minPrice != null">min_price = #{minPrice},</if>
+			<if test="startTime != null">start_time = #{startTime},</if>
+			<if test="endTime != null">end_time = #{endTime},</if>
+			<if test="status != null">status = #{status},</if>
+			<if test="createTime != null">create_time = #{createTime},</if>
+			<if test="updateTime != null">update_time = #{updateTime},</if>
+			<if test="seq != null">seq = #{seq},</if>
+			<if test="desc != null">desc = #{desc},</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="cn.peyton.plum.mall.pojo.Coupon">
+		update coupon
+		set 
+			name = #{name},
+			type = #{type},
+			value = #{value},
+			total = #{total},
+			used = #{used},
+			min_price = #{minPrice},
+			start_time = #{startTime},
+			end_time = #{endTime},
+			status = #{status},
+			create_time = #{createTime},
+			update_time = #{updateTime},
+			seq = #{seq},
+			desc = #{desc}
+		where id = #{id}
+	</update>
+
+	<select id="selectByPrimaryKey" resultMap="ResultCouponMap"  parameterType="java.lang.Long">
+		select
+		<include refid="Column_coupon_List"/>
+		from coupon
+		where id = #{id}
+	</select>
+
+	<!-- new create method   -->
+
+</mapper>

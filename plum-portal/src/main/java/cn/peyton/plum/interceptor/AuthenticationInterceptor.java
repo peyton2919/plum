@@ -50,14 +50,15 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
         HttpSession session = request.getSession();
         Object _obj = session.getAttribute(PROPERTY.SESSION_USER);
         if (null == _obj) {
-            HttpServletResponseUtil.returnJson(response, JsonMapper.toJSon(JSONResult.error(StatusCode.NEED_LOGIN)));
+            HttpServletResponseUtil.returnJson(response, JsonMapper.toJSon(
+                    JSONResult.error(StatusCode.NEED_LOGIN)));
             return false;
         }
         UserParam _param = (UserParam) _obj;
         TokenUtil _tokenUtil = new TokenUtil();
         //判断 token 是否是服务 签发的
         if (!_tokenUtil.verify(_param.getToken())) {
-            HttpServletResponseUtil.returnJson(response, JsonMapper.toJSon(JSONResult.error(StatusCode.ILLEGAL_TOKEN)));
+            HttpServletResponseUtil.returnJson(response, JsonMapper.toJSon(JSONResult.fail(StatusCode.ILLEGAL_TOKEN)));
             return false;
         }
 

@@ -10,8 +10,6 @@ import cn.peyton.plum.core.base.JSONResult;
 import cn.peyton.plum.core.exception.StatusCode;
 import cn.peyton.plum.core.img.ImageProcessing;
 import cn.peyton.plum.core.utils.Lists;
-import cn.peyton.plum.core.utils.PathUtil;
-import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -60,6 +58,6 @@ public class ImagesController extends ChatterApiRoutineController<ImagesParam, I
             List<ImagesParam> _results = imagesService.insertBatch(_list);
             return JSONResult.success(_results);
         }
-        return JSONResult.fail(StatusCode.FAIL.getCode(), "文件上传失败");
+        return JSONResult.fail(StatusCode.FAIL_OPERATE_UPDATE);
     }
 }

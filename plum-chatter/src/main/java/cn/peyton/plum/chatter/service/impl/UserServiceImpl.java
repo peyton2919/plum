@@ -59,9 +59,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserParam login(String username, String password) {
-
-        return new UserBo().compat(userMapper.login(username,
-                BaseCipher.encoderMD5(password,KEY_PASSWORD_ENCODER)));
+        User user = userMapper.login(username, BaseCipher.encoderMD5(password, KEY_PASSWORD_ENCODER));
+        if (null == user) {
+            return null;
+        }
+        return new UserParam().compat(user);
     }
 
     @Override
@@ -134,5 +136,9 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
-
+    @Override
+    public UserParam findById(Integer id) {
+        User _user = userMapper.selectByPrimaryKey(id);
+        return (null == _user) ? null : new UserParam().compat(_user);
+    }
 }

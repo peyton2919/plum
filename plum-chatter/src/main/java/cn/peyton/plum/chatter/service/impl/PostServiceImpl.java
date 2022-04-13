@@ -53,8 +53,8 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostParam> findByTopicId(int topicId, PageQuery page) {
-        return postMapper.findByTopicId(topicId,page);
+    public List<PostParam> findByTopicId(int topicId, PageQuery page,int type) {
+        return postMapper.findByTopicId(topicId,page,type);
     }
 
     @Override

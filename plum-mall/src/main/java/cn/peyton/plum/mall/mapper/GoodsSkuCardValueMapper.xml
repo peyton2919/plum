@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.peyton.plum.mall.mapper.GoodsSkuCardValueMapper">
+	<resultMap id="ResultGoodsSkuCardValueMap" type="cn.peyton.plum.mall.pojo.GoodsSkuCardValue">
+		<id column="id" property="id" jdbcType="BIGINT"/>
+		<result column="name" property="name" jdbcType="VARCHAR"/>
+		<result column="value" property="value" jdbcType="VARCHAR"/>
+		<result column="seq" property="seq" jdbcType="INTEGER"/>
+		<result column="goods_sku_card_id" property="goodsSkuCardId" jdbcType="BIGINT"></result>
+	</resultMap>
+
+	<sql id="Column_goods_sku_card_value_List">
+		id,goods_sku_card_id,name,value,seq
+	</sql>
+
+	<insert id="insert" parameterType="cn.peyton.plum.mall.pojo.GoodsSkuCardValue" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into goods_sku_card_value(goods_sku_card_id,name,value,seq)
+		values (#{goodsSkuCard.id},#{name},#{value},#{seq})
+	</insert>
+
+	<insert id="insertSelective" parameterType="cn.peyton.plum.mall.pojo.GoodsSkuCardValue" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into goods_sku_card_value
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="goodsSkuCard != null">goods_sku_card_id,</if>
+			<if test="name != null">name,</if>
+			<if test="value != null">value,</if>
+			<if test="seq != null">seq,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="goodsSkuCard != null">#{goodsSkuCard.id},</if>
+			<if test="name != null">#{name},</if>
+			<if test="value != null">#{value},</if>
+			<if test="seq != null">#{seq},</if>
+		</trim>
+	</insert>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from goods_sku_card_value
+		where id = #{id}
+	</delete>
+
+	<update id="updateByPrimaryKeySelective" parameterType="cn.peyton.plum.mall.pojo.GoodsSkuCardValue">
+		update goods_sku_card_value
+		<set>
+			<if test="goodsSkuCard != null">goods_sku_card_id = #{goodsSkuCard.id},</if>
+			<if test="name != null">name = #{name},</if>
+			<if test="value != null">value = #{value},</if>
+			<if test="seq != null">seq = #{seq},</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="cn.peyton.plum.mall.pojo.GoodsSkuCardValue">
+		update goods_sku_card_value
+		set 
+			goods_sku_card_id = #{goodsSkuCard.id},
+			name = #{name},
+			value = #{value},
+			seq = #{seq}
+		where id = #{id}
+	</update>
+
+	<select id="selectByPrimaryKey" resultMap="ResultGoodsSkuCardValueMap"  parameterType="java.lang.Long">
+		select
+		<include refid="Column_goods_sku_card_value_List"/>
+		from goods_sku_card_value
+		where id = #{id}
+	</select>
+
+    <!-- new create method   -->
+    <select id="findByGoodsSkuCardId" resultType="cn.peyton.plum.mall.pojo.GoodsSkuCardValue">
+        select  <include refid="Column_goods_sku_card_value_List"></include>
+        FROM goods_sku_card_value
+        where goods_sku_card_id =#{goodsSkuCardId} ORDER BY seq DESC
+    </select>
+
+</mapper>

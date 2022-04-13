@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.peyton.plum.mall.mapper.MemberAddressesMapper">
+	<resultMap id="ResultMemberAddressesMap" type="cn.peyton.plum.mall.pojo.MemberAddresses">
+		<id column="id" property="id" jdbcType="BIGINT"/>
+		<result column="member_id" property="memberId" jdbcType="BIGINT"/>
+		<result column="province" property="province" jdbcType="VARCHAR"/>
+		<result column="city" property="city" jdbcType="VARCHAR"/>
+		<result column="district" property="district" jdbcType="VARCHAR"/>
+		<result column="address" property="address" jdbcType="VARCHAR"/>
+		<result column="zip" property="zip" jdbcType="INTEGER"/>
+		<result column="name" property="name" jdbcType="VARCHAR"/>
+		<result column="phone" property="phone" jdbcType="VARCHAR"/>
+		<result column="last_used_time" property="lastUsedTime" jdbcType="TIMESTAMP"/>
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+	</resultMap>
+
+	<sql id="Column_member_addresses_List">
+		id,member_id,province,city,district,address,zip,name,phone,last_used_time,create_time
+	</sql>
+
+	<insert id="insert" parameterType="cn.peyton.plum.mall.pojo.MemberAddresses" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into member_addresses(member_id,province,city,district,address,zip,name,phone,last_used_time,create_time)
+		values (#{memberId},#{province},#{city},#{district},#{address},#{zip},#{name},#{phone},#{lastUsedTime},#{createTime})
+	</insert>
+
+	<insert id="insertSelective" parameterType="cn.peyton.plum.mall.pojo.MemberAddresses" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into member_addresses
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="memberId != null">member_id,</if>
+			<if test="province != null">province,</if>
+			<if test="city != null">city,</if>
+			<if test="district != null">district,</if>
+			<if test="address != null">address,</if>
+			<if test="zip != null">zip,</if>
+			<if test="name != null">name,</if>
+			<if test="phone != null">phone,</if>
+			<if test="lastUsedTime != null">last_used_time,</if>
+			<if test="createTime != null">create_time,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="memberId != null">#{memberId},</if>
+			<if test="province != null">#{province},</if>
+			<if test="city != null">#{city},</if>
+			<if test="district != null">#{district},</if>
+			<if test="address != null">#{address},</if>
+			<if test="zip != null">#{zip},</if>
+			<if test="name != null">#{name},</if>
+			<if test="phone != null">#{phone},</if>
+			<if test="lastUsedTime != null">#{lastUsedTime},</if>
+			<if test="createTime != null">#{createTime},</if>
+		</trim>
+	</insert>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from member_addresses
+		where id = #{id}
+	</delete>
+
+	<update id="updateByPrimaryKeySelective" parameterType="cn.peyton.plum.mall.pojo.MemberAddresses">
+		update member_addresses
+		<set>
+			<if test="memberId != null">member_id = #{memberId},</if>
+			<if test="province != null">province = #{province},</if>
+			<if test="city != null">city = #{city},</if>
+			<if test="district != null">district = #{district},</if>
+			<if test="address != null">address = #{address},</if>
+			<if test="zip != null">zip = #{zip},</if>
+			<if test="name != null">name = #{name},</if>
+			<if test="phone != null">phone = #{phone},</if>
+			<if test="lastUsedTime != null">last_used_time = #{lastUsedTime},</if>
+			<if test="createTime != null">create_time = #{createTime},</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="cn.peyton.plum.mall.pojo.MemberAddresses">
+		update member_addresses
+		set 
+			member_id = #{memberId},
+			province = #{province},
+			city = #{city},
+			district = #{district},
+			address = #{address},
+			zip = #{zip},
+			name = #{name},
+			phone = #{phone},
+			last_used_time = #{lastUsedTime},
+			create_time = #{createTime}
+		where id = #{id}
+	</update>
+
+	<select id="selectByPrimaryKey" resultMap="ResultMemberAddressesMap"  parameterType="java.lang.Long">
+		select
+		<include refid="Column_member_addresses_List"/>
+		from member_addresses
+		where id = #{id}
+	</select>
+
+	<!-- new create method   -->
+
+</mapper>

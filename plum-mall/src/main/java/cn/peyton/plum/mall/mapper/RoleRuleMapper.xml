@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.peyton.plum.mall.mapper.RoleRuleMapper">
+	<resultMap id="ResultRoleRuleMap" type="cn.peyton.plum.mall.pojo.RoleRule">
+		<id column="id" property="id" jdbcType="BIGINT"/>
+		<result column="role_id" property="roleId" jdbcType="INTEGER"/>
+		<result column="rule_id" property="ruleId" jdbcType="INTEGER"/>
+	</resultMap>
+
+	<sql id="Column_role_rule_List">
+		id,role_id,rule_id
+	</sql>
+
+	<insert id="insert" parameterType="cn.peyton.plum.mall.pojo.RoleRule" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into role_rule(role_id,rule_id)
+		values (#{roleId},#{ruleId})
+	</insert>
+
+	<insert id="insertSelective" parameterType="cn.peyton.plum.mall.pojo.RoleRule" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into role_rule
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="roleId != null">role_id,</if>
+			<if test="ruleId != null">rule_id,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="roleId != null">#{roleId},</if>
+			<if test="ruleId != null">#{ruleId},</if>
+		</trim>
+	</insert>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from role_rule
+		where id = #{id}
+	</delete>
+
+	<update id="updateByPrimaryKeySelective" parameterType="cn.peyton.plum.mall.pojo.RoleRule">
+		update role_rule
+		<set>
+			<if test="roleId != null">role_id = #{roleId},</if>
+			<if test="ruleId != null">rule_id = #{ruleId},</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="cn.peyton.plum.mall.pojo.RoleRule">
+		update role_rule
+		set 
+			role_id = #{roleId},
+			rule_id = #{ruleId}
+		where id = #{id}
+	</update>
+
+	<select id="selectByPrimaryKey" resultMap="ResultRoleRuleMap"  parameterType="java.lang.Long">
+		select
+		<include refid="Column_role_rule_List"/>
+		from role_rule
+		where id = #{id}
+	</select>
+
+	<!-- new create method   -->
+
+</mapper>

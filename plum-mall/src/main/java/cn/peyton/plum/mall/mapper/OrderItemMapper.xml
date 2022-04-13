@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.peyton.plum.mall.mapper.OrderItemMapper">
+	<resultMap id="ResultOrderItemMap" type="cn.peyton.plum.mall.pojo.OrderItem">
+		<id column="id" property="id" jdbcType="BIGINT"/>
+		<result column="shop_id" property="shopId" jdbcType="BIGINT"/>
+		<result column="goods_id" property="goodsId" jdbcType="BIGINT"/>
+		<result column="num" property="num" jdbcType="INTEGER"/>
+		<result column="price" property="price" jdbcType="DECIMAL"/>
+		<result column="rating" property="rating" jdbcType="INTEGER"/>
+		<result column="review" property="review" jdbcType="LONGVARCHAR"/>
+		<result column="review_time" property="reviewTime" jdbcType="INTEGER"/>
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+		<result column="skus_type" property="skusType" jdbcType="TINYINT"/>
+		<result column="goods_num" property="goodsNum" jdbcType="INTEGER"/>
+		<result column="extra" property="extra" jdbcType="LONGVARCHAR"/>
+		<result column="status" property="status" jdbcType="TINYINT"/>
+		<association column="order_id" property="order" javaType="cn.peyton.plum.mall.pojo.Order"
+			 select="cn.peyton.plum.mall.mapper.OrderMapper.selectByPrimaryKey" jdbcType="BIGINT">
+		</association>
+	</resultMap>
+
+	<sql id="Column_order_item_List">
+		id,order_id,shop_id,goods_id,num,price,rating,review,review_time,create_time,skus_type,goods_num,extra,status
+	</sql>
+
+	<insert id="insert" parameterType="cn.peyton.plum.mall.pojo.OrderItem" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into order_item(order_id,shop_id,goods_id,num,price,rating,review,review_time,create_time,skus_type,goods_num,extra,status)
+		values (#{order.id},#{shopId},#{goodsId},#{num},#{price},#{rating},#{review},#{reviewTime},#{createTime},#{skusType},#{goodsNum},#{extra},#{status})
+	</insert>
+
+	<insert id="insertSelective" parameterType="cn.peyton.plum.mall.pojo.OrderItem" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into order_item
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="order != null">order_id,</if>
+			<if test="shopId != null">shop_id,</if>
+			<if test="goodsId != null">goods_id,</if>
+			<if test="num != null">num,</if>
+			<if test="price != null">price,</if>
+			<if test="rating != null">rating,</if>
+			<if test="review != null">review,</if>
+			<if test="reviewTime != null">review_time,</if>
+			<if test="createTime != null">create_time,</if>
+			<if test="skusType != null">skus_type,</if>
+			<if test="goodsNum != null">goods_num,</if>
+			<if test="extra != null">extra,</if>
+			<if test="status != null">status,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="order != null">#{order.id},</if>
+			<if test="shopId != null">#{shopId},</if>
+			<if test="goodsId != null">#{goodsId},</if>
+			<if test="num != null">#{num},</if>
+			<if test="price != null">#{price},</if>
+			<if test="rating != null">#{rating},</if>
+			<if test="review != null">#{review},</if>
+			<if test="reviewTime != null">#{reviewTime},</if>
+			<if test="createTime != null">#{createTime},</if>
+			<if test="skusType != null">#{skusType},</if>
+			<if test="goodsNum != null">#{goodsNum},</if>
+			<if test="extra != null">#{extra},</if>
+			<if test="status != null">#{status},</if>
+		</trim>
+	</insert>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from order_item
+		where id = #{id}
+	</delete>
+
+	<update id="updateByPrimaryKeySelective" parameterType="cn.peyton.plum.mall.pojo.OrderItem">
+		update order_item
+		<set>
+			<if test="order != null">order_id = #{order.id},</if>
+			<if test="shopId != null">shop_id = #{shopId},</if>
+			<if test="goodsId != null">goods_id = #{goodsId},</if>
+			<if test="num != null">num = #{num},</if>
+			<if test="price != null">price = #{price},</if>
+			<if test="rating != null">rating = #{rating},</if>
+			<if test="review != null">review = #{review},</if>
+			<if test="reviewTime != null">review_time = #{reviewTime},</if>
+			<if test="createTime != null">create_time = #{createTime},</if>
+			<if test="skusType != null">skus_type = #{skusType},</if>
+			<if test="goodsNum != null">goods_num = #{goodsNum},</if>
+			<if test="extra != null">extra = #{extra},</if>
+			<if test="status != null">status = #{status},</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="cn.peyton.plum.mall.pojo.OrderItem">
+		update order_item
+		set 
+			order_id = #{order.id},
+			shop_id = #{shopId},
+			goods_id = #{goodsId},
+			num = #{num},
+			price = #{price},
+			rating = #{rating},
+			review = #{review},
+			review_time = #{reviewTime},
+			create_time = #{createTime},
+			skus_type = #{skusType},
+			goods_num = #{goodsNum},
+			extra = #{extra},
+			status = #{status}
+		where id = #{id}
+	</update>
+
+	<select id="selectByPrimaryKey" resultMap="ResultOrderItemMap"  parameterType="java.lang.Long">
+		select
+		<include refid="Column_order_item_List"/>
+		from order_item
+		where id = #{id}
+	</select>
+
+	<!-- new create method   -->
+
+</mapper>

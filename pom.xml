@@ -9,6 +9,8 @@
         <module>plum-chatter</module>
         <module>plum-portal</module>
         <module>mybatis-generator-toolkit</module>
+        <module>plum-mall</module>
+        <module>plum-common</module>
     </modules>
 
     <parent>
