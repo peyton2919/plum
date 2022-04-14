@@ -17,7 +17,7 @@ public class Order implements Serializable {
 	/**   */
 	private Long id;
 	/** 使用优惠券id  */
-	private Integer couponMemberId;
+	private Long couponMemberId;
 	/** 用户id  */
 	private Member member;
 	/** 订单唯一流水号  */
@@ -77,14 +77,14 @@ public class Order implements Serializable {
 	/** 
 	 * @param couponMemberId 使用优惠券id 
 	 */ 
-	public void setCouponMemberId(Integer couponMemberId){
+	public void setCouponMemberId(Long couponMemberId){
 		this.couponMemberId = couponMemberId;
 	}
 
 	/** 
 	 * @return 使用优惠券id 
 	 */ 
-	public Integer getCouponMemberId(){
+	public Long getCouponMemberId(){
 		return couponMemberId;
 	}
 

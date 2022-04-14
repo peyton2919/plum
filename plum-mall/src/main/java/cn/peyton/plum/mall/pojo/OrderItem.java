@@ -9,7 +9,7 @@ import java.io.Serializable;
  * <pre>
  * @author <a href="http://www.peyton.cn">peyton</a>
  * @email <a href="mailto:fz2919@tom.com">fz2919@tom.com</a>
- * @createDate 2022/04/11 14:10:01
+ * @createDate 2022/04/15 00:09:56
  * @version 1.0.0
  * </pre>
 */
@@ -30,18 +30,18 @@ public class OrderItem implements Serializable {
 	private Integer rating;
 	/** 评价  */
 	private String review;
-	/** 评价时间  */
-	private Integer reviewTime;
-	/**   */
-	private Date createTime;
-	/** 规格类型  */
-	private Integer skusType;
+	/** 规格类型 0单规格 1多规格  */
+	private Integer skuType;
 	/** 商品数量  */
 	private Integer goodsNum;
+	/** 评价时间  */
+	private Date reviewTime;
 	/** 客服回复评论  */
 	private String extra;
 	/** 是否可用,1：可用;0:不可用;2:删除;  */
 	private Integer status;
+	/**   */
+	private Date createTime;
 
 	//================================== Constructor =======================================//
 
@@ -163,45 +163,17 @@ public class OrderItem implements Serializable {
 	}
 
 	/** 
-	 * @param reviewTime 评价时间 
+	 * @param skuType 规格类型 0单规格 1多规格 
 	 */ 
-	public void setReviewTime(Integer reviewTime){
-		this.reviewTime = reviewTime;
+	public void setSkuType(Integer skuType){
+		this.skuType = skuType;
 	}
 
 	/** 
-	 * @return 评价时间 
+	 * @return 规格类型 0单规格 1多规格 
 	 */ 
-	public Integer getReviewTime(){
-		return reviewTime;
-	}
-
-	/** 
-	 * @param createTime  
-	 */ 
-	public void setCreateTime(Date createTime){
-		this.createTime = createTime;
-	}
-
-	/** 
-	 * @return  
-	 */ 
-	public Date getCreateTime(){
-		return createTime;
-	}
-
-	/** 
-	 * @param skusType 规格类型 
-	 */ 
-	public void setSkusType(Integer skusType){
-		this.skusType = skusType;
-	}
-
-	/** 
-	 * @return 规格类型 
-	 */ 
-	public Integer getSkusType(){
-		return skusType;
+	public Integer getSkuType(){
+		return skuType;
 	}
 
 	/** 
@@ -216,6 +188,20 @@ public class OrderItem implements Serializable {
 	 */ 
 	public Integer getGoodsNum(){
 		return goodsNum;
+	}
+
+	/** 
+	 * @param reviewTime 评价时间 
+	 */ 
+	public void setReviewTime(Date reviewTime){
+		this.reviewTime = reviewTime;
+	}
+
+	/** 
+	 * @return 评价时间 
+	 */ 
+	public Date getReviewTime(){
+		return reviewTime;
 	}
 
 	/** 
@@ -244,6 +230,20 @@ public class OrderItem implements Serializable {
 	 */ 
 	public Integer getStatus(){
 		return status;
+	}
+
+	/** 
+	 * @param createTime  
+	 */ 
+	public void setCreateTime(Date createTime){
+		this.createTime = createTime;
+	}
+
+	/** 
+	 * @return  
+	 */ 
+	public Date getCreateTime(){
+		return createTime;
 	}
 
 }

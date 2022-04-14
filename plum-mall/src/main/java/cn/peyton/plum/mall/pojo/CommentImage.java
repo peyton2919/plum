@@ -1,31 +1,26 @@
 package cn.peyton.plum.mall.pojo;
 
 import java.util.Date;
-import java.util.Date;
 
 import java.io.Serializable;
 /**
- * <h3> 会员信息 实体类</h3>
+ * <h3> 商品评论图片 实体类</h3>
  * <pre>
  * @author <a href="http://www.peyton.cn">peyton</a>
  * @email <a href="mailto:fz2919@tom.com">fz2919@tom.com</a>
- * @createDate 2022/04/14 20:51:50
+ * @createDate 2022/04/14 08:57:54
  * @version 1.0.0
  * </pre>
 */
-public class MemberInfo implements Serializable {
+public class CommentImage implements Serializable {
 	/**   */
 	private Long id;
-	/** 会员id  */
-	private Long memberId;
-	/** 性别  */
-	private Integer sex;
-	/** 生日  */
-	private Date birthday;
+	/** 商品评论ID  */
+	private Long commentId;
+	/** 图片地址  */
+	private String src;
 	/** 创建时间  */
 	private Date createTime;
-	/** 更新时间  */
-	private Date updateTime;
 
 	//================================== Constructor =======================================//
 
@@ -49,45 +44,31 @@ public class MemberInfo implements Serializable {
 	}
 
 	/** 
-	 * @param memberId 会员id 
+	 * @param commentId 商品评论ID 
 	 */ 
-	public void setMemberId(Long memberId){
-		this.memberId = memberId;
+	public void setCommentId(Long commentId){
+		this.commentId = commentId;
 	}
 
 	/** 
-	 * @return 会员id 
+	 * @return 商品评论ID 
 	 */ 
-	public Long getMemberId(){
-		return memberId;
+	public Long getCommentId(){
+		return commentId;
 	}
 
 	/** 
-	 * @param sex 性别 
+	 * @param src 图片地址 
 	 */ 
-	public void setSex(Integer sex){
-		this.sex = sex;
+	public void setSrc(String src){
+		this.src = src;
 	}
 
 	/** 
-	 * @return 性别 
+	 * @return 图片地址 
 	 */ 
-	public Integer getSex(){
-		return sex;
-	}
-
-	/** 
-	 * @param birthday 生日 
-	 */ 
-	public void setBirthday(Date birthday){
-		this.birthday = birthday;
-	}
-
-	/** 
-	 * @return 生日 
-	 */ 
-	public Date getBirthday(){
-		return birthday;
+	public String getSrc(){
+		return src;
 	}
 
 	/** 
@@ -102,20 +83,6 @@ public class MemberInfo implements Serializable {
 	 */ 
 	public Date getCreateTime(){
 		return createTime;
-	}
-
-	/** 
-	 * @param updateTime 更新时间 
-	 */ 
-	public void setUpdateTime(Date updateTime){
-		this.updateTime = updateTime;
-	}
-
-	/** 
-	 * @return 更新时间 
-	 */ 
-	public Date getUpdateTime(){
-		return updateTime;
 	}
 
 }

@@ -3,7 +3,7 @@
 <mapper namespace="cn.peyton.plum.mall.mapper.OrderMapper">
 	<resultMap id="ResultOrderMap" type="cn.peyton.plum.mall.pojo.Order">
 		<id column="id" property="id" jdbcType="BIGINT"/>
-		<result column="coupon_member_id" property="couponMemberId" jdbcType="INTEGER"/>
+		<result column="coupon_member_id" property="couponMemberId" jdbcType="BIGINT"/>
 		<result column="no" property="no" jdbcType="VARCHAR"/>
 		<result column="address" property="address" jdbcType="LONGVARCHAR"/>
 		<result column="total_price" property="totalPrice" jdbcType="DECIMAL"/>

@@ -1,30 +1,30 @@
 package cn.peyton.plum.mall.mapper;
 
-import cn.peyton.plum.mall.pojo.MemberAddress;
+import cn.peyton.plum.mall.pojo.SkuGoodsType;
 
 /**
- * <h3> 会员地址 Mapper 接口</h3>
+ * <h3> 规格商品类型 Mapper 接口</h3>
  * <pre>
  * @author <a href="http://www.peyton.cn">peyton</a>
  * @email <a href="mailto:fz2919@tom.com">fz2919@tom.com</a>
- * @createDate 2022/04/15 00:32:20
+ * @createDate 2022/04/14 20:36:28
  * @version 1.0.0
  * </pre>
 */
-public interface MemberAddressMapper {
+public interface SkuGoodsTypeMapper {
 	/**
 	 * <h4>插入 对象</h4>
 	 * @param record 对象
 	 * @return 受影响的行数
 	 */
-	int insert(MemberAddress record);
+	int insert(SkuGoodsType record);
 
 	/**
 	 * <h4>插入 对象[根据属性是否有值 插入]</h4>
 	 * @param record 对象
 	 * @return 受影响的行数
 	 */
-	int insertSelective(MemberAddress record);
+	int insertSelective(SkuGoodsType record);
 
 	/**
 	 * <h4>根据 主键 删除 对象</h4>
@@ -38,21 +38,21 @@ public interface MemberAddressMapper {
 	 * @param record 对象
 	 * @return 受影响的行数
 	 */
-	int updateByPrimaryKey(MemberAddress record);
+	int updateByPrimaryKey(SkuGoodsType record);
 
 	/**
 	 * <h4>更新 对象[根据属性是否有值 更新]</h4>
 	 * @param record 对象
 	 * @return 受影响的行数
 	 */
-	int updateByPrimaryKeySelective(MemberAddress record);
+	int updateByPrimaryKeySelective(SkuGoodsType record);
 
 	/**
 	 * <h4>根据 主键 查找 对象</h4>
 	 * @param id 主键
 	 * @return 对象
 	 */
-	MemberAddress selectByPrimaryKey(Long id);
+	SkuGoodsType selectByPrimaryKey(Long id);
 
 
 	// ==================================== new create method ==================================== //

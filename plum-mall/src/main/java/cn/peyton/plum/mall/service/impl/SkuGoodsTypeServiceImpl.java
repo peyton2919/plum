@@ -1,7 +1,7 @@
 package cn.peyton.plum.mall.service.impl;
 
-import cn.peyton.plum.mall.service.SkusGoodsTypeService;
-import cn.peyton.plum.mall.mapper.SkusGoodsTypeMapper;
+import cn.peyton.plum.mall.service.SkuGoodsTypeService;
+import cn.peyton.plum.mall.mapper.SkuGoodsTypeMapper;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 
@@ -10,13 +10,13 @@ import javax.annotation.Resource;
  * <pre>
  * @author <a href="http://www.peyton.cn">peyton</a>
  * @email <a href="mailto:fz2919@tom.com">fz2919@tom.com</a>
- * @createDate 2022/04/11 14:10:01
+ * @createDate 2022/04/14 20:36:28
  * @version 1.0.0
  * </pre>
 */
-@Service("skusGoodsTypeService")
-public class SkusGoodsTypeServiceImpl implements SkusGoodsTypeService {
+@Service("skuGoodsTypeService")
+public class SkuGoodsTypeServiceImpl implements SkuGoodsTypeService {
 	@Resource
-	private SkusGoodsTypeMapper skusGoodsTypeMapper;
+	private SkuGoodsTypeMapper skuGoodsTypeMapper;
 
 }

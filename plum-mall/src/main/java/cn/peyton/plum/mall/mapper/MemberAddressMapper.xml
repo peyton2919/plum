@@ -8,7 +8,7 @@
 		<result column="city" property="city" jdbcType="VARCHAR"/>
 		<result column="district" property="district" jdbcType="VARCHAR"/>
 		<result column="address" property="address" jdbcType="VARCHAR"/>
-		<result column="zip" property="zip" jdbcType="INTEGER"/>
+		<result column="zip" property="zip" jdbcType="VARCHAR"/>
 		<result column="name" property="name" jdbcType="VARCHAR"/>
 		<result column="phone" property="phone" jdbcType="VARCHAR"/>
 		<result column="last_used_time" property="lastUsedTime" jdbcType="TIMESTAMP"/>

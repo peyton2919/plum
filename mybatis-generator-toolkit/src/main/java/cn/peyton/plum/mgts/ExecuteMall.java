@@ -32,7 +32,20 @@ public class ExecuteMall {
         // generation.create(null,PATH,MAPPER,POJO,true);
 
         // 单个数据
-        generation.create("collect",null,PATH,MAPPER,POJO,true);
+
+        generation.create("sys_log",null,PATH,MAPPER,POJO,true);
+        // generation.create("sys_supplier_log",null,PATH,MAPPER,POJO,true);
+        // generation.create("member_address",null,PATH,MAPPER,POJO,true);
+        // generation.create("order_item",null,PATH,MAPPER,POJO,true);
+        // generation.create("member",null,PATH,MAPPER,POJO,true);
+        // generation.create("member_info",null,PATH,MAPPER,POJO,true);
+        // generation.create("order_item",null,PATH,MAPPER,POJO,true);
+        // generation.create("cart",null,PATH,MAPPER,POJO,true);
+        // generation.create("goods_comment",null,PATH,MAPPER,POJO,true);
+        // generation.create("comment_image",null,PATH,MAPPER,POJO,true);
+        // generation.create("sku_goods_type",null,PATH,MAPPER,POJO,true);
+
+        // generation.create("collect",null,PATH,MAPPER,POJO,true);
         // generation.create("goods_attr",null,PATH,MAPPER,POJO,true);
         // generation.create("goods_sku",null,PATH,MAPPER,POJO,true);
         // generation.create("goods_sku_card",null,PATH,MAPPER,POJO,true);

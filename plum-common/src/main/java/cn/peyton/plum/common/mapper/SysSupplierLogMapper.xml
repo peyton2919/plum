@@ -3,7 +3,7 @@
 <mapper namespace="cn.peyton.plum.common.mapper.SysSupplierLogMapper">
 	<resultMap id="ResultSysSupplierLogMap" type="cn.peyton.plum.common.pojo.SysSupplierLog">
 		<id column="id" property="id" jdbcType="BIGINT"/>
-		<result column="member_id" property="memberId" jdbcType="BIGINT"/>
+		<result column="supplier_id" property="supplierId" jdbcType="BIGINT"/>
 		<result column="old_value" property="oldValue" jdbcType="LONGVARCHAR"/>
 		<result column="new_value" property="newValue" jdbcType="LONGVARCHAR"/>
 		<result column="operate_ip" property="operateIp" jdbcType="VARCHAR"/>
@@ -11,25 +11,25 @@
 	</resultMap>
 
 	<sql id="Column_sys_supplier_log_List">
-		id,member_id,old_value,new_value,operate_ip,create_time
+		id,supplier_id,old_value,new_value,operate_ip,create_time
 	</sql>
 
 	<insert id="insert" parameterType="cn.peyton.plum.common.pojo.SysSupplierLog" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
-		insert into sys_supplier_log(member_id,old_value,new_value,operate_ip,create_time)
-		values (#{memberId},#{oldValue},#{newValue},#{operateIp},#{createTime})
+		insert into sys_supplier_log(supplier_id,old_value,new_value,operate_ip,create_time)
+		values (#{supplierId},#{oldValue},#{newValue},#{operateIp},#{createTime})
 	</insert>
 
 	<insert id="insertSelective" parameterType="cn.peyton.plum.common.pojo.SysSupplierLog" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
 		insert into sys_supplier_log
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="memberId != null">member_id,</if>
+			<if test="supplierId != null">supplier_id,</if>
 			<if test="oldValue != null">old_value,</if>
 			<if test="newValue != null">new_value,</if>
 			<if test="operateIp != null">operate_ip,</if>
 			<if test="createTime != null">create_time,</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="memberId != null">#{memberId},</if>
+			<if test="supplierId != null">#{supplierId},</if>
 			<if test="oldValue != null">#{oldValue},</if>
 			<if test="newValue != null">#{newValue},</if>
 			<if test="operateIp != null">#{operateIp},</if>
@@ -45,7 +45,7 @@
 	<update id="updateByPrimaryKeySelective" parameterType="cn.peyton.plum.common.pojo.SysSupplierLog">
 		update sys_supplier_log
 		<set>
-			<if test="memberId != null">member_id = #{memberId},</if>
+			<if test="supplierId != null">supplier_id = #{supplierId},</if>
 			<if test="oldValue != null">old_value = #{oldValue},</if>
 			<if test="newValue != null">new_value = #{newValue},</if>
 			<if test="operateIp != null">operate_ip = #{operateIp},</if>
@@ -57,7 +57,7 @@
 	<update id="updateByPrimaryKey" parameterType="cn.peyton.plum.common.pojo.SysSupplierLog">
 		update sys_supplier_log
 		set 
-			member_id = #{memberId},
+			supplier_id = #{supplierId},
 			old_value = #{oldValue},
 			new_value = #{newValue},
 			operate_ip = #{operateIp},

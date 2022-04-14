@@ -1,6 +1,5 @@
 package cn.peyton.plum.common.mapper;
 
-
 import cn.peyton.plum.common.pojo.SysLog;
 
 /**
@@ -8,7 +7,7 @@ import cn.peyton.plum.common.pojo.SysLog;
  * <pre>
  * @author <a href="http://www.peyton.cn">peyton</a>
  * @email <a href="mailto:fz2919@tom.com">fz2919@tom.com</a>
- * @createDate 2022/04/11 14:22:58
+ * @createDate 2022/04/15 01:01:45
  * @version 1.0.0
  * </pre>
 */

@@ -6,15 +6,17 @@
 		<result column="member_id" property="memberId" jdbcType="BIGINT"/>
 		<result column="sex" property="sex" jdbcType="TINYINT"/>
 		<result column="birthday" property="birthday" jdbcType="TIMESTAMP"/>
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
 	</resultMap>
 
 	<sql id="Column_member_info_List">
-		id,member_id,sex,birthday
+		id,member_id,sex,birthday,create_time,update_time
 	</sql>
 
 	<insert id="insert" parameterType="cn.peyton.plum.mall.pojo.MemberInfo" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
-		insert into member_info(member_id,sex,birthday)
-		values (#{memberId},#{sex},#{birthday})
+		insert into member_info(member_id,sex,birthday,create_time,update_time)
+		values (#{memberId},#{sex},#{birthday},#{createTime},#{updateTime})
 	</insert>
 
 	<insert id="insertSelective" parameterType="cn.peyton.plum.mall.pojo.MemberInfo" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
@@ -23,11 +25,15 @@
 			<if test="memberId != null">member_id,</if>
 			<if test="sex != null">sex,</if>
 			<if test="birthday != null">birthday,</if>
+			<if test="createTime != null">create_time,</if>
+			<if test="updateTime != null">update_time,</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="memberId != null">#{memberId},</if>
 			<if test="sex != null">#{sex},</if>
 			<if test="birthday != null">#{birthday},</if>
+			<if test="createTime != null">#{createTime},</if>
+			<if test="updateTime != null">#{updateTime},</if>
 		</trim>
 	</insert>
 
@@ -42,6 +48,8 @@
 			<if test="memberId != null">member_id = #{memberId},</if>
 			<if test="sex != null">sex = #{sex},</if>
 			<if test="birthday != null">birthday = #{birthday},</if>
+			<if test="createTime != null">create_time = #{createTime},</if>
+			<if test="updateTime != null">update_time = #{updateTime},</if>
 		</set>
 		where id = #{id}
 	</update>
@@ -51,7 +59,9 @@
 		set 
 			member_id = #{memberId},
 			sex = #{sex},
-			birthday = #{birthday}
+			birthday = #{birthday},
+			create_time = #{createTime},
+			update_time = #{updateTime}
 		where id = #{id}
 	</update>
 

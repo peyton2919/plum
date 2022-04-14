@@ -6,10 +6,7 @@ import cn.peyton.plum.core.utils.Maps;
 import cn.peyton.plum.mall.pojo.Goods;
 import cn.peyton.plum.mall.pojo.GoodsAttr;
 import cn.peyton.plum.mall.pojo.GoodsSkuCard;
-import cn.peyton.plum.mall.service.GoodsAttrService;
-import cn.peyton.plum.mall.service.GoodsBannerService;
-import cn.peyton.plum.mall.service.GoodsService;
-import cn.peyton.plum.mall.service.GoodsSkuCardService;
+import cn.peyton.plum.mall.service.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,6 +34,8 @@ public class GoodsController extends MallApiRoutineController {
     GoodsAttrService goodsAttrService;
 	@Resource
     GoodsSkuCardService goodsSkuCardService;
+	@Resource
+    GoodsCommentService goodsCommentService;
 
 	@GetMapping("/detail")
 	public JSONResult detail(@RequestParam("goodsId") Long goodsId){
@@ -46,6 +45,7 @@ public class GoodsController extends MallApiRoutineController {
             return JSONResult.fail("没找到商品");
         }
         map.put("goods", _goods);
+        map.put("goodsComments", goodsCommentService.findByGoodsId(goodsId));
         map.put("hotList",goodsService.findByHotAndRandTopNumber(_goods.getCategoryId(),4));
         map.put("goodsBanners", goodsBannerService.findByGoodsId(goodsId));
         map.put("goodsSkuCards", goodsSkuCardService.findByGoodsId(goodsId));

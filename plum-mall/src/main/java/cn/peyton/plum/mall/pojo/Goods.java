@@ -1,5 +1,7 @@
 package cn.peyton.plum.mall.pojo;
 
+import cn.peyton.plum.core.utils.BigDecimalUtil;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -179,7 +181,8 @@ public class Goods implements Serializable {
 	 * @return 最低sku价格 
 	 */ 
 	public BigDecimal getMinSkuPrice(){
-		return minSkuPrice;
+
+	    return BigDecimalUtil.format(this.minSkuPrice);
 	}
 
 	/** 
@@ -193,7 +196,7 @@ public class Goods implements Serializable {
 	 * @return 最低原始价格 
 	 */ 
 	public BigDecimal getMinPrice(){
-		return minPrice;
+		return BigDecimalUtil.format(minPrice);
 	}
 
 	/** 

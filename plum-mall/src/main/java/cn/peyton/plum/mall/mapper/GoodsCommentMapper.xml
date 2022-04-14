@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.peyton.plum.mall.mapper.GoodsCommentMapper">
+	<resultMap id="ResultGoodsCommentMap" type="cn.peyton.plum.mall.pojo.GoodsComment">
+		<id column="id" property="id" jdbcType="BIGINT"/>
+		<result column="parent_id" property="parentId" jdbcType="BIGINT"/>
+		<result column="goods_id" property="goodsId" jdbcType="BIGINT"/>
+		<result column="comment_num" property="commentNum" jdbcType="INTEGER"/>
+		<result column="content" property="content" jdbcType="VARCHAR"/>
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+		<association column="member_id" property="member" javaType="cn.peyton.plum.mall.pojo.Member"
+			 select="cn.peyton.plum.mall.mapper.MemberMapper.selectByPrimaryKey" jdbcType="BIGINT">
+		</association>
+        <collection property="commentImages" column="id" ofType="cn.peyton.plum.mall.pojo.CommentImage"
+                    jdbcType="BIGINT" select="cn.peyton.plum.mall.mapper.CommentImageMapper.findByCommentId">
+
+        </collection>
+	</resultMap>
+
+	<sql id="Column_goods_comment_List">
+		id,parent_id,goods_id,member_id,comment_num,content,create_time
+	</sql>
+
+	<insert id="insert" parameterType="cn.peyton.plum.mall.pojo.GoodsComment" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into goods_comment(parent_id,goods_id,member_id,comment_num,content,create_time)
+		values (#{parentId},#{goodsId},#{member.id},#{commentNum},#{content},#{createTime})
+	</insert>
+
+	<insert id="insertSelective" parameterType="cn.peyton.plum.mall.pojo.GoodsComment" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into goods_comment
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="parentId != null">parent_id,</if>
+			<if test="goodsId != null">goods_id,</if>
+			<if test="member != null">member_id,</if>
+			<if test="commentNum != null">comment_num,</if>
+			<if test="content != null">content,</if>
+			<if test="createTime != null">create_time,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="parentId != null">#{parentId},</if>
+			<if test="goodsId != null">#{goodsId},</if>
+			<if test="member != null">#{member.id},</if>
+			<if test="commentNum != null">#{commentNum},</if>
+			<if test="content != null">#{content},</if>
+			<if test="createTime != null">#{createTime},</if>
+		</trim>
+	</insert>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from goods_comment
+		where id = #{id}
+	</delete>
+
+	<update id="updateByPrimaryKeySelective" parameterType="cn.peyton.plum.mall.pojo.GoodsComment">
+		update goods_comment
+		<set>
+			<if test="parentId != null">parent_id = #{parentId},</if>
+			<if test="goodsId != null">goods_id = #{goodsId},</if>
+			<if test="member != null">member_id = #{member.id},</if>
+			<if test="commentNum != null">comment_num = #{commentNum},</if>
+			<if test="content != null">content = #{content},</if>
+			<if test="createTime != null">create_time = #{createTime},</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="cn.peyton.plum.mall.pojo.GoodsComment">
+		update goods_comment
+		set 
+			parent_id = #{parentId},
+			goods_id = #{goodsId},
+			member_id = #{member.id},
+			comment_num = #{commentNum},
+			content = #{content},
+			create_time = #{createTime}
+		where id = #{id}
+	</update>
+
+	<select id="selectByPrimaryKey" resultMap="ResultGoodsCommentMap"  parameterType="java.lang.Long">
+		select
+		<include refid="Column_goods_comment_List"/>
+		from goods_comment
+		where id = #{id}
+	</select>
+
+    <!-- new create method   -->
+    <select id="findByGoodsId" resultMap="ResultGoodsCommentMap">
+        select
+        <include refid="Column_goods_comment_List"/>
+        from goods_comment
+        where goods_id = #{goodsId}
+    </select>
+
+</mapper>

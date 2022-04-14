@@ -8,7 +8,7 @@ import java.io.Serializable;
  * <pre>
  * @author <a href="http://www.peyton.cn">peyton</a>
  * @email <a href="mailto:fz2919@tom.com">fz2919@tom.com</a>
- * @createDate 2022/04/12 10:05:56
+ * @createDate 2022/04/15 00:53:56
  * @version 1.0.0
  * </pre>
 */
@@ -16,7 +16,7 @@ public class SysSupplierLog implements Serializable {
 	/**   */
 	private Long id;
 	/** 会员编号  */
-	private Long memberId;
+	private Long supplierId;
 	/** 旧值  */
 	private String oldValue;
 	/** 新值  */
@@ -48,17 +48,17 @@ public class SysSupplierLog implements Serializable {
 	}
 
 	/** 
-	 * @param memberId 会员编号 
+	 * @param supplierId 会员编号 
 	 */ 
-	public void setMemberId(Long memberId){
-		this.memberId = memberId;
+	public void setSupplierId(Long supplierId){
+		this.supplierId = supplierId;
 	}
 
 	/** 
 	 * @return 会员编号 
 	 */ 
-	public Long getMemberId(){
-		return memberId;
+	public Long getSupplierId(){
+		return supplierId;
 	}
 
 	/** 

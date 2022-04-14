@@ -10,7 +10,7 @@
 		<result column="operator" property="operator" jdbcType="VARCHAR"/>
 		<result column="operate_time" property="operateTime" jdbcType="TIMESTAMP"/>
 		<result column="operate_ip" property="operateIp" jdbcType="VARCHAR"/>
-		<result column="status" property="status" jdbcType="INTEGER"/>
+		<result column="status" property="status" jdbcType="TINYINT"/>
 	</resultMap>
 
 	<sql id="Column_sys_log_List">

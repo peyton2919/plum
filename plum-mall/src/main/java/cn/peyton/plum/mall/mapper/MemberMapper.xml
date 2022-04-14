@@ -14,17 +14,15 @@
 		<result column="login_count" property="loginCount" jdbcType="INTEGER"/>
 		<result column="last_login_time" property="lastLoginTime" jdbcType="TIMESTAMP"/>
 		<result column="status" property="status" jdbcType="TINYINT"/>
-		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
-		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
 	</resultMap>
 
 	<sql id="Column_member_List">
-		id,member_level_id,username,password,avatar,nickname,phone,email,last_ip,login_count,last_login_time,status,create_time,update_time
+		id,member_level_id,username,password,avatar,nickname,phone,email,last_ip,login_count,last_login_time,status
 	</sql>
 
 	<insert id="insert" parameterType="cn.peyton.plum.mall.pojo.Member" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
-		insert into member(member_level_id,username,password,avatar,nickname,phone,email,last_ip,login_count,last_login_time,status,create_time,update_time)
-		values (#{memberLevelId},#{username},#{password},#{avatar},#{nickname},#{phone},#{email},#{lastIp},#{loginCount},#{lastLoginTime},#{status},#{createTime},#{updateTime})
+		insert into member(member_level_id,username,password,avatar,nickname,phone,email,last_ip,login_count,last_login_time,status)
+		values (#{memberLevelId},#{username},#{password},#{avatar},#{nickname},#{phone},#{email},#{lastIp},#{loginCount},#{lastLoginTime},#{status})
 	</insert>
 
 	<insert id="insertSelective" parameterType="cn.peyton.plum.mall.pojo.Member" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
@@ -41,8 +39,6 @@
 			<if test="loginCount != null">login_count,</if>
 			<if test="lastLoginTime != null">last_login_time,</if>
 			<if test="status != null">status,</if>
-			<if test="createTime != null">create_time,</if>
-			<if test="updateTime != null">update_time,</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="memberLevelId != null">#{memberLevelId},</if>
@@ -56,8 +52,6 @@
 			<if test="loginCount != null">#{loginCount},</if>
 			<if test="lastLoginTime != null">#{lastLoginTime},</if>
 			<if test="status != null">#{status},</if>
-			<if test="createTime != null">#{createTime},</if>
-			<if test="updateTime != null">#{updateTime},</if>
 		</trim>
 	</insert>
 
@@ -80,8 +74,6 @@
 			<if test="loginCount != null">login_count = #{loginCount},</if>
 			<if test="lastLoginTime != null">last_login_time = #{lastLoginTime},</if>
 			<if test="status != null">status = #{status},</if>
-			<if test="createTime != null">create_time = #{createTime},</if>
-			<if test="updateTime != null">update_time = #{updateTime},</if>
 		</set>
 		where id = #{id}
 	</update>
@@ -99,9 +91,7 @@
 			last_ip = #{lastIp},
 			login_count = #{loginCount},
 			last_login_time = #{lastLoginTime},
-			status = #{status},
-			create_time = #{createTime},
-			update_time = #{updateTime}
+			status = #{status}
 		where id = #{id}
 	</update>
 

@@ -4,7 +4,7 @@
 	<resultMap id="ResultCartMap" type="cn.peyton.plum.mall.pojo.Cart">
 		<id column="id" property="id" jdbcType="BIGINT"/>
 		<result column="shop_id" property="shopId" jdbcType="BIGINT"/>
-		<result column="skus_type" property="skusType" jdbcType="TINYINT"/>
+		<result column="sku_type" property="skuType" jdbcType="TINYINT"/>
 		<result column="num" property="num" jdbcType="INTEGER"/>
 		<result column="status" property="status" jdbcType="TINYINT"/>
 		<association column="member_id" property="member" javaType="cn.peyton.plum.mall.pojo.Member"
@@ -13,12 +13,12 @@
 	</resultMap>
 
 	<sql id="Column_cart_List">
-		id,member_id,shop_id,skus_type,num,status
+		id,member_id,shop_id,sku_type,num,status
 	</sql>
 
 	<insert id="insert" parameterType="cn.peyton.plum.mall.pojo.Cart" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
-		insert into cart(member_id,shop_id,skus_type,num,status)
-		values (#{member.id},#{shopId},#{skusType},#{num},#{status})
+		insert into cart(member_id,shop_id,sku_type,num,status)
+		values (#{member.id},#{shopId},#{skuType},#{num},#{status})
 	</insert>
 
 	<insert id="insertSelective" parameterType="cn.peyton.plum.mall.pojo.Cart" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
@@ -26,14 +26,14 @@
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="member != null">member_id,</if>
 			<if test="shopId != null">shop_id,</if>
-			<if test="skusType != null">skus_type,</if>
+			<if test="skuType != null">sku_type,</if>
 			<if test="num != null">num,</if>
 			<if test="status != null">status,</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="member != null">#{member.id},</if>
 			<if test="shopId != null">#{shopId},</if>
-			<if test="skusType != null">#{skusType},</if>
+			<if test="skuType != null">#{skuType},</if>
 			<if test="num != null">#{num},</if>
 			<if test="status != null">#{status},</if>
 		</trim>
@@ -49,7 +49,7 @@
 		<set>
 			<if test="member != null">member_id = #{member.id},</if>
 			<if test="shopId != null">shop_id = #{shopId},</if>
-			<if test="skusType != null">skus_type = #{skusType},</if>
+			<if test="skuType != null">sku_type = #{skuType},</if>
 			<if test="num != null">num = #{num},</if>
 			<if test="status != null">status = #{status},</if>
 		</set>
@@ -61,7 +61,7 @@
 		set 
 			member_id = #{member.id},
 			shop_id = #{shopId},
-			skus_type = #{skusType},
+			sku_type = #{skuType},
 			num = #{num},
 			status = #{status}
 		where id = #{id}

@@ -22,7 +22,7 @@ public class Brand implements Serializable {
 	private String name;
 	/** 所属地区  */
 	private String area;
-	/** 排序 从小到大  */
+	/** 排序: 数值越大越靠前  */
 	private Integer seq;
 	/** 状态，1为可用，0不可用，2为删除, 默认为1  */
 	private Integer status;
@@ -107,14 +107,14 @@ public class Brand implements Serializable {
 	}
 
 	/** 
-	 * @param seq 排序 从小到大 
+	 * @param seq 排序: 数值越大越靠前
 	 */ 
 	public void setSeq(Integer seq){
 		this.seq = seq;
 	}
 
 	/** 
-	 * @return 排序 从小到大 
+	 * @return 排序: 数值越大越靠前
 	 */ 
 	public Integer getSeq(){
 		return seq;

@@ -4,10 +4,10 @@ package cn.peyton.plum.mall.service;
  * <pre>
  * @author <a href="http://www.peyton.cn">peyton</a>
  * @email <a href="mailto:fz2919@tom.com">fz2919@tom.com</a>
- * @createDate 2022/04/11 14:10:01
+ * @createDate 2022/04/14 20:36:28
  * @version 1.0.0
  * </pre>
 */
-public interface SkusGoodsTypeService {
+public interface SkuGoodsTypeService {
 
 }

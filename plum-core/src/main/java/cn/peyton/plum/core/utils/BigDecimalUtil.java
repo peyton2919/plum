@@ -1,4 +1,4 @@
-package cn.peyton.plum.controller.common;
+package cn.peyton.plum.core.utils;
 
 import cn.peyton.plum.core.validator.Regulation;
 
@@ -40,6 +40,26 @@ public final class BigDecimalUtil implements Serializable {
                     .setScale(2,RoundingMode.HALF_UP);
         }
         return BigDecimal.valueOf(0.00);
+    }
+
+    /**
+     * <h4>格式 BigDecimal </h4>
+     * @param value BigDecimal 值
+     * @return 返回 BigDecimal 小数位二位
+     */
+    public static BigDecimal format(BigDecimal value) {
+        return format(value, null);
+    }
+
+    /**
+     * <h4>格式 BigDecimal </h4>
+     * @param value BigDecimal 值
+     * @param scaleLength 留小数位的长度
+     * @return 返回 BigDecimal 小数位scaleLength
+     */
+    public static BigDecimal format(BigDecimal value, Integer scaleLength) {
+        if (null == value || "".equals(value)) return value;
+        return value.setScale((null == scaleLength) ? 2 : scaleLength, RoundingMode.HALF_UP);
     }
 
 }

@@ -7,15 +7,15 @@ import java.io.Serializable;
  * <pre>
  * @author <a href="http://www.peyton.cn">peyton</a>
  * @email <a href="mailto:fz2919@tom.com">fz2919@tom.com</a>
- * @createDate 2022/04/11 14:10:01
+ * @createDate 2022/04/14 20:36:28
  * @version 1.0.0
  * </pre>
 */
-public class SkusGoodsType implements Serializable {
+public class SkuGoodsType implements Serializable {
 	/**   */
 	private Long id;
 	/** 商品规格ID  */
-	private Integer skusId;
+	private Integer skuId;
 	/** 商品类型ID  */
 	private Integer goodsTypeId;
 
@@ -41,17 +41,17 @@ public class SkusGoodsType implements Serializable {
 	}
 
 	/** 
-	 * @param skusId 商品规格ID 
+	 * @param skuId 商品规格ID 
 	 */ 
-	public void setSkusId(Integer skusId){
-		this.skusId = skusId;
+	public void setSkuId(Integer skuId){
+		this.skuId = skuId;
 	}
 
 	/** 
 	 * @return 商品规格ID 
 	 */ 
-	public Integer getSkusId(){
-		return skusId;
+	public Integer getSkuId(){
+		return skuId;
 	}
 
 	/** 

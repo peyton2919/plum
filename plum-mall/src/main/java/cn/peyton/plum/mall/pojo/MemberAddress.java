@@ -8,7 +8,7 @@ import java.io.Serializable;
  * <pre>
  * @author <a href="http://www.peyton.cn">peyton</a>
  * @email <a href="mailto:fz2919@tom.com">fz2919@tom.com</a>
- * @createDate 2022/04/12 18:47:07
+ * @createDate 2022/04/15 00:32:20
  * @version 1.0.0
  * </pre>
 */
@@ -26,7 +26,7 @@ public class MemberAddress implements Serializable {
 	/** 具体地址  */
 	private String address;
 	/** 邮编  */
-	private Integer zip;
+	private String zip;
 	/** 联系人  */
 	private String name;
 	/** 联系电话  */
@@ -130,14 +130,14 @@ public class MemberAddress implements Serializable {
 	/** 
 	 * @param zip 邮编 
 	 */ 
-	public void setZip(Integer zip){
+	public void setZip(String zip){
 		this.zip = zip;
 	}
 
 	/** 
 	 * @return 邮编 
 	 */ 
-	public Integer getZip(){
+	public String getZip(){
 		return zip;
 	}
 

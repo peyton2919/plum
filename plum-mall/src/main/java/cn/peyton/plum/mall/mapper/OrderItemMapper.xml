@@ -9,24 +9,24 @@
 		<result column="price" property="price" jdbcType="DECIMAL"/>
 		<result column="rating" property="rating" jdbcType="INTEGER"/>
 		<result column="review" property="review" jdbcType="LONGVARCHAR"/>
-		<result column="review_time" property="reviewTime" jdbcType="INTEGER"/>
-		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
-		<result column="skus_type" property="skusType" jdbcType="TINYINT"/>
+		<result column="sku_type" property="skuType" jdbcType="TINYINT"/>
 		<result column="goods_num" property="goodsNum" jdbcType="INTEGER"/>
+		<result column="review_time" property="reviewTime" jdbcType="TIMESTAMP"/>
 		<result column="extra" property="extra" jdbcType="LONGVARCHAR"/>
 		<result column="status" property="status" jdbcType="TINYINT"/>
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
 		<association column="order_id" property="order" javaType="cn.peyton.plum.mall.pojo.Order"
 			 select="cn.peyton.plum.mall.mapper.OrderMapper.selectByPrimaryKey" jdbcType="BIGINT">
 		</association>
 	</resultMap>
 
 	<sql id="Column_order_item_List">
-		id,order_id,shop_id,goods_id,num,price,rating,review,review_time,create_time,skus_type,goods_num,extra,status
+		id,order_id,shop_id,goods_id,num,price,rating,review,sku_type,goods_num,review_time,extra,status,create_time
 	</sql>
 
 	<insert id="insert" parameterType="cn.peyton.plum.mall.pojo.OrderItem" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
-		insert into order_item(order_id,shop_id,goods_id,num,price,rating,review,review_time,create_time,skus_type,goods_num,extra,status)
-		values (#{order.id},#{shopId},#{goodsId},#{num},#{price},#{rating},#{review},#{reviewTime},#{createTime},#{skusType},#{goodsNum},#{extra},#{status})
+		insert into order_item(order_id,shop_id,goods_id,num,price,rating,review,sku_type,goods_num,review_time,extra,status,create_time)
+		values (#{order.id},#{shopId},#{goodsId},#{num},#{price},#{rating},#{review},#{skuType},#{goodsNum},#{reviewTime},#{extra},#{status},#{createTime})
 	</insert>
 
 	<insert id="insertSelective" parameterType="cn.peyton.plum.mall.pojo.OrderItem" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
@@ -39,12 +39,12 @@
 			<if test="price != null">price,</if>
 			<if test="rating != null">rating,</if>
 			<if test="review != null">review,</if>
-			<if test="reviewTime != null">review_time,</if>
-			<if test="createTime != null">create_time,</if>
-			<if test="skusType != null">skus_type,</if>
+			<if test="skuType != null">sku_type,</if>
 			<if test="goodsNum != null">goods_num,</if>
+			<if test="reviewTime != null">review_time,</if>
 			<if test="extra != null">extra,</if>
 			<if test="status != null">status,</if>
+			<if test="createTime != null">create_time,</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="order != null">#{order.id},</if>
@@ -54,12 +54,12 @@
 			<if test="price != null">#{price},</if>
 			<if test="rating != null">#{rating},</if>
 			<if test="review != null">#{review},</if>
-			<if test="reviewTime != null">#{reviewTime},</if>
-			<if test="createTime != null">#{createTime},</if>
-			<if test="skusType != null">#{skusType},</if>
+			<if test="skuType != null">#{skuType},</if>
 			<if test="goodsNum != null">#{goodsNum},</if>
+			<if test="reviewTime != null">#{reviewTime},</if>
 			<if test="extra != null">#{extra},</if>
 			<if test="status != null">#{status},</if>
+			<if test="createTime != null">#{createTime},</if>
 		</trim>
 	</insert>
 
@@ -78,12 +78,12 @@
 			<if test="price != null">price = #{price},</if>
 			<if test="rating != null">rating = #{rating},</if>
 			<if test="review != null">review = #{review},</if>
-			<if test="reviewTime != null">review_time = #{reviewTime},</if>
-			<if test="createTime != null">create_time = #{createTime},</if>
-			<if test="skusType != null">skus_type = #{skusType},</if>
+			<if test="skuType != null">sku_type = #{skuType},</if>
 			<if test="goodsNum != null">goods_num = #{goodsNum},</if>
+			<if test="reviewTime != null">review_time = #{reviewTime},</if>
 			<if test="extra != null">extra = #{extra},</if>
 			<if test="status != null">status = #{status},</if>
+			<if test="createTime != null">create_time = #{createTime},</if>
 		</set>
 		where id = #{id}
 	</update>
@@ -98,12 +98,12 @@
 			price = #{price},
 			rating = #{rating},
 			review = #{review},
-			review_time = #{reviewTime},
-			create_time = #{createTime},
-			skus_type = #{skusType},
+			sku_type = #{skuType},
 			goods_num = #{goodsNum},
+			review_time = #{reviewTime},
 			extra = #{extra},
-			status = #{status}
+			status = #{status},
+			create_time = #{createTime}
 		where id = #{id}
 	</update>
 

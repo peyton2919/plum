@@ -7,7 +7,7 @@ import java.io.Serializable;
  * <pre>
  * @author <a href="http://www.peyton.cn">peyton</a>
  * @email <a href="mailto:fz2919@tom.com">fz2919@tom.com</a>
- * @createDate 2022/04/11 14:10:00
+ * @createDate 2022/04/14 22:31:14
  * @version 1.0.0
  * </pre>
 */
@@ -19,7 +19,7 @@ public class Cart implements Serializable {
 	/** 商品id/商品规则id  */
 	private Long shopId;
 	/** 规格类型 0单规格 1多规格  */
-	private Integer skusType;
+	private Integer skuType;
 	/** 数量  */
 	private Integer num;
 	/** 是否可用,1：可用;0:不可用;2:删除;  */
@@ -75,17 +75,17 @@ public class Cart implements Serializable {
 	}
 
 	/** 
-	 * @param skusType 规格类型 0单规格 1多规格 
+	 * @param skuType 规格类型 0单规格 1多规格 
 	 */ 
-	public void setSkusType(Integer skusType){
-		this.skusType = skusType;
+	public void setSkuType(Integer skuType){
+		this.skuType = skuType;
 	}
 
 	/** 
 	 * @return 规格类型 0单规格 1多规格 
 	 */ 
-	public Integer getSkusType(){
-		return skusType;
+	public Integer getSkuType(){
+		return skuType;
 	}
 
 	/** 

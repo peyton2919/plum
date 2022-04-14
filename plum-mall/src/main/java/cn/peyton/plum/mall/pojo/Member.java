@@ -1,7 +1,6 @@
 package cn.peyton.plum.mall.pojo;
 
 import java.util.Date;
-import java.util.Date;
 
 import java.io.Serializable;
 /**
@@ -9,7 +8,7 @@ import java.io.Serializable;
  * <pre>
  * @author <a href="http://www.peyton.cn">peyton</a>
  * @email <a href="mailto:fz2919@tom.com">fz2919@tom.com</a>
- * @createDate 2022/04/11 14:10:01
+ * @createDate 2022/04/14 20:51:49
  * @version 1.0.0
  * </pre>
 */
@@ -38,10 +37,6 @@ public class Member implements Serializable {
 	private Date lastLoginTime;
 	/** 状态：0禁用1启用2删除  */
 	private Integer status;
-	/** 创建时间  */
-	private Date createTime;
-	/** 更新时间  */
-	private Date updateTime;
 
 	//================================== Constructor =======================================//
 
@@ -216,34 +211,6 @@ public class Member implements Serializable {
 	 */ 
 	public Integer getStatus(){
 		return status;
-	}
-
-	/** 
-	 * @param createTime 创建时间 
-	 */ 
-	public void setCreateTime(Date createTime){
-		this.createTime = createTime;
-	}
-
-	/** 
-	 * @return 创建时间 
-	 */ 
-	public Date getCreateTime(){
-		return createTime;
-	}
-
-	/** 
-	 * @param updateTime 更新时间 
-	 */ 
-	public void setUpdateTime(Date updateTime){
-		this.updateTime = updateTime;
-	}
-
-	/** 
-	 * @return 更新时间 
-	 */ 
-	public Date getUpdateTime(){
-		return updateTime;
 	}
 
 }

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.peyton.plum.mall.mapper.CommentImageMapper">
+	<resultMap id="ResultCommentImageMap" type="cn.peyton.plum.mall.pojo.CommentImage">
+		<id column="id" property="id" jdbcType="BIGINT"/>
+		<result column="comment_id" property="commentId" jdbcType="BIGINT"/>
+		<result column="src" property="src" jdbcType="VARCHAR"/>
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+	</resultMap>
+
+	<sql id="Column_comment_image_List">
+		id,comment_id,src,create_time
+	</sql>
+
+	<insert id="insert" parameterType="cn.peyton.plum.mall.pojo.CommentImage" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into comment_image(comment_id,src,create_time)
+		values (#{commentId},#{src},#{createTime})
+	</insert>
+
+	<insert id="insertSelective" parameterType="cn.peyton.plum.mall.pojo.CommentImage" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into comment_image
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="commentId != null">comment_id,</if>
+			<if test="src != null">src,</if>
+			<if test="createTime != null">create_time,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="commentId != null">#{commentId},</if>
+			<if test="src != null">#{src},</if>
+			<if test="createTime != null">#{createTime},</if>
+		</trim>
+	</insert>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from comment_image
+		where id = #{id}
+	</delete>
+
+	<update id="updateByPrimaryKeySelective" parameterType="cn.peyton.plum.mall.pojo.CommentImage">
+		update comment_image
+		<set>
+			<if test="commentId != null">comment_id = #{commentId},</if>
+			<if test="src != null">src = #{src},</if>
+			<if test="createTime != null">create_time = #{createTime},</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="cn.peyton.plum.mall.pojo.CommentImage">
+		update comment_image
+		set 
+			comment_id = #{commentId},
+			src = #{src},
+			create_time = #{createTime}
+		where id = #{id}
+	</update>
+
+	<select id="selectByPrimaryKey" resultMap="ResultCommentImageMap"  parameterType="java.lang.Long">
+		select
+		<include refid="Column_comment_image_List"/>
+		from comment_image
+		where id = #{id}
+	</select>
+
+    <!-- new create method   -->
+    <select id="findByCommentId" resultMap="ResultCommentImageMap">
+        select <include refid="Column_comment_image_List"/>
+        from comment_image
+        where comment_id = #{commentId}
+    </select>
+
+</mapper>
