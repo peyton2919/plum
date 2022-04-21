@@ -3,6 +3,7 @@ package cn.peyton.plum.mall.mapper;
 import cn.peyton.plum.core.mybatis.utils.PageQuery;
 import cn.peyton.plum.mall.pojo.Goods;
 import cn.peyton.plum.mall.vo.GoodsHotVo;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -75,6 +76,24 @@ public interface GoodsMapper {
      * @param row 需要返回的条数
      * @return 品对象集合
      */
-    List<GoodsHotVo> findByHotAndRandTopNumber(Integer categoryId,Integer row);
+    List<GoodsHotVo> findByHotAndRandTopNumber(@Param("categoryId") Integer categoryId, @Param("row") Integer row);
+
+    /**
+     * <h4>根据商品ID 查找 好评数和平均分</h4>
+     * @param id 商品ID
+     * @return 好评数量{reviewCount}和平均分{rating}
+     */
+    Goods findCommentGoodRateAndTotalById(@Param("id") Long id);
+
+    /**
+     * <h4>多条件查找</h4>
+     * @param keyword 关键字
+     * @param type 类型: all综合; sale 销量; price 价格;
+     * @param order 排序: 默认asc 升序 asc; 降序 desc;
+     * @param page 分页对象
+     * @return 商品集合
+     */
+    List<GoodsHotVo> findByMulti(@Param("keyword") String keyword,@Param("type") String type,
+                                 @Param("order") String order,@Param("page") PageQuery page);
 
 }

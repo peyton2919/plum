@@ -1,9 +1,8 @@
 package cn.peyton.plum.controller;
 
 import cn.peyton.plum.core.base.JSONResult;
-import cn.peyton.plum.mall.service.GoodsAttrService;
-import cn.peyton.plum.mall.service.GoodsBannerService;
-import cn.peyton.plum.mall.service.GoodsSkuCardService;
+import cn.peyton.plum.mall.mapper.GoodsCardValueMapper;
+import cn.peyton.plum.mall.service.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,12 +28,21 @@ public class TestController {
     GoodsAttrService goodsAttrService;
     @Resource
     GoodsSkuCardService goodsSkuCardService;
+    @Resource
+    GoodsService goodsService;
+    @Resource
+    GoodsCardValueMapper goodsCardValueMapper;
 
 
     @GetMapping("/test1")
     public JSONResult index() {
 
 
+
+
+
+        // return JSONResult.success(goodsCardValueMapper.findByGoodsId(1L));
+        // return JSONResult.success(goodsService.findJoinByGoodsId(1L));
         return JSONResult.success(goodsSkuCardService.findByGoodsId(1L));
         // return JSONResult.success(goodsAttrService.findByGoodsId(1L));
         // return JSONResult.success(goodsBannerService.findByGoodsId(1L));

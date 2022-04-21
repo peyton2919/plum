@@ -18,8 +18,6 @@ import java.util.List;
 public class GoodsSkuCard implements Serializable {
 	/**   */
 	private Long id;
-	/** 商品ID  */
-	private Long goodsId;
 	/** 商品属性卡片值  */
 	private String name;
 	/** 商品属性卡片属性类型 0无 1颜色 2图片  */
@@ -52,20 +50,6 @@ public class GoodsSkuCard implements Serializable {
 	 */ 
 	public Long getId(){
 		return id;
-	}
-
-	/** 
-	 * @param goodsId 商品ID 
-	 */ 
-	public void setGoodsId(Long goodsId){
-		this.goodsId = goodsId;
-	}
-
-	/** 
-	 * @return 商品ID 
-	 */ 
-	public Long getGoodsId(){
-		return goodsId;
 	}
 
 	/** 

@@ -62,7 +62,7 @@ public class ParameterInterceptor implements HandlerInterceptor {
             if (!HttpServletRequestUtil.isBaseType(_filedType)) { continue; }
             String _filedName = _p.getName();
             String[] _ps = _parameterMap.get(_filedName);
-            if (null == _ps||"".equals(_ps[0])) {
+            if (null == _ps||"".equals(_ps[0])||"undefined".equals(_ps[0])) {
                 String _errMsg = "参数名称: [" + _filedName + "]不能为空值;";
                 HttpServletResponseUtil.returnJson(response
                         ,JsonMapper.toJSon(JSONResult.fail(StatusCode.FAIL_PARAM.getCode(),_errMsg)));

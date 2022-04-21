@@ -35,6 +35,14 @@
         <result column="desc" property="desc" jdbcType="VARCHAR"/>
         <result column="min_sku_price" property="minSkuPrice" jdbcType="DECIMAL"/>
         <result column="min_price" property="minPrice" jdbcType="DECIMAL"/>
+        <result column="rating" property="rating" jdbcType="FLOAT"/>
+        <result column="review_count" property="reviewCount" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <resultMap id="ResultGoodsSimpleMap" type="cn.peyton.plum.mall.pojo.Goods">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="rating" property="rating" jdbcType="FLOAT"/>
+        <result column="review_count" property="reviewCount" jdbcType="INTEGER"/>
     </resultMap>
 
 	<sql id="Column_goods_List">
@@ -42,7 +50,7 @@
 	</sql>
 
     <sql id="column_goods_hot_list">
-        id,title,cover,min_sku_price,min_price,`desc`
+        id,title,cover,min_sku_price,min_price,`desc`,rating,review_count
     </sql>
 
 	<insert id="insert" parameterType="cn.peyton.plum.mall.pojo.Goods" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
@@ -193,6 +201,33 @@
             and category_id=#{categoryId}
         </if>
         ORDER BY RAND() LIMIT #{row}
+    </select>
+
+    <select id="findCommentGoodRateAndTotalById" resultMap="ResultGoodsSimpleMap">
+        select id,rating,review_count
+        from goods where ischeck=1 and status=1 and id=#{id}
+    </select>
+
+    <select id="findByMulti" resultType="cn.peyton.plum.mall.vo.GoodsHotVo">
+        select <include refid="column_goods_hot_list"/>
+        FROM goods
+        WHERE ischeck=1 and status=1 and title LIKE CONCAT('%','华为','%')
+        <if test="type=='all'">
+            ORDER BY seq
+        </if>
+        <if test="type=='sale'">
+            ORDER BY sale_count
+        </if>
+        <if test="type=='price'">
+            ORDER BY min_price
+        </if>
+        <if test="order =='asc'">
+            asc
+        </if>
+        <if test="order =='desc'">
+            desc
+        </if>
+        LIMIT #{page.offset},#{page.pageSize}
     </select>
 
 

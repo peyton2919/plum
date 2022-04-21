@@ -14,8 +14,6 @@ import java.io.Serializable;
 public class GoodsSkuCardValue implements Serializable {
 	/**   */
 	private Long id;
-	/** 商品规格卡片id  */
-	private Long goodsSkuCardId;
 	/** 值  */
 	private String name;
 	/** 扩展值  */
@@ -42,20 +40,6 @@ public class GoodsSkuCardValue implements Serializable {
 	 */ 
 	public Long getId(){
 		return id;
-	}
-
-	/** 
-	 * @param goodsSkuCardId 商品规格卡片id
-	 */ 
-	public void setGoodsSkuCardId(Long goodsSkuCardId){
-		this.goodsSkuCardId = goodsSkuCardId;
-	}
-
-	/** 
-	 * @return 商品规格卡片id 
-	 */ 
-	public Long getGoodsSkuCardId(){
-		return goodsSkuCardId;
 	}
 
 	/** 

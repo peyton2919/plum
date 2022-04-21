@@ -63,8 +63,8 @@ public interface GoodsSkuCardValueMapper {
     /**
      * <h4>根据商品规格卡ID 查找商品属性</h4>
      * @param goodsSkuCardId 商品规格卡ID
-     * @return 商品规格卡
+     * @return 商品规格卡值
      */
-    List<GoodsSkuCardValue> findByGoodsSkuCardId(@Param("goodsSkuCardId") Long goodsSkuCardId);
+    List<GoodsSkuCardValue> findByGoodsSkuCardId( @Param("goodsSkuCardId") Long goodsSkuCardId);
 
 }

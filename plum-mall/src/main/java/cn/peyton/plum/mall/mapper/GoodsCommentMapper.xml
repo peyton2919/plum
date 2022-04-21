@@ -6,7 +6,10 @@
 		<result column="parent_id" property="parentId" jdbcType="BIGINT"/>
 		<result column="goods_id" property="goodsId" jdbcType="BIGINT"/>
 		<result column="comment_num" property="commentNum" jdbcType="INTEGER"/>
-		<result column="content" property="content" jdbcType="VARCHAR"/>
+		<result column="rating" property="rating" jdbcType="INTEGER"/>
+		<result column="review" property="review" jdbcType="VARCHAR"/>
+		<result column="extra" property="extra" jdbcType="LONGVARCHAR"/>
+        <result column="support_num" property="supportNum" jdbcType="INTEGER"/>
 		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
 		<association column="member_id" property="member" javaType="cn.peyton.plum.mall.pojo.Member"
 			 select="cn.peyton.plum.mall.mapper.MemberMapper.selectByPrimaryKey" jdbcType="BIGINT">
@@ -18,12 +21,12 @@
 	</resultMap>
 
 	<sql id="Column_goods_comment_List">
-		id,parent_id,goods_id,member_id,comment_num,content,create_time
+		id,parent_id,goods_id,member_id,comment_num,rating,review,extra,create_time,support_num
 	</sql>
 
 	<insert id="insert" parameterType="cn.peyton.plum.mall.pojo.GoodsComment" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
-		insert into goods_comment(parent_id,goods_id,member_id,comment_num,content,create_time)
-		values (#{parentId},#{goodsId},#{member.id},#{commentNum},#{content},#{createTime})
+		insert into goods_comment(parent_id,goods_id,member_id,comment_num,rating,review,extra,create_time,support_num)
+		values (#{parentId},#{goodsId},#{member.id},#{commentNum},#{rating},#{review},#{extra},#{createTime},#{supportNum})
 	</insert>
 
 	<insert id="insertSelective" parameterType="cn.peyton.plum.mall.pojo.GoodsComment" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
@@ -33,16 +36,22 @@
 			<if test="goodsId != null">goods_id,</if>
 			<if test="member != null">member_id,</if>
 			<if test="commentNum != null">comment_num,</if>
-			<if test="content != null">content,</if>
+			<if test="rating != null">rating,</if>
+			<if test="review != null">review,</if>
+			<if test="extra != null">extra,</if>
 			<if test="createTime != null">create_time,</if>
+			<if test="supportNum != null">support_num,</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="parentId != null">#{parentId},</if>
 			<if test="goodsId != null">#{goodsId},</if>
 			<if test="member != null">#{member.id},</if>
 			<if test="commentNum != null">#{commentNum},</if>
-			<if test="content != null">#{content},</if>
+			<if test="rating != null">#{rating},</if>
+			<if test="review != null">#{review},</if>
+			<if test="extra != null">#{extra},</if>
 			<if test="createTime != null">#{createTime},</if>
+            <if test="supportNum != null">#{supportNum},</if>
 		</trim>
 	</insert>
 
@@ -58,8 +67,11 @@
 			<if test="goodsId != null">goods_id = #{goodsId},</if>
 			<if test="member != null">member_id = #{member.id},</if>
 			<if test="commentNum != null">comment_num = #{commentNum},</if>
-			<if test="content != null">content = #{content},</if>
+			<if test="rating != null">rating = #{rating},</if>
+			<if test="review != null">review = #{review},</if>
+			<if test="extra != null">extra = #{extra},</if>
 			<if test="createTime != null">create_time = #{createTime},</if>
+            <if test="supportNum != null">support_num=#{supportNum},</if>
 		</set>
 		where id = #{id}
 	</update>
@@ -71,8 +83,11 @@
 			goods_id = #{goodsId},
 			member_id = #{member.id},
 			comment_num = #{commentNum},
-			content = #{content},
+			rating = #{rating},
+			review = #{review},
+			extra = #{extra},
 			create_time = #{createTime}
+			support_num =#{supportNum}
 		where id = #{id}
 	</update>
 
@@ -83,12 +98,16 @@
 		where id = #{id}
 	</select>
 
-    <!-- new create method   -->
+	<!-- new create method   -->
     <select id="findByGoodsId" resultMap="ResultGoodsCommentMap">
         select
         <include refid="Column_goods_comment_List"/>
         from goods_comment
         where goods_id = #{goodsId}
+        <if test="commentType ==1">and rating >3</if>
+        <if test="commentType ==2">and rating =3</if>
+        <if test="commentType ==3"> and rating &lt; 3</if>
+        limit #{page.offset},#{page.pageSize}
     </select>
 
 </mapper>

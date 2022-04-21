@@ -1,10 +1,12 @@
 package cn.peyton.plum.mall.service.impl;
 
 import cn.peyton.plum.mall.mapper.GoodsSkuMapper;
+import cn.peyton.plum.mall.pojo.GoodsSku;
 import cn.peyton.plum.mall.service.GoodsSkuService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * <h3> 商品规格 Service 实现类</h3>
@@ -20,4 +22,9 @@ public class GoodsSkuServiceImpl implements GoodsSkuService {
 	@Resource
 	private GoodsSkuMapper goodsSkuMapper;
 
+
+    @Override
+    public List<GoodsSku> findByGoodsId(Long goodsId) {
+        return goodsSkuMapper.findByGoodsId(goodsId);
+    }
 }

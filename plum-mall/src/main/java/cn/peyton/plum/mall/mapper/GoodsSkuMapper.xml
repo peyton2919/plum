@@ -13,9 +13,10 @@
 		<result column="code" property="code" jdbcType="VARCHAR"/>
 		<result column="skus" property="skus" jdbcType="LONGVARCHAR"/>
 		<result column="status" property="status" jdbcType="TINYINT"/>
-		<association column="goods_id" property="goods" javaType="cn.peyton.plum.mall.pojo.Goods"
-			 select="cn.peyton.plum.mall.mapper.GoodsMapper.selectByPrimaryKey" jdbcType="BIGINT">
-		</association>
+
+		<!--<association column="goods_id" property="goods" javaType="cn.peyton.plum.mall.pojo.Goods"-->
+		<!--	 select="cn.peyton.plum.mall.mapper.GoodsMapper.selectByPrimaryKey" jdbcType="BIGINT">-->
+		<!--</association>-->
 	</resultMap>
 
 	<sql id="Column_goods_sku_List">
@@ -104,6 +105,12 @@
 		where id = #{id}
 	</select>
 
-	<!-- new create method   -->
+    <!-- new create method   -->
+    <select id="findByGoodsId" resultMap="ResultGoodsSkuMap">
+        SELECT <include refid="Column_goods_sku_List"/>
+        FROM goods_sku
+        where goods_id=#{goodsId}
+    </select>
+
 
 </mapper>

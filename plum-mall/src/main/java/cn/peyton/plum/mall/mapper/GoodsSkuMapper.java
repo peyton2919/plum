@@ -1,6 +1,9 @@
 package cn.peyton.plum.mall.mapper;
 
 import cn.peyton.plum.mall.pojo.GoodsSku;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * <h3> 商品规格 Mapper 接口</h3>
@@ -55,7 +58,13 @@ public interface GoodsSkuMapper {
 	GoodsSku selectByPrimaryKey(Long id);
 
 
-	// ==================================== new create method ==================================== //
+    // ==================================== new create method ==================================== //
 
+    /**
+     * <h4>根据商品ID 查找 商品规格对象</h4>
+     * @param goodsId 商品ID
+     * @return 商品规格对象集合
+     */
+    List<GoodsSku> findByGoodsId(@Param("goodsId") Long goodsId);
 
 }

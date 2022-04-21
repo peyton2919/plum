@@ -1,7 +1,9 @@
 package cn.peyton.plum.mall.service.impl;
 
 import cn.peyton.plum.core.mybatis.utils.PageQuery;
+import cn.peyton.plum.mall.mapper.GoodsSkuCardMapper;
 import cn.peyton.plum.mall.pojo.Goods;
+import cn.peyton.plum.mall.pojo.GoodsSkuCard;
 import cn.peyton.plum.mall.service.GoodsService;
 import cn.peyton.plum.mall.mapper.GoodsMapper;
 import cn.peyton.plum.mall.vo.GoodsHotVo;
@@ -22,6 +24,8 @@ import java.util.List;
 public class GoodsServiceImpl implements GoodsService {
 	@Resource
 	private GoodsMapper goodsMapper;
+	@Resource
+    GoodsSkuCardMapper goodsSkuCardMapper;
 
     @Override
     public List<GoodsHotVo> findByHot(Integer categoryId, PageQuery page) {
@@ -36,5 +40,20 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     public Goods findById(Long id) {
         return goodsMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<GoodsSkuCard> findJoinByGoodsId(Long goodsId) {
+        return goodsSkuCardMapper.findByGoodsId(goodsId);
+    }
+
+    @Override
+    public Goods findCommentGoodRateAndTotalById(Long id) {
+        return goodsMapper.findCommentGoodRateAndTotalById(id);
+    }
+
+    @Override
+    public List<GoodsHotVo> findByMulti(String keyword, String type, String order, PageQuery page) {
+        return goodsMapper.findByMulti(keyword,type,order,page);
     }
 }

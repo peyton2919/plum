@@ -28,7 +28,10 @@ public final class GoodsHotVo implements Serializable {
     private String minPrice;
     /** 商品描述  */
     private String desc;
-
+    /** 平均评分  */
+    private Float rating;
+    /** 评论数  */
+    private Integer reviewCount;
 
     /**
      * @param id
@@ -110,5 +113,32 @@ public final class GoodsHotVo implements Serializable {
      */
     public String getDesc(){
         return desc;
+    }
+    /**
+     * @param rating 平均评分
+     */
+    public void setRating(Float rating){
+        this.rating = rating;
+    }
+
+    /**
+     * @return 平均评分
+     */
+    public Float getRating(){
+        return rating;
+    }
+
+    /**
+     * @param reviewCount 评论数
+     */
+    public void setReviewCount(Integer reviewCount){
+        this.reviewCount = reviewCount;
+    }
+
+    /**
+     * @return 评论数
+     */
+    public Integer getReviewCount(){
+        return reviewCount;
     }
 }

@@ -1,5 +1,6 @@
 package cn.peyton.plum.mall.service.impl;
 
+import cn.peyton.plum.core.mybatis.utils.PageQuery;
 import cn.peyton.plum.mall.pojo.GoodsComment;
 import cn.peyton.plum.mall.service.GoodsCommentService;
 import cn.peyton.plum.mall.mapper.GoodsCommentMapper;
@@ -22,7 +23,15 @@ public class GoodsCommentServiceImpl implements GoodsCommentService {
 	private GoodsCommentMapper goodsCommentMapper;
 
     @Override
-    public List<GoodsComment> findByGoodsId(Long goodsId) {
-        return goodsCommentMapper.findByGoodsId(goodsId);
+    public List<GoodsComment> findByGoodsId(Long goodsId,String commentTyp, PageQuery page) {
+        Integer _commentType = 0;
+        if ("good".equals(commentTyp)){
+            _commentType = 1;
+        }else if ("middle".equals(commentTyp)){
+            _commentType = 2;
+        }else if ("bad".equals(commentTyp)){
+            _commentType = 3;
+        }
+        return goodsCommentMapper.findByGoodsId(goodsId, _commentType, page);
     }
 }

@@ -25,6 +25,7 @@ public abstract class AbstractValidator implements IValidator {
     private final String _DOUBLE = "double";
     private final String INTEGER = "class java.lang.Integer";
     private final String INT = "int";
+    private final String LONG = "class java.lang.Long,long";
 
 
     /**
@@ -73,7 +74,7 @@ public abstract class AbstractValidator implements IValidator {
     /**
      * <h4>判断整型 数字 类型</h4>
      * <pre>
-     *     比对 [Integer , int , String]
+     *     比对 [Integer,Long , int , String]
      * </pre>
      * @param type 数据 类型
      * @return true为不是整型类型
@@ -81,6 +82,7 @@ public abstract class AbstractValidator implements IValidator {
     protected boolean existInt(String type) {
         if (INTEGER.contains(type) ||
                 INT.contains(type) ||
+                LONG.contains(type)||
                 STRING.contains(type)) {
             return false;
         }

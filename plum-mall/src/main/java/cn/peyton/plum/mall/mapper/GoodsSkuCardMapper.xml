@@ -3,33 +3,31 @@
 <mapper namespace="cn.peyton.plum.mall.mapper.GoodsSkuCardMapper">
 	<resultMap id="ResultGoodsSkuCardMap" type="cn.peyton.plum.mall.pojo.GoodsSkuCard">
 		<id column="id" property="id" jdbcType="BIGINT"/>
-		<result column="goods_id" property="goodsId" jdbcType="BIGINT"/>
 		<result column="name" property="name" jdbcType="VARCHAR"/>
 		<result column="type" property="type" jdbcType="TINYINT"/>
 		<result column="seq" property="seq" jdbcType="INTEGER"/>
-        <collection column="id" property="goodsSkuCardValues" ofType="cn.peyton.plum.mall.pojo.GoodsSkuCardValue"
-                    select="cn.peyton.plum.mall.mapper.GoodsSkuCardValueMapper.findByGoodsSkuCardId" ></collection>
+        <collection property="goodsSkuCardValues" column="id"
+                    select="cn.peyton.plum.mall.mapper.GoodsSkuCardValueMapper.findByGoodsSkuCardId">
+        </collection>
 	</resultMap>
 
 	<sql id="Column_goods_sku_card_List">
-		id,goods_id,name,type,seq
+		id,`name`,`type`,seq
 	</sql>
 
 	<insert id="insert" parameterType="cn.peyton.plum.mall.pojo.GoodsSkuCard" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
-		insert into goods_sku_card(goods_id,name,type,seq)
-		values (#{goodsId},#{name},#{type},#{seq})
+		insert into goods_sku_card(`name`,`type`,`seq`)
+		values (#{name},#{type},#{seq})
 	</insert>
 
 	<insert id="insertSelective" parameterType="cn.peyton.plum.mall.pojo.GoodsSkuCard" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
 		insert into goods_sku_card
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="goodsId != null">goods_id,</if>
 			<if test="name != null">name,</if>
 			<if test="type != null">type,</if>
 			<if test="seq != null">seq,</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="goodsId != null">#{goodsId},</if>
 			<if test="name != null">#{name},</if>
 			<if test="type != null">#{type},</if>
 			<if test="seq != null">#{seq},</if>
@@ -44,7 +42,6 @@
 	<update id="updateByPrimaryKeySelective" parameterType="cn.peyton.plum.mall.pojo.GoodsSkuCard">
 		update goods_sku_card
 		<set>
-			<if test="goodsId != null">goods_id = #{goodsId},</if>
 			<if test="name != null">name = #{name},</if>
 			<if test="type != null">type = #{type},</if>
 			<if test="seq != null">seq = #{seq},</if>
@@ -54,10 +51,9 @@
 
 	<update id="updateByPrimaryKey" parameterType="cn.peyton.plum.mall.pojo.GoodsSkuCard">
 		update goods_sku_card
-		set 
-			goods_id = #{goodsId},
-			name = #{name},
-			type = #{type},
+		set
+			`name` = #{name},
+			`type` = #{type},
 			seq = #{seq}
 		where id = #{id}
 	</update>
@@ -73,7 +69,9 @@
     <select id="findByGoodsId" resultMap="ResultGoodsSkuCardMap">
         SELECT <include refid="Column_goods_sku_card_List"/>
         FROM goods_sku_card
-        where goods_id =#{goodsId} ORDER BY seq DESC
+        WHERE id in(
+            SELECT DISTINCT goods_sku_card_id FROM goods_card_value where goods_id=#{goodsId})
+        ORDER BY seq DESC
     </select>
 
 

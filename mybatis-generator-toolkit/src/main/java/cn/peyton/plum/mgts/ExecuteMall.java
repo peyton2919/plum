@@ -33,7 +33,10 @@ public class ExecuteMall {
 
         // 单个数据
 
-        generation.create("sys_log",null,PATH,MAPPER,POJO,true);
+        generation.create("goods_comment",null,PATH,MAPPER,POJO,true);
+        // generation.create("order_item",null,PATH,MAPPER,POJO,true);
+        // generation.create("goods_card_value",null,PATH,MAPPER,POJO,true);
+        // generation.create("sys_log",null,PATH,MAPPER,POJO,true);
         // generation.create("sys_supplier_log",null,PATH,MAPPER,POJO,true);
         // generation.create("member_address",null,PATH,MAPPER,POJO,true);
         // generation.create("order_item",null,PATH,MAPPER,POJO,true);

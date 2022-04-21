@@ -1,7 +1,6 @@
 package cn.peyton.plum.mall.service;
 
 import cn.peyton.plum.mall.pojo.GoodsSkuCardValue;
-
 import java.util.List;
 
 /**
@@ -18,7 +17,7 @@ public interface GoodsSkuCardValueService {
     /**
      * <h4>根据商品规格卡ID 查找商品属性</h4>
      * @param goodsSkuCardId 商品规格卡ID
-     * @return 商品规格卡
+     * @return 商品规格卡值
      */
     List<GoodsSkuCardValue> findByGoodsSkuCardId(Long goodsSkuCardId);
 

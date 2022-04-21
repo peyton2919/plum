@@ -2,6 +2,7 @@ package cn.peyton.plum.mall.service;
 
 import cn.peyton.plum.core.mybatis.utils.PageQuery;
 import cn.peyton.plum.mall.pojo.Goods;
+import cn.peyton.plum.mall.pojo.GoodsSkuCard;
 import cn.peyton.plum.mall.vo.GoodsHotVo;
 
 import java.util.List;
@@ -40,4 +41,28 @@ public interface GoodsService {
      */
     Goods findById(Long id);
 
+    /**
+     * <h4>关联查找 根据商品ID 找 商品规格</h4>
+     * @param goodsId 商品ID
+     * @return 商品规格集合
+     */
+    List<GoodsSkuCard> findJoinByGoodsId(Long goodsId);
+
+
+    /**
+     * <h4>根据商品ID 查找 好评数和平均分</h4>
+     * @param id 商品ID
+     * @return 好评数量{reviewCount}和平均分{rating}
+     */
+    Goods findCommentGoodRateAndTotalById(Long id);
+
+    /**
+     * <h4>多条件查找</h4>
+     * @param keyword 关键字
+     * @param type 类型: all综合; sale 销量; price 价格;
+     * @param order 排序: 默认asc 升序 asc; 降序 desc;
+     * @param page 分页对象
+     * @return 商品集合
+     */
+    List<GoodsHotVo> findByMulti(String keyword,String type,String order,PageQuery page);
 }

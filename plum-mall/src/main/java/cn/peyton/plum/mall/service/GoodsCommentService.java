@@ -1,5 +1,6 @@
 package cn.peyton.plum.mall.service;
 
+import cn.peyton.plum.core.mybatis.utils.PageQuery;
 import cn.peyton.plum.mall.pojo.GoodsComment;
 
 import java.util.List;
@@ -19,7 +20,9 @@ public interface GoodsCommentService {
     /**
      * <h4>根据商品ID 查找 商品评论集合</h4>
      * @param goodsId 商品ID
+     * @param commentType 评论类型: 全部 all 好评 good 中评 middle 差评 bad
+     * @param page 分页
      * @return 商品评论集合
      */
-    List<GoodsComment> findByGoodsId(Long goodsId);
+    List<GoodsComment> findByGoodsId(Long goodsId,String commentType, PageQuery page);
 }

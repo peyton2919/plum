@@ -2,12 +2,14 @@ package cn.peyton.plum.controller.mall.api.routine;
 
 import cn.peyton.plum.controller.route.MallApiRoutineController;
 import cn.peyton.plum.core.base.JSONResult;
+import cn.peyton.plum.core.mybatis.utils.PageQuery;
 import cn.peyton.plum.core.utils.Maps;
 import cn.peyton.plum.mall.pojo.Goods;
 import cn.peyton.plum.mall.pojo.GoodsAttr;
 import cn.peyton.plum.mall.pojo.GoodsSkuCard;
 import cn.peyton.plum.mall.service.*;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,6 +38,8 @@ public class GoodsController extends MallApiRoutineController {
     GoodsSkuCardService goodsSkuCardService;
 	@Resource
     GoodsCommentService goodsCommentService;
+	@Resource
+    GoodsSkuService goodsSkuService;
 
 	@GetMapping("/detail")
 	public JSONResult detail(@RequestParam("goodsId") Long goodsId){
@@ -45,9 +49,11 @@ public class GoodsController extends MallApiRoutineController {
             return JSONResult.fail("没找到商品");
         }
         map.put("goods", _goods);
-        map.put("goodsComments", goodsCommentService.findByGoodsId(goodsId));
+        map.put("goodsComments", goodsCommentService.findByGoodsId(goodsId,"all",new PageQuery(1)));
         map.put("hotList",goodsService.findByHotAndRandTopNumber(_goods.getCategoryId(),4));
         map.put("goodsBanners", goodsBannerService.findByGoodsId(goodsId));
+        // goodsSkus
+        map.put("goodsSkus", goodsSkuService.findByGoodsId(goodsId));
         map.put("goodsSkuCards", goodsSkuCardService.findByGoodsId(goodsId));
         map.put("goodsAttrs", goodsAttrService.findByGoodsId(goodsId));
         // 少个goodsSkus
@@ -55,4 +61,9 @@ public class GoodsController extends MallApiRoutineController {
         return JSONResult.success(map);
     }
 
+    @PostMapping("/goods/search")
+    public JSONResult findByMulti(String keyword, String type, String order, Integer pageNo) {
+
+        return JSONResult.success(goodsService.findByMulti(keyword, type, order, new PageQuery(pageNo)));
+    }
 }

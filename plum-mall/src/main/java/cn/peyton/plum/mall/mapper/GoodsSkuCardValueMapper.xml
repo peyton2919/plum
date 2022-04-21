@@ -6,7 +6,6 @@
 		<result column="name" property="name" jdbcType="VARCHAR"/>
 		<result column="value" property="value" jdbcType="VARCHAR"/>
 		<result column="seq" property="seq" jdbcType="INTEGER"/>
-		<result column="goods_sku_card_id" property="goodsSkuCardId" jdbcType="BIGINT"></result>
 	</resultMap>
 
 	<sql id="Column_goods_sku_card_value_List">
@@ -69,9 +68,10 @@
 
     <!-- new create method   -->
     <select id="findByGoodsSkuCardId" resultType="cn.peyton.plum.mall.pojo.GoodsSkuCardValue">
-        select  <include refid="Column_goods_sku_card_value_List"></include>
-        FROM goods_sku_card_value
-        where goods_sku_card_id =#{goodsSkuCardId} ORDER BY seq DESC
+       SELECT <include refid="Column_goods_sku_card_value_List"/>
+       from goods_sku_card_value
+       where goods_sku_card_id=#{goodsSkuCardId}
+        ORDER BY seq DESC
     </select>
 
 </mapper>

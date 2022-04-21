@@ -12,7 +12,7 @@ import java.util.List;
  * <pre>
  * @author <a href="http://www.peyton.cn">peyton</a>
  * @email <a href="mailto:fz2919@tom.com">fz2919@tom.com</a>
- * @createDate 2022/04/14 08:57:54
+ * @createDate 2022/04/17 20:41:04
  * @version 1.0.0
  * </pre>
 */
@@ -27,14 +27,20 @@ public class GoodsComment implements Serializable {
 	private Member member;
 	/** 评论数; 0为无评论  */
 	private Integer commentNum;
-	/** 评论内容  */
-	private String content;
+	/** 评分  */
+	private Integer rating;
+	/** 评价内容  */
+	private String review;
+	/** 客服回复评论  */
+	private String extra;
 	/** 创建时间  */
 	private Date createTime;
-	/** 评论图片集合 */
-	List<CommentImage> commentImages;
+	/** 点赞数 */
+	private Integer supportNum;
+    /** 评论图片集合 */
+    List<CommentImage> commentImages;
 
-    //================================== Constructor =======================================//
+	//================================== Constructor =======================================//
     public GoodsComment() {
         if(null == commentImages){
             commentImages = Lists.newArrayList();
@@ -116,17 +122,45 @@ public class GoodsComment implements Serializable {
 	}
 
 	/** 
-	 * @param content 评论内容
+	 * @param rating 评分 
 	 */ 
-	public void setContent(String content){
-		this.content = content;
+	public void setRating(Integer rating){
+		this.rating = rating;
 	}
 
 	/** 
-	 * @return 评论内容 
+	 * @return 评分 
 	 */ 
-	public String getContent(){
-		return content;
+	public Integer getRating(){
+		return rating;
+	}
+
+	/** 
+	 * @param review 评价内容 
+	 */ 
+	public void setReview(String review){
+		this.review = review;
+	}
+
+	/** 
+	 * @return 评价内容 
+	 */ 
+	public String getReview(){
+		return review;
+	}
+
+	/** 
+	 * @param extra 客服回复评论 
+	 */ 
+	public void setExtra(String extra){
+		this.extra = extra;
+	}
+
+	/** 
+	 * @return 客服回复评论 
+	 */ 
+	public String getExtra(){
+		return extra;
 	}
 
 	/** 
@@ -155,5 +189,19 @@ public class GoodsComment implements Serializable {
      */
     public void setCommentImages(List<CommentImage> commentImages) {
         this.commentImages = commentImages;
+    }
+
+    /**
+     * @return 点赞数
+     */
+    public Integer getSupportNum() {
+        return supportNum;
+    }
+
+    /**
+     * @param supportNum 点赞数
+     */
+    public void setSupportNum(Integer supportNum) {
+        this.supportNum = supportNum;
     }
 }
