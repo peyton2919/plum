@@ -1,5 +1,7 @@
 package cn.peyton.plum.mall.pojo;
 
+import cn.peyton.plum.core.base.BaseUser;
+
 import java.util.Date;
 import java.util.Date;
 

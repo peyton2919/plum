@@ -66,6 +66,11 @@
 		from category
 		where id = #{id}
 	</select>
-	<!-- new create method   -->
 
+    <!-- new create method   -->
+    <select id="finds" resultMap="ResultCategoryMap">
+        select <include refid="Column_category_List"/>
+        FROM category
+        where status =1 ORDER BY seq desc
+    </select>
 </mapper>

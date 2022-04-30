@@ -211,7 +211,7 @@
     <select id="findByMulti" resultType="cn.peyton.plum.mall.vo.GoodsHotVo">
         select <include refid="column_goods_hot_list"/>
         FROM goods
-        WHERE ischeck=1 and status=1 and title LIKE CONCAT('%','华为','%')
+        WHERE ischeck=1 and status=1 and title LIKE CONCAT('%',#{keyword},'%')
         <if test="type=='all'">
             ORDER BY seq
         </if>

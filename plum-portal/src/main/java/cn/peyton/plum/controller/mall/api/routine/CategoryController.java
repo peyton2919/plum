@@ -1,8 +1,13 @@
 package cn.peyton.plum.controller.mall.api.routine;
 
+import cn.peyton.plum.controller.route.MallApiRoutineController;
+import cn.peyton.plum.core.base.JSONResult;
 import cn.peyton.plum.mall.service.CategoryService;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import javax.annotation.Resource;
 
 /**
@@ -14,11 +19,15 @@ import javax.annotation.Resource;
  * @version 1.0.0
  * </pre>
 */
-@Controller
-@RequestMapping("/")
-public class CategoryController {
+@RestController
+public class CategoryController extends MallApiRoutineController {
 
 	@Resource
 	private CategoryService categoryService;
+
+	@GetMapping("/category")
+	public JSONResult finds(){
+        return JSONResult.success(categoryService.finds());
+    }
 
 }

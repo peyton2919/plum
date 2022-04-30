@@ -1,13 +1,16 @@
 package cn.peyton.plum.controller.mall.api.routine;
 
 import cn.peyton.plum.controller.route.MallApiRoutineController;
+import cn.peyton.plum.core.base.BaseUser;
 import cn.peyton.plum.core.base.JSONResult;
 import cn.peyton.plum.core.mybatis.utils.PageQuery;
 import cn.peyton.plum.core.utils.Maps;
 import cn.peyton.plum.mall.pojo.Goods;
 import cn.peyton.plum.mall.pojo.GoodsAttr;
 import cn.peyton.plum.mall.pojo.GoodsSkuCard;
+import cn.peyton.plum.mall.pojo.Supplier;
 import cn.peyton.plum.mall.service.*;
+import cn.peyton.plum.mall.vo.SupplierVo;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -65,5 +68,11 @@ public class GoodsController extends MallApiRoutineController {
     public JSONResult findByMulti(String keyword, String type, String order, Integer pageNo) {
 
         return JSONResult.success(goodsService.findByMulti(keyword, type, order, new PageQuery(pageNo)));
+    }
+
+    @GetMapping("/goods/class")
+    public JSONResult findByClass(Integer categoryId){
+
+        return JSONResult.success(goodsService.findByHotAndRandTopNumber(categoryId, 9));
     }
 }

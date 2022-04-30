@@ -2,6 +2,8 @@ package cn.peyton.plum.mall.mapper;
 
 import cn.peyton.plum.mall.pojo.Category;
 
+import java.util.List;
+
 /**
  * <h3> 分类信息 Mapper 接口</h3>
  * <pre>
@@ -55,7 +57,12 @@ public interface CategoryMapper {
 	Category selectByPrimaryKey(Integer id);
 
 
-	// ==================================== new create method ==================================== //
+    // ==================================== new create method ==================================== //
 
+    /**
+     * <h4>查找所有分类</h4>
+     * @return 分类集合
+     */
+    List<Category> finds();
 
 }

@@ -1,9 +1,11 @@
 package cn.peyton.plum.mall.service.impl;
 
+import cn.peyton.plum.mall.pojo.Category;
 import cn.peyton.plum.mall.service.CategoryService;
 import cn.peyton.plum.mall.mapper.CategoryMapper;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * <h3> 分类信息 Service 实现类</h3>
@@ -19,4 +21,8 @@ public class CategoryServiceImpl implements CategoryService {
 	@Resource
 	private CategoryMapper categoryMapper;
 
+    @Override
+    public List<Category> finds() {
+        return categoryMapper.finds();
+    }
 }

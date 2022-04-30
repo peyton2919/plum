@@ -2,6 +2,8 @@ package cn.peyton.plum.core.base;
 
 import cn.peyton.plum.core.inf.IUser;
 
+import java.io.Serializable;
+
 /**
  * <h3>基础 用户类 .</h3>
  * <pre>
@@ -11,7 +13,7 @@ import cn.peyton.plum.core.inf.IUser;
  * @version: 1.0.0
  * </pre>
  */
-public abstract class BaseUser<K> implements IUser {
+public abstract class BaseUser<K,T> implements IUser, Serializable {
 
     /**
      * <h4>设置用户类型[强制子类实现]</h4>
@@ -57,13 +59,29 @@ public abstract class BaseUser<K> implements IUser {
      * <h4>设置 主键 数值[强制子类实现]</h4>
      * @return 用户主键
      */
-    protected abstract <K> K abstractPrimaryKey();
 
+    protected abstract <K> K abstractPrimaryKey();
     /**
      * @return 用户主键
      */
     public <K> K getPrimaryKey() {
         return abstractPrimaryKey();
+    }
+
+    /**
+     * <h4>获取子用户对象</h4>
+     * @param <T> 子用户对象
+     * @return 子用户对象
+     */
+    protected abstract <T> T abstractObject();
+
+    /**
+     * <h4>获取子用户对象</h4>
+     * @param <T> 子用户对象
+     * @return 子用户对象
+     */
+    public <T> T getObject() {
+        return abstractObject();
     }
 
 }
